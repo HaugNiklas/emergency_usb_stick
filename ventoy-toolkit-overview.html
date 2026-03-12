@@ -6,33 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ventoy USB Toolkit – Übersicht</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
-
     :root {
-      --bg: #0d0f14;
-      --surface: #151820;
-      --border: #252a35;
-      --text: #c8cdd8;
-      --muted: #5a6178;
-      --accent: #00aaff;
-      --h: #f97316;
-      --m: #a855f7;
-      --s: #00aaff;
+      --white: #fff;
+      --background: #001;
+      --surface: #112;
+      --border: #223;
+      --text: #CDE;
+      --muted: #567;
+      --accent: #9AB;
+      --accent-alt: #9AB3;
+      --hirens: #F80;
+      --hirens-alt: #F803;
+      --mediacat: #A0F;
+      --mediacat-alt: #A0F3;
+      --standalone: #09F;
+      --standalone-alt: #09F3;
+      --sichtbar: #0C6;
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
 
     body {
       font-family: 'IBM Plex Sans', sans-serif;
-      background: var(--bg);
+      background: var(--background);
       color: var(--text);
-      padding: 2rem 1.5rem 4rem
     }
 
     /* ── Layout ── */
@@ -40,34 +36,21 @@
     .legend,
     .controls,
     .stats-bar,
-    .categories {
+    .categories,
+    .quickaccess {
       max-width: 1100px;
-      margin-inline: auto
+      margin-inline: auto;
     }
 
     header {
       border-bottom: 1px solid var(--border);
       padding-bottom: 1.5rem;
-      margin-bottom: 2rem
-    }
-
-    h1 {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: -.02em;
-      margin-bottom: .4rem
-    }
-
-    h1 span {
-      color: var(--accent)
+      margin-bottom: 2rem;
     }
 
     .subtitle {
       font-size: .8rem;
       color: var(--muted);
-      font-family: 'IBM Plex Mono', monospace
     }
 
     /* ── Legend ── */
@@ -75,21 +58,21 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-block: 1.5rem
+      margin-block: 1.5rem;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
       gap: .5rem;
-      font-size: .8rem
+      font-size: .8rem;
     }
 
     .dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      flex-shrink: 0
+      flex-shrink: 0;
     }
 
     /* ── Controls ── */
@@ -98,95 +81,94 @@
       flex-wrap: wrap;
       align-items: center;
       gap: .5rem;
-      margin-bottom: 1rem
+      margin-bottom: 1rem;
     }
 
-    .search-input {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .8rem;
-      padding: .45rem .9rem;
+    .toolbox,
+    .search-input,
+    .btn,
+    .tier2-btn {
+      padding: .35rem .85rem;
       border-radius: 2px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+    }
+
+    .search-input {
+      padding: .45rem .9rem;
       width: 260px;
       outline: none;
-      transition: border-color .15s;
+    }
+
+    .btn {
+      font-size: .75rem;
+      cursor: pointer;
+    }
+
+    .tier2-btn {
+      font-size: .7rem;
+      margin: .6rem 1rem;
     }
 
     .search-input:focus {
-      border-color: var(--accent)
+      border-color: var(--accent);
     }
 
     .search-input::placeholder {
-      color: var(--muted)
+      color: var(--muted);
     }
 
     .filter-sep {
       width: 1px;
       height: 1.2rem;
       background: var(--border);
-      margin-inline: .25rem
-    }
-
-    .filter-label,
-    .filter-hint {
-      font-family: 'IBM Plex Mono', monospace;
-      color: var(--muted)
     }
 
     .filter-label {
-      font-size: .7rem
-    }
-
-    .filter-hint {
-      font-size: .68rem
-    }
-
-    .btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .75rem;
-      padding: .3rem .85rem;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      background: var(--surface);
       color: var(--muted);
-      cursor: pointer;
-      transition: all .15s;
-      user-select: none;
+      font-size: .7rem;
     }
 
+    .category.open .tier2-btn {
+      display: inline-block;
+    }
+
+    .tier2-btn:hover,
     .btn:hover {
-      color: #fff;
-      border-color: var(--accent)
+      color: var(--white);
+      border-color: var(--accent);
     }
 
     .btn.active-all {
-      color: #fff;
-      background: rgba(0, 170, 255, .1);
-      border-color: var(--accent)
+      color: var(--white);
+      background: var(--accent-alt);
+      border-color: var(--accent);
     }
 
     .btn.active-h {
-      color: #fff;
-      background: rgba(249, 115, 22, .18);
-      border-color: var(--h)
+      color: var(--white);
+      background: var(--hirens-alt);
+      border-color: var(--hirens);
     }
 
     .btn.active-m {
-      color: #fff;
-      background: rgba(168, 85, 247, .18);
-      border-color: var(--m)
+      color: var(--white);
+      background: var(--mediacat-alt);
+      border-color: var(--mediacat);
     }
 
     .btn.active-s {
-      color: #fff;
-      background: rgba(0, 170, 255, .18);
-      border-color: var(--s)
+      color: var(--white);
+      background: var(--standalone-alt);
+      border-color: var(--standalone);
     }
 
     .btn-expand {
-      margin-left: auto
+      margin-left: auto;
     }
 
     /* ── Stats ── */
@@ -194,53 +176,52 @@
       display: flex;
       gap: 1.5rem;
       flex-wrap: wrap;
-      margin-bottom: 1.5rem
+      margin-bottom: 1.5rem;
     }
 
     .stat {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .75rem
+      font-size: .75rem;
     }
 
     .stat-num {
       font-size: 1.3rem;
       font-weight: 600;
-      color: #fff;
-      display: block
+      color: var(--white);
+      display: block;
     }
 
     .stat-num.orange {
-      color: var(--h)
+      color: var(--hirens);
     }
 
     .stat-num.purple {
-      color: var(--m)
+      color: var(--mediacat);
     }
 
     .stat-num.blue {
-      color: var(--s)
+      color: var(--standalone);
     }
 
     .stat-num.green {
-      color: #6ee7b7
+      color: var(--sichtbar);
     }
 
     .stat-label {
-      color: var(--muted)
+      color: var(--muted);
     }
 
     /* ── Categories ── */
     .categories {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem
+      gap: 1.5rem;
     }
 
     .category {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 4px;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .cat-header {
@@ -255,38 +236,36 @@
     }
 
     .cat-header:hover {
-      background: rgba(255, 255, 255, .06)
+      background: rgba(255, 255, 255, .06);
     }
 
     .cat-header.cat-match {
-      border-left: 2px solid var(--accent)
+      border-left: 2px solid var(--accent);
     }
 
     .cat-title {
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .8rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--white);
       letter-spacing: .05em;
-      text-transform: uppercase
+      text-transform: uppercase;
     }
 
     .cat-count {
       margin-left: auto;
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .7rem;
-      color: var(--muted)
+      color: var(--muted);
     }
 
     .cat-chevron {
       font-size: .7rem;
       color: var(--muted);
       transition: transform .2s;
-      flex-shrink: 0
+      flex-shrink: 0;
     }
 
     .category.open .cat-chevron {
-      transform: rotate(90deg)
+      transform: rotate(90deg);
     }
 
     /* ── Tools grid ── */
@@ -294,11 +273,11 @@
       display: none;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 1px;
-      background: var(--border)
+      background: var(--border);
     }
 
     .category.open .tools-grid {
-      display: grid
+      display: grid;
     }
 
     .tool-card {
@@ -307,49 +286,53 @@
       display: flex;
       flex-direction: column;
       gap: .35rem;
-      transition: background .1s
-    }
-
-    .tool-card:hover {
-      background: #1a1f2e
     }
 
     .tool-card.hidden {
-      display: none
+      display: none;
+    }
+
+    .tool-card.tier2 {
+      opacity: .55;
+    }
+
+    .tool-card.tier2-hidden {
+      display: none;
     }
 
     .tool-top {
       display: flex;
       align-items: flex-start;
-      gap: .6rem
+      gap: .6rem;
     }
 
     .tool-name {
       font-size: .85rem;
       font-weight: 600;
-      color: #e2e8f0;
-      line-height: 1.3
+      color: var(--text);
+      line-height: 1.3;
     }
 
+    /* Shared left indent for description and badges */
     .tool-desc,
     .tool-badges {
-      padding-left: 1.1rem
+      padding-left: 1.1rem;
     }
 
     .tool-desc {
       font-size: .75rem;
       color: var(--muted);
-      line-height: 1.6
+      line-height: 1.6;
     }
 
     .nir-wrap {
-      margin-top: .4rem
+      margin-top: .4rem;
     }
 
     .tool-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: .3rem
+      gap: .3rem;
     }
 
     /* ── Presence dots ── */
@@ -358,96 +341,63 @@
       flex-direction: column;
       gap: 2px;
       flex-shrink: 0;
-      margin-top: 4px
+      margin-top: 4px;
     }
 
     .pdot {
       width: 6px;
       height: 6px;
-      border-radius: 50%
+      border-radius: 50%;
     }
 
     .pdot-off {
-      background: #252a35
+      background: var(--border);
     }
 
     .pdot-h {
-      background: var(--h)
+      background: var(--hirens);
     }
 
     .pdot-m {
-      background: var(--m)
+      background: var(--mediacat);
     }
 
     .pdot-s {
-      background: var(--s)
+      background: var(--standalone);
     }
 
-    /* ── Tier 2 ── */
-    .tool-card.tier2 {
-      opacity: .55
-    }
 
-    .tool-card.tier2-hidden {
-      display: none
-    }
-
-    .tier2-btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: .68rem;
-      padding: .3rem .75rem;
-      border-radius: 2px;
-      cursor: pointer;
-      border: 1px dashed var(--border);
-      background: transparent;
-      color: var(--muted);
-      margin: .6rem 1rem;
-      display: none;
-      transition: all .15s;
-    }
-
-    .category.open .tier2-btn {
-      display: inline-block
-    }
-
-    .tier2-btn:hover {
-      color: #fff;
-      border-color: var(--muted)
-    }
 
     /* ── Tool Info Box ── */
     .tool-info-toggle {
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .65rem;
       color: var(--accent);
       cursor: pointer;
-      padding-left: 1.1rem;
+      padding: .5rem 0 .5rem 1.1rem;
       margin-top: .6rem;
       margin-bottom: .5rem;
       display: block;
       background: none;
       border: none;
-      text-align: left;
-      padding-top: .5rem;
-      padding-bottom: .5rem;
       border-top: 1px solid rgba(255, 255, 255, .08);
       border-bottom: 1px solid rgba(255, 255, 255, .08);
-      width: calc(100% - 1.1rem)
+      text-align: left;
+      width: calc(100% - 1.1rem);
     }
 
     .tool-info-toggle:hover {
-      text-decoration: underline
+      text-decoration: underline;
     }
 
     .nir-arrow {
       display: inline-block;
       transition: transform .2s;
       font-size: .55rem;
-      vertical-align: middle
+      vertical-align: middle;
     }
 
     .nir-arrow.open {
-      transform: rotate(90deg)
+      transform: rotate(90deg);
     }
 
     .tool-info-box {
@@ -459,107 +409,99 @@
       border-radius: 2px;
       font-size: .72rem;
       color: var(--text);
-      line-height: 1.8
+      line-height: 1.8;
     }
 
     .tool-info-box b {
       color: var(--accent);
-      font-weight: 600
+      font-weight: 600;
     }
 
     .tool-info-box.open {
-      display: block
+      display: block;
     }
 
     .nir-search-area {
       margin: .7rem 1.1rem .2rem;
-      font-size: .72rem
+      font-size: .72rem;
     }
 
     .nir-found-label {
       color: var(--accent);
       font-size: .68rem;
       margin-bottom: .2rem;
-      font-weight: 600
-    }
-
-    .nir-search-result:not(:empty) {
-      margin-bottom: .3rem
+      font-weight: 600;
     }
 
     .nir-hit {
-      color: #fff;
+      color: var(--white);
       font-size: .72rem;
-      line-height: 1.6
+      line-height: 1.6;
     }
 
     .nir-hit b {
-      color: var(--accent)
+      color: var(--accent);
     }
 
     .nir-placeholder {
       color: var(--muted);
       font-size: .68rem;
-      line-height: 1.6
+      line-height: 1.6;
     }
 
     .nir-link {
       color: var(--accent);
-      text-decoration: none
+      text-decoration: none;
     }
 
     .nir-link:hover {
-      text-decoration: underline
+      text-decoration: underline;
     }
 
     /* ── Badges ── */
     .badge {
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .65rem;
       padding: .1rem .4rem;
       border-radius: 2px;
       font-weight: 600;
-      letter-spacing: .03em
+      letter-spacing: .03em;
     }
 
     .badge-h {
       background: rgba(249, 115, 22, .15);
-      color: var(--h);
-      border: 1px solid rgba(249, 115, 22, .3)
+      color: var(--hirens);
+      border: 1px solid rgba(249, 115, 22, .3);
     }
 
     .badge-m {
       background: rgba(168, 85, 247, .15);
-      color: var(--m);
-      border: 1px solid rgba(168, 85, 247, .3)
+      color: var(--mediacat);
+      border: 1px solid rgba(168, 85, 247, .3);
     }
 
     .badge-s {
       background: rgba(0, 170, 255, .12);
-      color: var(--s);
-      border: 1px solid rgba(0, 170, 255, .25)
+      color: var(--standalone);
+      border: 1px solid rgba(0, 170, 255, .25);
     }
 
     /* ── Quick Access ── */
     .quickaccess {
-      max-width: 1100px;
-      margin-inline: auto;
-      margin-bottom: 2rem
+      margin-bottom: 2rem;
     }
 
     .qa-title {
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .7rem;
       color: var(--muted);
       letter-spacing: .08em;
       text-transform: uppercase;
-      margin-bottom: .6rem
+      margin-bottom: .6rem;
     }
 
     .qa-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: .5rem
+      gap: .5rem;
     }
 
     .qa-card {
@@ -571,31 +513,29 @@
       flex-direction: column;
       gap: .25rem;
       cursor: default;
-      transition: background .1s, border-color .1s;
+      transition: border-color .1s;
     }
 
     .qa-card:hover {
-      background: #1a1f2e;
-      border-color: var(--accent)
+      border-color: var(--accent);
     }
 
     .qa-card-name {
       font-size: .8rem;
       font-weight: 600;
-      color: #e2e8f0;
-      line-height: 1.2
+      color: var(--text);
+      line-height: 1.2;
     }
 
     .qa-card-cat {
-      font-family: 'IBM Plex Mono', monospace;
       font-size: .62rem;
-      color: var(--muted)
+      color: var(--muted);
     }
 
     .qa-dots {
       display: flex;
       gap: 3px;
-      margin-top: .1rem
+      margin-top: .1rem;
     }
   </style>
 </head>
@@ -610,16 +550,16 @@
 
   <div class="legend">
     <div class="legend-item">
-      <div class="dot" style="background:var(--h)"></div>In Hiren's BootCD PE
+      <div class="dot" style="background:var(--hirens)"></div>In Hiren's BootCD PE
     </div>
     <div class="legend-item">
-      <div class="dot" style="background:var(--m)"></div>In MediCat PortableApps
+      <div class="dot" style="background:var(--mediacat)"></div>In MediCat PortableApps
     </div>
     <div class="legend-item">
-      <div class="dot" style="background:var(--s)"></div>Standalone im Tools-Ordner
+      <div class="dot" style="background:var(--standalone)"></div>Standalone im Tools-Ordner
     </div>
     <div class="legend-item">
-      <div class="dot" style="background:#252a35;border:1px solid #3a4055"></div>Nicht enthalten
+      <div class="dot" style="background:var(--border);border:1px solid var(--border)"></div>Nicht enthalten
     </div>
   </div>
 
@@ -631,7 +571,6 @@
     <button class="btn" id="btn-h" onclick="setFilter('h')">Hiren's</button>
     <button class="btn" id="btn-m" onclick="setFilter('m')">MediCat</button>
     <button class="btn" id="btn-s" onclick="setFilter('s')">Standalone</button>
-
     <button class="btn btn-expand" id="btn-expand" onclick="expandCollapseAll()">▼ Alle einklappen</button>
     <button class="btn" id="btn-tier2" onclick="toggleAllTier2()" style="margin-left:.5rem">+ Erweiterte
       anzeigen</button>
@@ -1393,8 +1332,12 @@
       document.getElementById('qa-grid').style.display = query ? 'none' : '';
       document.querySelectorAll('.category').forEach(cat => {
         const catHit = query && cat.querySelector('.cat-title').textContent.toLowerCase().includes(query);
-        const toolHit = [...cat.querySelectorAll('.tool-card')].some(c =>
-          c.dataset.name.includes(query) || c.dataset.desc.includes(query));
+        const toolHit = [...cat.querySelectorAll('.tool-card')].some(c => {
+          for (const attr of c.attributes) {
+            if (attr.name.startsWith('data-') && attr.value && attr.value.toLowerCase().includes(query)) return true;
+          }
+          return c.innerText && c.innerText.toLowerCase().includes(query);
+        });
         cat.querySelector('.cat-header').classList.toggle('cat-match', catHit);
         if (catHit || toolHit) cat.classList.add('open');
         else if (query) cat.classList.remove('open');
@@ -1417,7 +1360,6 @@
         const inc = card.dataset.in.split(',');
         const tier2hidden = card.classList.contains('tier2') && card.classList.contains('tier2-hidden');
 
-        // NirSoft sub-tool search
         let nirMatches = [];
         if (query && card.dataset.nir) {
           const nir = JSON.parse(card.dataset.nir);
@@ -1432,7 +1374,6 @@
         const show = !tier2hidden && matchesFilter(inc) && (!query || nameDescMatch || nirMatches.length > 0);
         card.classList.toggle('hidden', !show);
 
-        // update nir search result box
         const nirResult = card.querySelector('.nir-search-result');
         if (nirResult) {
           const placeholder = card.querySelector('.nir-placeholder');
@@ -1446,7 +1387,7 @@
             if (!query) {
               card.querySelector('.tool-info-box')?.classList.remove('open');
               const btn = card.querySelector('.tool-info-toggle');
-              if (btn) btn.textContent = '📋 Ausgewählte Tools anzeigen';
+              if (btn) btn.querySelector('.nir-toggle-text').textContent = 'Ausgewählte Tools anzeigen';
             }
           }
         }
@@ -1476,7 +1417,6 @@
         const btn = cat.querySelector('.tier2-btn');
         if (!btn) return;
         const isOpen = cat.dataset.tier2 === 'open';
-        // count tier2 cards that match current filter (not hidden by filter, only by tier2-hidden)
         const visibleTier2 = [...cat.querySelectorAll('.tool-card.tier2')].filter(c => {
           const inc = c.dataset.in.split(',');
           return matchesFilter(inc) && (!query || c.dataset.name.includes(query) || c.dataset.desc.includes(query));
@@ -1525,7 +1465,6 @@
       const totalTools = data.reduce((sum, cat) => sum + cat.tools.length, 0);
       document.getElementById('cnt-all').textContent = totalTools;
       document.getElementById('categories').innerHTML = data.map(cat => {
-        // Tools sortieren: erst Tier 1 (ohne tier:2), dann Tier 2, jeweils alphabetisch
         const tier1 = cat.tools.filter(t => t.tier !== 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
         const tier2 = cat.tools.filter(t => t.tier === 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
         const sortedTools = [...tier1, ...tier2];
@@ -1587,8 +1526,6 @@
       { name: 'Snappy Driver Installer Origin (SDIO)', cat: 'Treiber', in: ['m', 's'] },
     ];
 
-    // ── Sort ───────────────────────────────────────────────────────
-
     function renderQuickAccess() {
       document.getElementById('qa-grid').innerHTML = quickTools.map(t => {
         return `<div class="qa-card" title="${t.cat}" onclick="highlightTool('${t.name.replace(/'/g, "\\'")}')">
@@ -1602,7 +1539,6 @@
     }
 
     function highlightTool(name) {
-      // expand all cats, then scroll to the tool card
       document.querySelectorAll('.category').forEach(c => c.classList.add('open'));
       const card = [...document.querySelectorAll('.tool-card')].find(c =>
         c.dataset.name === name.toLowerCase() ||
