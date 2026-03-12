@@ -8,30 +8,28 @@
   <style>
     :root {
       --white: #fff;
-      --background: #001;
+      --bg: #001;
       --surface: #112;
       --border: #223;
       --text: #CDE;
       --muted: #567;
-      --accent: #9AB;
-      --accent-alt: #9AB3;
-      --hirens: #F80;
-      --hirens-alt: #F803;
-      --mediacat: #A0F;
-      --mediacat-alt: #A0F3;
-      --standalone: #09F;
-      --standalone-alt: #09F3;
-      --sichtbar: #0C6;
+      --accent: #AAE;
+      --accent-bg: #AAF3;
+      --c-h: #F80;
+      --c-h-bg: #F803;
+      --c-m: #A0F;
+      --c-m-bg: #A0F3;
+      --c-s: #09F;
+      --c-s-bg: #09F3;
+      --c-ok: #0C6;
     }
-
 
     body {
       font-family: 'IBM Plex Sans', sans-serif;
-      background: var(--background);
+      background: var(--bg);
       color: var(--text);
     }
 
-    /* ── Layout ── */
     header,
     .legend,
     .controls,
@@ -53,7 +51,7 @@
       color: var(--muted);
     }
 
-    /* ── Legend ── */
+    /* Legend */
     .legend {
       display: flex;
       flex-wrap: wrap;
@@ -75,7 +73,7 @@
       flex-shrink: 0;
     }
 
-    /* ── Controls ── */
+    /* Controls */
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -84,9 +82,8 @@
       margin-bottom: 1rem;
     }
 
-    .toolbox,
-    .search-input,
     .btn,
+    .search-input,
     .tier2-btn {
       padding: .35rem .85rem;
       border-radius: 2px;
@@ -104,16 +101,6 @@
       outline: none;
     }
 
-    .btn {
-      font-size: .75rem;
-      cursor: pointer;
-    }
-
-    .tier2-btn {
-      font-size: .7rem;
-      margin: .6rem 1rem;
-    }
-
     .search-input:focus {
       border-color: var(--accent);
     }
@@ -122,7 +109,51 @@
       color: var(--muted);
     }
 
-    .filter-sep {
+    .btn {
+      font-size: .75rem;
+    }
+
+    .tier2-btn {
+      font-size: .7rem;
+      margin: .6rem 1rem;
+    }
+
+    .btn:hover,
+    .tier2-btn:hover {
+      color: var(--white);
+      border-color: var(--accent);
+    }
+
+    /* Active filter buttons via data-src */
+    .btn[data-src="all"].active {
+      color: var(--white);
+      background: var(--accent-bg);
+      border-color: var(--accent);
+    }
+
+    .btn[data-src="h"].active {
+      color: var(--white);
+      background: var(--c-h-bg);
+      border-color: var(--c-h);
+    }
+
+    .btn[data-src="m"].active {
+      color: var(--white);
+      background: var(--c-m-bg);
+      border-color: var(--c-m);
+    }
+
+    .btn[data-src="s"].active {
+      color: var(--white);
+      background: var(--c-s-bg);
+      border-color: var(--c-s);
+    }
+
+    .btn-expand {
+      margin-left: auto;
+    }
+
+    .sep {
       width: 1px;
       height: 1.2rem;
       background: var(--border);
@@ -133,45 +164,7 @@
       font-size: .7rem;
     }
 
-    .category.open .tier2-btn {
-      display: inline-block;
-    }
-
-    .tier2-btn:hover,
-    .btn:hover {
-      color: var(--white);
-      border-color: var(--accent);
-    }
-
-    .btn.active-all {
-      color: var(--white);
-      background: var(--accent-alt);
-      border-color: var(--accent);
-    }
-
-    .btn.active-h {
-      color: var(--white);
-      background: var(--hirens-alt);
-      border-color: var(--hirens);
-    }
-
-    .btn.active-m {
-      color: var(--white);
-      background: var(--mediacat-alt);
-      border-color: var(--mediacat);
-    }
-
-    .btn.active-s {
-      color: var(--white);
-      background: var(--standalone-alt);
-      border-color: var(--standalone);
-    }
-
-    .btn-expand {
-      margin-left: auto;
-    }
-
-    /* ── Stats ── */
+    /* Stats */
     .stats-bar {
       display: flex;
       gap: 1.5rem;
@@ -190,27 +183,27 @@
       display: block;
     }
 
-    .stat-num.orange {
-      color: var(--hirens);
-    }
-
-    .stat-num.purple {
-      color: var(--mediacat);
-    }
-
-    .stat-num.blue {
-      color: var(--standalone);
-    }
-
-    .stat-num.green {
-      color: var(--sichtbar);
-    }
-
     .stat-label {
       color: var(--muted);
     }
 
-    /* ── Categories ── */
+    [data-color="h"] {
+      color: var(--c-h);
+    }
+
+    [data-color="m"] {
+      color: var(--c-m);
+    }
+
+    [data-color="s"] {
+      color: var(--c-s);
+    }
+
+    [data-color="ok"] {
+      color: var(--c-ok);
+    }
+
+    /* Categories */
     .categories {
       display: flex;
       flex-direction: column;
@@ -268,7 +261,7 @@
       transform: rotate(90deg);
     }
 
-    /* ── Tools grid ── */
+    /* Tools grid */
     .tools-grid {
       display: none;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
@@ -288,16 +281,13 @@
       gap: .35rem;
     }
 
-    .tool-card.hidden {
+    .tool-card.hidden,
+    .tool-card.tier2-hidden {
       display: none;
     }
 
     .tool-card.tier2 {
       opacity: .55;
-    }
-
-    .tool-card.tier2-hidden {
-      display: none;
     }
 
     .tool-top {
@@ -313,7 +303,6 @@
       line-height: 1.3;
     }
 
-    /* Shared left indent for description and badges */
     .tool-desc,
     .tool-badges {
       padding-left: 1.1rem;
@@ -325,17 +314,13 @@
       line-height: 1.6;
     }
 
-    .nir-wrap {
-      margin-top: .4rem;
-    }
-
     .tool-badges {
       display: flex;
       flex-wrap: wrap;
       gap: .3rem;
     }
 
-    /* ── Presence dots ── */
+    /* Presence dots — color via data-src */
     .pdots {
       display: flex;
       flex-direction: column;
@@ -348,28 +333,27 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-    }
-
-    .pdot-off {
       background: var(--border);
     }
 
-    .pdot-h {
-      background: var(--hirens);
+    .pdot[data-src="h"] {
+      background: var(--c-h);
     }
 
-    .pdot-m {
-      background: var(--mediacat);
+    .pdot[data-src="m"] {
+      background: var(--c-m);
     }
 
-    .pdot-s {
-      background: var(--standalone);
+    .pdot[data-src="s"] {
+      background: var(--c-s);
     }
 
+    /* Info box */
+    .nir-wrap {
+      margin-top: .4rem;
+    }
 
-
-    /* ── Tool Info Box ── */
-    .tool-info-toggle {
+    .info-toggle {
       font-size: .65rem;
       color: var(--accent);
       cursor: pointer;
@@ -385,22 +369,22 @@
       width: calc(100% - 1.1rem);
     }
 
-    .tool-info-toggle:hover {
+    .info-toggle:hover {
       text-decoration: underline;
     }
 
-    .nir-arrow {
+    .toggle-arrow {
       display: inline-block;
       transition: transform .2s;
       font-size: .55rem;
       vertical-align: middle;
     }
 
-    .nir-arrow.open {
+    .toggle-arrow.open {
       transform: rotate(90deg);
     }
 
-    .tool-info-box {
+    .info-box {
       display: none;
       margin: .4rem 1.1rem 0;
       padding: .5rem .7rem;
@@ -412,12 +396,12 @@
       line-height: 1.8;
     }
 
-    .tool-info-box b {
+    .info-box b {
       color: var(--accent);
       font-weight: 600;
     }
 
-    .tool-info-box.open {
+    .info-box.open {
       display: block;
     }
 
@@ -458,7 +442,7 @@
       text-decoration: underline;
     }
 
-    /* ── Badges ── */
+    /* Badges — color via data-src */
     .badge {
       font-size: .65rem;
       padding: .1rem .4rem;
@@ -467,25 +451,25 @@
       letter-spacing: .03em;
     }
 
-    .badge-h {
+    .badge[data-src="h"] {
       background: rgba(249, 115, 22, .15);
-      color: var(--hirens);
+      color: var(--c-h);
       border: 1px solid rgba(249, 115, 22, .3);
     }
 
-    .badge-m {
+    .badge[data-src="m"] {
       background: rgba(168, 85, 247, .15);
-      color: var(--mediacat);
+      color: var(--c-m);
       border: 1px solid rgba(168, 85, 247, .3);
     }
 
-    .badge-s {
+    .badge[data-src="s"] {
       background: rgba(0, 170, 255, .12);
-      color: var(--standalone);
+      color: var(--c-s);
       border: 1px solid rgba(0, 170, 255, .25);
     }
 
-    /* ── Quick Access ── */
+    /* Quick Access */
     .quickaccess {
       margin-bottom: 2rem;
     }
@@ -550,13 +534,13 @@
 
   <div class="legend">
     <div class="legend-item">
-      <div class="dot" style="background:var(--hirens)"></div>In Hiren's BootCD PE
+      <div class="dot" style="background:var(--c-h)"></div>In Hiren's BootCD PE
     </div>
     <div class="legend-item">
-      <div class="dot" style="background:var(--mediacat)"></div>In MediCat PortableApps
+      <div class="dot" style="background:var(--c-m)"></div>In MediCat PortableApps
     </div>
     <div class="legend-item">
-      <div class="dot" style="background:var(--standalone)"></div>Standalone im Tools-Ordner
+      <div class="dot" style="background:var(--c-s)"></div>Standalone im Tools-Ordner
     </div>
     <div class="legend-item">
       <div class="dot" style="background:var(--border);border:1px solid var(--border)"></div>Nicht enthalten
@@ -565,12 +549,12 @@
 
   <div class="controls">
     <input class="search-input" type="text" placeholder="Tool oder Kategorie suchen…" oninput="onSearch(this.value)">
-    <div class="filter-sep"></div>
+    <div class="sep"></div>
     <span class="filter-label">FILTER:</span>
-    <button class="btn active-all" id="btn-all" onclick="setFilter(null)">Alle</button>
-    <button class="btn" id="btn-h" onclick="setFilter('h')">Hiren's</button>
-    <button class="btn" id="btn-m" onclick="setFilter('m')">MediCat</button>
-    <button class="btn" id="btn-s" onclick="setFilter('s')">Standalone</button>
+    <button class="btn active" data-src="all" id="btn-all" onclick="setFilter(null)">Alle</button>
+    <button class="btn" data-src="h" id="btn-h" onclick="setFilter('h')">Hiren's</button>
+    <button class="btn" data-src="m" id="btn-m" onclick="setFilter('m')">MediCat</button>
+    <button class="btn" data-src="s" id="btn-s" onclick="setFilter('s')">Standalone</button>
     <button class="btn btn-expand" id="btn-expand" onclick="expandCollapseAll()">▼ Alle einklappen</button>
     <button class="btn" id="btn-tier2" onclick="toggleAllTier2()" style="margin-left:.5rem">+ Erweiterte
       anzeigen</button>
@@ -578,10 +562,14 @@
 
   <div class="stats-bar">
     <div class="stat"><span class="stat-num" id="cnt-all">–</span><span class="stat-label">Tools gesamt</span></div>
-    <div class="stat"><span class="stat-num orange" id="cnt-h">–</span><span class="stat-label">in Hiren's</span></div>
-    <div class="stat"><span class="stat-num purple" id="cnt-m">–</span><span class="stat-label">in MediCat</span></div>
-    <div class="stat"><span class="stat-num blue" id="cnt-s">–</span><span class="stat-label">Standalone</span></div>
-    <div class="stat"><span class="stat-num green" id="cnt-vis">–</span><span class="stat-label">sichtbar</span></div>
+    <div class="stat"><span class="stat-num" data-color="h" id="cnt-h">–</span><span class="stat-label">in
+        Hiren's</span></div>
+    <div class="stat"><span class="stat-num" data-color="m" id="cnt-m">–</span><span class="stat-label">in
+        MediCat</span></div>
+    <div class="stat"><span class="stat-num" data-color="s" id="cnt-s">–</span><span
+        class="stat-label">Standalone</span></div>
+    <div class="stat"><span class="stat-num" data-color="ok" id="cnt-vis">–</span><span
+        class="stat-label">sichtbar</span></div>
   </div>
 
   <div class="quickaccess">
@@ -593,7 +581,6 @@
 
   <script>
     const data = [
-
       {
         icon: '💽', title: 'BCD & MBR / Boot-Reparatur', tools: [
           { name: 'BootIce', desc: 'MBR/PBR bearbeiten, BCD verwalten, USB-Boot-Fix', in: ['h'] },
@@ -604,7 +591,6 @@
           { name: 'Rescatux', desc: 'Linux-Rettungssystem für Boot & GRUB-Reparatur (ISO)', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '💾', title: 'Festplatte – Diagnose & SMART', tools: [
           { name: 'CrystalDiskInfo', desc: 'SMART-Daten & HDD/SSD-Health überwachen', in: ['h', 'm', 's'] },
@@ -621,7 +607,6 @@
           { name: 'CheckDisk GUI', desc: 'Grafische Oberfläche für chkdsk', in: ['h'], tier: 2 },
         ]
       },
-
       {
         icon: '📊', title: 'Festplatte – Speicherplatz-Analyse', tools: [
           { name: 'WizTree', desc: 'Speicherplatzbelegung (NTFS direkt, sehr schnell)', in: ['s'] },
@@ -629,7 +614,6 @@
           { name: 'TreeSize', desc: 'Kompakte Ordnergrößen-Übersicht', in: ['h'] },
         ]
       },
-
       {
         icon: '🗂️', title: 'Festplatte – Partitionsverwaltung', tools: [
           { name: 'AOMEI Partition Assistant', desc: 'Partitionen verschieben, verkleinern & verwalten', in: ['h', 's'] },
@@ -642,7 +626,6 @@
           { name: 'NTFS Permission Tool', desc: 'NTFS-Berechtigungen einsehen & reparieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🔄', title: 'Festplatte – Defragmentierung', tools: [
           { name: 'Defraggler', desc: 'Defragmentierung einzelner Dateien oder Laufwerke', in: ['h', 'm'] },
@@ -651,14 +634,12 @@
           { name: 'JkDefrag', desc: 'Leichtgewichtiger Defragmenter, sehr schnell', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🗑️', title: 'Festplatte – Sicheres Löschen', tools: [
           { name: 'HDD Low Level Format Tool', desc: 'Festplatte auf Hardwareebene nullen', in: ['h'] },
           { name: 'Eraser', desc: 'Dateien & freien Speicher sicher überschreiben (DoD-Standard)', in: ['h'] },
         ]
       },
-
       {
         icon: '🔩', title: 'Festplatte – Spezialformate & Virtual Disk', tools: [
           { name: 'HxD Hex Editor', desc: 'Hex-Editor für direkte Disk- und RAM-Bearbeitung', in: ['h', 'm'], tier: 2 },
@@ -673,7 +654,6 @@
           { name: 'SD Formatter', desc: 'SD-Karten nach offenem Standard korrekt formatieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '💿', title: 'Backup & Imaging', tools: [
           { name: 'Macrium Reflect', desc: 'System-Backup & Images erstellen (Goldstandard)', in: ['h', 's'] },
@@ -691,7 +671,6 @@
           { name: 'WinToUSB', desc: 'Windows-To-Go auf USB-Stick installieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🗃️', title: 'Datenrettung', tools: [
           { name: 'Recuva', desc: 'Gelöschte Dateien einfach wiederherstellen', in: ['h', 'm', 's'] },
@@ -709,7 +688,6 @@
           { name: 'Elcomsoft System Recovery', desc: 'Windows-Passwörter & Zugänge zurücksetzen', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🛡️', title: 'Sicherheit & Viren', tools: [
           { name: 'Malwarebytes', desc: 'On-Demand Malware-Scanner (Free: kein Echtzeit-Schutz)', in: ['m', 's'] },
@@ -728,361 +706,30 @@
           { name: 'OpenVPN Portable', desc: 'VPN-Verbindung direkt vom Stick aufbauen', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '⚙️', title: 'Microsoft – SysInternals Suite', tools: [
           {
-            name: 'SysInternals Suite', desc: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. process, disk oder network.', descHtml: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. <i>process</i>, <i>disk</i> oder <i>network</i>.<br><a class="nir-link" href="https://learn.microsoft.com/en-us/sysinternals/downloads/" target="_blank">→ Vollständige Tool-Liste auf learn.microsoft.com</a>', in: ['h'],
-            nir: {
-              'AccessChk': 'Command-line tool for viewing effective permissions on files, registry keys, services, processes and kernel objects',
-              'AccessEnum': 'Shows who has what access to directories, files and Registry keys — find holes in permissions',
-              'AdExplorer': 'Advanced Active Directory viewer and editor',
-              'AdInsight': 'LDAP real-time monitoring tool for troubleshooting Active Directory client applications',
-              'AdRestore': 'Undelete Active Directory objects',
-              'Autologon': 'Bypass password screen during logon',
-              'Autoruns': 'See what programs are configured to startup automatically when your system boots and you log in',
-              'BgInfo': 'Automatically display relevant information about a Windows computer on the desktop background',
-              'CacheSet': 'Program that allows you to control the Cache Manager working set size',
-              'ClockRes': 'View the resolution of the system clock',
-              'Contig': 'Defragment individual files or create new files that are contiguous',
-              'Coreinfo': 'Shows mapping between logical processors and the physical processor, NUMA node, socket and cache topology',
-              'Ctrl2Cap': 'Kernel-mode driver that remaps Caps Lock key to Ctrl',
-              'DebugView': 'Monitor debug output on your local machine or across the Internet without an active debugger',
-              'Desktops': 'Create up to four virtual desktops and switch between them using hotkeys',
-              'Disk2vhd': 'Simplifies migration of physical systems into virtual machines (P2V)',
-              'DiskExt': 'Display volume disk-mappings',
-              'DiskMon': 'Capture all hard disk activity or acts as a software disk activity light in system tray',
-              'DiskView': 'Graphical disk sector viewer',
-              'DU': 'Report the disk space usage for the directory you specify',
-              'EFSDump': 'View information for encrypted files',
-              'FindLinks': 'Reports the file index and any hard links that exist for the specified file',
-              'Handle': 'Show what files are open by which processes',
-              'Hex2dec': 'Convert hex numbers to decimal and vice versa',
-              'Junction': 'Create Win2K NTFS symbolic links',
-              'LDMDump': 'Dump the contents of the Logical Disk Manager database',
-              'ListDLLs': 'List all DLLs that are currently loaded, including version numbers and full paths',
-              'LiveKd': 'Use Microsoft kernel debuggers to examine a live system',
-              'LoadOrder': 'See the order in which devices are loaded on your Windows system',
-              'LogonSessions': 'List the active logon sessions on a system',
-              'MoveFile': 'Schedule move and delete commands for the next reboot',
-              'NotMyFault': 'Crash, hang, and cause kernel memory leaks on your Windows system (for testing)',
-              'NTFSInfo': 'Detailed information about NTFS volumes including MFT size and location',
-              'PendMoves': 'Enumerate file rename and delete commands that will execute at next boot',
-              'PipeList': 'Display named pipes on your system',
-              'PortMon': 'Monitor serial and parallel port activity',
-              'ProcDump': 'Capture process dumps for CPU spikes, hung windows or unhandled exceptions',
-              'Process Explorer': 'Find out what files, registry keys and objects processes have open, which DLLs they have loaded',
-              'Process Monitor': 'Monitor file system, Registry, process, thread and DLL activity in real-time',
-              'PsExec': 'Execute processes on remote systems',
-              'PsFile': 'Show files opened remotely',
-              'PsGetSid': 'Display the SID of a computer or user',
-              'PsInfo': 'Obtain information about a system',
-              'PsKill': 'Kill processes by name or process ID',
-              'PsList': 'List detailed information about processes',
-              'PsLoggedOn': 'Show users logged on to a local or remote system',
-              'PsLogList': 'Dump event log records',
-              'PsPasswd': 'Change account passwords',
-              'PsPing': 'Measure network performance including latency and bandwidth',
-              'PsService': 'View and control services',
-              'PsShutdown': 'Shutdown or reboot a computer',
-              'PsSuspend': 'Suspend and resume processes',
-              'PsTools': 'Suite of command-line utilities for managing local and remote Windows systems',
-              'RAMMap': 'Advanced physical memory usage analysis — see exactly how Windows is using RAM',
-              'RDCMan': 'Manage multiple remote desktop connections',
-              'RegDelNull': 'Scan and delete Registry keys with embedded null-characters',
-              'RegJump': 'Jump to a registry path directly in Regedit',
-              'RU': 'View the registry space usage for the specified registry key',
-              'SDelete': 'Securely overwrite sensitive files and cleanse free space (DoD-compliant)',
-              'ShareEnum': 'Scan file shares on your network and view their security settings',
-              'ShellRunas': 'Launch programs as a different user via right-click context menu',
-              'Sigcheck': 'Show file version, timestamp, and digital signature details — verify file integrity',
-              'Streams': 'Reveal NTFS alternate streams in files',
-              'Strings': 'Search for ANSI and Unicode strings in binary images',
-              'Sync': 'Flush cached data to disk',
-              'Sysmon': 'Monitor and log system activity including processes, network connections and file changes',
-              'TCPView': 'Live view of all TCP and UDP endpoints, including local and remote addresses and state',
-              'VMMap': 'Analyze virtual memory usage of a specific process in detail',
-              'VolumeID': 'Set the Volume ID of FAT or NTFS drives',
-              'WhoIs': 'WHOIS lookup for domain registration information',
-              'WinObj': 'Display information about the Windows Object Manager namespace',
-              'ZoomIt': 'Screen zoom, annotation and recording tool for presentations'
-            },
+            name: 'SysInternals Suite',
+            desc: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. process, disk oder network.',
+            descHtml: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. <i>process</i>, <i>disk</i> oder <i>network</i>.<br><a class="nir-link" href="https://learn.microsoft.com/en-us/sysinternals/downloads/" target="_blank">→ Vollständige Tool-Liste auf learn.microsoft.com</a>',
+            in: ['h'],
+            nir: { 'AccessChk': 'Command-line tool for viewing effective permissions on files, registry keys, services, processes and kernel objects', 'AccessEnum': 'Shows who has what access to directories, files and Registry keys — find holes in permissions', 'AdExplorer': 'Advanced Active Directory viewer and editor', 'AdInsight': 'LDAP real-time monitoring tool for troubleshooting Active Directory client applications', 'AdRestore': 'Undelete Active Directory objects', 'Autologon': 'Bypass password screen during logon', 'Autoruns': 'See what programs are configured to startup automatically when your system boots and you log in', 'BgInfo': 'Automatically display relevant information about a Windows computer on the desktop background', 'CacheSet': 'Program that allows you to control the Cache Manager working set size', 'ClockRes': 'View the resolution of the system clock', 'Contig': 'Defragment individual files or create new files that are contiguous', 'Coreinfo': 'Shows mapping between logical processors and the physical processor, NUMA node, socket and cache topology', 'Ctrl2Cap': 'Kernel-mode driver that remaps Caps Lock key to Ctrl', 'DebugView': 'Monitor debug output on your local machine or across the Internet without an active debugger', 'Desktops': 'Create up to four virtual desktops and switch between them using hotkeys', 'Disk2vhd': 'Simplifies migration of physical systems into virtual machines (P2V)', 'DiskExt': 'Display volume disk-mappings', 'DiskMon': 'Capture all hard disk activity or acts as a software disk activity light in system tray', 'DiskView': 'Graphical disk sector viewer', 'DU': 'Report the disk space usage for the directory you specify', 'EFSDump': 'View information for encrypted files', 'FindLinks': 'Reports the file index and any hard links that exist for the specified file', 'Handle': 'Show what files are open by which processes', 'Hex2dec': 'Convert hex numbers to decimal and vice versa', 'Junction': 'Create Win2K NTFS symbolic links', 'LDMDump': 'Dump the contents of the Logical Disk Manager database', 'ListDLLs': 'List all DLLs that are currently loaded, including version numbers and full paths', 'LiveKd': 'Use Microsoft kernel debuggers to examine a live system', 'LoadOrder': 'See the order in which devices are loaded on your Windows system', 'LogonSessions': 'List the active logon sessions on a system', 'MoveFile': 'Schedule move and delete commands for the next reboot', 'NotMyFault': 'Crash, hang, and cause kernel memory leaks on your Windows system (for testing)', 'NTFSInfo': 'Detailed information about NTFS volumes including MFT size and location', 'PendMoves': 'Enumerate file rename and delete commands that will execute at next boot', 'PipeList': 'Display named pipes on your system', 'PortMon': 'Monitor serial and parallel port activity', 'ProcDump': 'Capture process dumps for CPU spikes, hung windows or unhandled exceptions', 'Process Explorer': 'Find out what files, registry keys and objects processes have open, which DLLs they have loaded', 'Process Monitor': 'Monitor file system, Registry, process, thread and DLL activity in real-time', 'PsExec': 'Execute processes on remote systems', 'PsFile': 'Show files opened remotely', 'PsGetSid': 'Display the SID of a computer or user', 'PsInfo': 'Obtain information about a system', 'PsKill': 'Kill processes by name or process ID', 'PsList': 'List detailed information about processes', 'PsLoggedOn': 'Show users logged on to a local or remote system', 'PsLogList': 'Dump event log records', 'PsPasswd': 'Change account passwords', 'PsPing': 'Measure network performance including latency and bandwidth', 'PsService': 'View and control services', 'PsShutdown': 'Shutdown or reboot a computer', 'PsSuspend': 'Suspend and resume processes', 'PsTools': 'Suite of command-line utilities for managing local and remote Windows systems', 'RAMMap': 'Advanced physical memory usage analysis — see exactly how Windows is using RAM', 'RDCMan': 'Manage multiple remote desktop connections', 'RegDelNull': 'Scan and delete Registry keys with embedded null-characters', 'RegJump': 'Jump to a registry path directly in Regedit', 'RU': 'View the registry space usage for the specified registry key', 'SDelete': 'Securely overwrite sensitive files and cleanse free space (DoD-compliant)', 'ShareEnum': 'Scan file shares on your network and view their security settings', 'ShellRunas': 'Launch programs as a different user via right-click context menu', 'Sigcheck': 'Show file version, timestamp, and digital signature details — verify file integrity', 'Streams': 'Reveal NTFS alternate streams in files', 'Strings': 'Search for ANSI and Unicode strings in binary images', 'Sync': 'Flush cached data to disk', 'Sysmon': 'Monitor and log system activity including processes, network connections and file changes', 'TCPView': 'Live view of all TCP and UDP endpoints, including local and remote addresses and state', 'VMMap': 'Analyze virtual memory usage of a specific process in detail', 'VolumeID': 'Set the Volume ID of FAT or NTFS drives', 'WhoIs': 'WHOIS lookup for domain registration information', 'WinObj': 'Display information about the Windows Object Manager namespace', 'ZoomIt': 'Screen zoom, annotation and recording tool for presentations' },
             nirOverview: '<b>🔍 Prozesse:</b> Process Explorer · Process Monitor · ProcDump · PsList · PsKill · VMMap<br><b>🚀 Autostart:</b> Autoruns · BgInfo · Desktops<br><b>🌐 Netzwerk:</b> TCPView · PsPing · PsTools · WhoIs · PortMon<br><b>💾 Festplatte:</b> DiskView · Disk2vhd · DU · SDelete · Contig · DiskMon<br><b>🔒 Sicherheit:</b> AccessChk · AccessEnum · Sigcheck · Sysmon · Streams<br><b>📋 Registry:</b> Autoruns · RegJump · RegDelNull · RU · AdExplorer<br><b>🖥️ System-Info:</b> PsInfo · Coreinfo · RAMMap · LogonSessions · Handle · ListDLLs<br><b>🔧 Remote:</b> PsExec · PsLoggedOn · PsLogList · PsService · PsShutdown · RDCMan'
           },
         ]
       },
-
       {
         icon: '🧰', title: 'NirSoft – NirLauncher', tools: [
           {
-            name: 'NirLauncher', desc: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. password, wifi oder registry. → launcher.nirsoft.net', descHtml: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. <i>password</i>, <i>wifi</i> oder <i>registry</i>.<br><a class="nir-link" href="https://launcher.nirsoft.net/utilities_list.html" target="_blank">→ Vollständige Tool-Liste auf launcher.nirsoft.net</a>', in: ['s'],
-            nir: {
-              'AdvancedRun': 'Run a program with different settings that you choose',
-              'AllThreadsView': 'Displays a list of all running threads in Windows',
-              'AlternateStreamView': 'Find all hidden alternate streams stored in the file system',
-              'AltStreamDump': 'Dumps the list of NTFS alternate streams',
-              'AppAudioConfig': 'View/change audio settings of applications',
-              'AppCompatibilityView': 'List of all programs that run with different compatibility setting',
-              'AppCrashView': 'Displays the details of all application crashes occurred in your system',
-              'AppNetworkCounter': 'Displays number of TCP/UDP bytes and packets sent/received by every application',
-              'AppReadWriteCounter': 'Displays read/write operations of every application running on your system',
-              'AppResourcesUsageView': 'View application resources usage information of Windows 10/11',
-              'AdapterWatch': 'Displays useful information about your network adapters',
-              'ActiveXHelper': 'View essential information about ActiveX components installed on your computer',
-              'BatteryHistoryView': 'Displays battery history information on Windows 11/10',
-              'BatteryInfoView': 'Displays battery information on laptops and netbooks',
-              'BlueScreenView': 'Show information about blue screen crashes occurred in your system',
-              'BluetoothCL': 'Show bluetooth devices list',
-              'BluetoothLEView': 'Monitors the activity of Bluetooth Low Energy devices around you',
-              'BluetoothLogView': 'Creates a log of Bluetooth activity in your area',
-              'BluetoothView': 'Monitors the activity of Bluetooth devices around you',
-              'BootPerformanceView': 'Displays the performance information of the boot process on Windows 11/10/8/7',
-              'BrowserAddonsView': 'Displays the details of all Web browser addons/plugins installed in your system',
-              'BrowserAutoFillView': 'View form autofill text stored by Chrome and Firefox Web browsers',
-              'BrowserDownloadsView': 'Displays the details of downloaded files of Chrome and Firefox Web browsers',
-              'BrowsingHistoryView': 'View browsing history of popular Web browsers',
-              'BulkFileChanger': 'Change date/time/attributes of multiple files',
-              'BulletsPassView': 'Reveals the passwords stored behind the bullets',
-              'ChromeCacheView': 'Chrome Browser Cache Viewer',
-              'ChromeCookiesView': 'Alternative to the standard internal cookies viewer of Google Chrome',
-              'ChromeHistoryView': 'View the browsing history of Chrome Web browser',
-              'ChromePass': 'Password recovery tool for Google Chrome Web browser',
-              'Clipboardic': 'Small and simple clipboard manager',
-              'ControlMyMonitor': 'View and modify the settings of your monitor',
-              'CountryTraceRoute': 'Fast Traceroute utility with IP country information',
-              'CurrPorts': 'Displays the list of all currently opened TCP/UDP ports on your computer',
-              'CurrProcess': 'Displays the list of all processes currently running on your system',
-              'CredentialsFileView': 'Decrypts Credentials files of Windows',
-              'CredHistView': 'Decrypt the CREDHIST file of Windows',
-              'CSVFileView': 'CSV/Tab-delimited file viewer and converter',
-              'DataProtectionDecryptor': 'Decrypt DPAPI-encrypted data of Windows',
-              'DeviceIOView': 'Watch the data transfer between a software or service and a device driver',
-              'DevManView': 'Alternative to the standard Device Manager of Windows',
-              'DHCPLogView': 'Displays DHCP requests sent by every device connect to your network',
-              'Dialupass': 'Recovers Dial-Up passwords in all versions of Windows',
-              'DiskCountersView': 'Show disk drive read/write counters',
-              'DiskSmartView': 'Retrieves S.M.A.R.T information from IDE/SATA disks',
-              'DLL Export Viewer': 'Lists DLL exported functions and their memory addresses for debugging',
-              'DNSDataView': 'Retrieve the DNS records (MX, NS, A, SOA) of the specified domains',
-              'DNSLookupView': 'DNS Lookup Viewer for Windows 11/10',
-              'DNSQuerySniffer': 'Network sniffer utility that shows the DNS queries sent on your system',
-              'DomainHostingView': 'Displays extensive information about a domain',
-              'DotNetResourcesExtract': 'Extract embedded resources from .NET applications',
-              'DownTester': 'Test your Internet download speed',
-              'DriveLetterView': 'View and change drive letter assignments',
-              'DriverView': 'Displays the list of all device drivers currently loaded on your system',
-              'DumpEDID': 'Dump EDID information into the console window',
-              'EdgeCookiesView': 'Display cookies from new versions of MS-Edge',
-              'EncryptedRegView': 'Scans the Registry and decrypts the data encrypted with DPAPI',
-              'ESEDatabaseView': 'View the content of ESE database files (.edb files)',
-              'EventLogChannelsView': 'View, Disable, Enable Event Log Channels',
-              'EventLogSourcesView': 'Displays the list of all event log sources installed on your system',
-              'ExecutedProgramsList': 'Displays programs and batch files that you previously executed on your system',
-              'ExifDataView': 'Displays the Exif data stored inside .jpg image files',
-              'ExtPassword': 'External Drive Password Recovery',
-              'FastResolver': 'Resolves multiple host names into IP addresses/MAC Addresses and vice versa',
-              'FavoritesView': 'Displays the list of all your Favorites/bookmarks in a single page',
-              'FBCacheView': 'Shows Facebook images stored in the cache of your Web browser',
-              'FileAccessErrorView': 'Displays file access error information',
-              'FileActivityWatch': 'Displays information about read/write/delete operations on your system',
-              'FileTypesMan': 'Alternative to the File Types manager of Windows',
-              'FirefoxDownloadsView': 'Displayed the list of downloaded files in Firefox',
-              'FirmwareTablesView': 'Displays a list of firmware tables (ACPI, SMBIOS) stored on your system',
-              'FlashCookiesView': 'View Flash cookies stored in your computer',
-              'FolderChangesView': 'Monitor folder/drive changes',
-              'FolderTimeUpdate': 'Updates the Modified Time of folders',
-              'FreeSpaceLogView': 'View log of free disk space on Windows',
-              'FullEventLogView': 'Event log viewer for Windows 10/8/7/Vista',
-              'FullUpdatesHistoryView': 'Displays the history of Windows 11 updates on your system',
-              'GDIView': 'Displays the list of GDI handles opened by every process',
-              'GetNir': 'Command line tool to extract values from tab-delimited and comma-delimited data',
-              'GUIPropView': 'Displays extensive information about all windows currently opened on your system',
-              'HandleCountersView': 'Shows handle counter for every process',
-              'HashMyFiles': 'Calculate the MD5/SHA1 hashes of your files',
-              'HeapMemView': 'View the content of all memory blocks allocated in the heap',
-              'HostedNetworkStarter': 'Create a wifi hotspot with your wireless network adapter',
-              'HotKeysList': 'Displays the list of hot keys that are currently registered on your system',
-              'HTMLAsText': 'Converts HTML documents to simple text files',
-              'HtmlDocEdit': 'Simple HTML designer/editor',
-              'IconsExtract': 'Extract icons and cursors from executable files (EXE, DLL, OCX, CPL)',
-              'IECacheView': 'List all files currently stored in the cache of Internet Explorer',
-              'IECookiesView': 'Displays the cookies that Internet Explorer stores on your computer',
-              'IEHistoryView': 'Displays the list of Web sites that you visited with IE Web browser',
-              'IE PassView': 'Recover passwords stored by Internet Explorer',
-              'ImageCacheViewer': 'Displays images stored in the cache of your Web browsers',
-              'InsideClipboard': 'Displays the content of all formats stored in the clipboard',
-              'InstalledAppView': 'View installed Windows 10 apps',
-              'InstalledCodec': 'List Codec drivers and DirectShow filters installed on your system',
-              'InstalledDriversList': 'Lists all device drivers that are currently installed on your system',
-              'InstalledPackagesView': 'Displays installed MSI packages on your system',
-              'IPInfoOffline': 'View country information about IP addresses',
-              'IPNeighborsView': 'View the IP neighbor table on Windows 10/8/7/Vista',
-              'IPNetInfo': 'Easily find all available information about IP address',
-              'IPPathTableView': 'IP Path Table Viewer',
-              'JumpListsView': 'Displays the information stored by the Jump Lists feature of Windows 7',
-              'KeyboardStateView': 'Shows the current state and virtual key code of every key you press',
-              'LANIPScanner': 'Local network scanner for Windows',
-              'LastActivityView': 'View the latest computer activity',
-              'LiveContactsView': 'View the details of all contacts in your Windows Live Messenger',
-              'LiveTcpUdpWatch': 'Displays live information about all TCP and UDP activity on your system',
-              'LoadedDllsView': 'Displays all DLL files loaded on your system',
-              'LostMyPassword': 'Password recovery tool for Windows',
-              'LSASecretsDump': 'Dump the LSA secrets from the Registry',
-              'LSASecretsView': 'Displays the list of all LSA secrets stored in the Registry on your computer',
-              'MACAddressView': 'MAC address lookup tool',
-              'MadPassExt': 'Extract the secret DPAPI password generated for your Microsoft account',
-              'Mail PassView': 'Recovers email passwords',
-              'ManageWirelessNetworks': 'Alternative tool to the standard Manage Wireless Networks of Windows',
-              'MMCSnapInsView': 'Displays the details of all MMC snap-ins installed on your system',
-              'MobileFileSearch': 'Search files inside a mobile device plugged to the USB port',
-              'MonitorInfoView': 'Displays essential information about your monitor',
-              'MZHistoryView': 'Displays the list of visited Web sites in Firefox/Mozilla/Netscape Web browsers',
-              'MessenPass': 'Recovers the passwords of instant messenger programs',
-              'MUICacheView': 'Edit/delete MUICache items in your system',
-              'MultiMonitorTool': 'Enable, disable, and set the primary monitor in Multi-Monitor system',
-              'MetarWeather': 'Decode METAR weather reports and display them in a simple weather report table',
-              'MyEventViewer': 'Simple alternative to the standard event viewer of Windows',
-              'MyLastSearch': 'View your latest searches with Google, Yahoo, and MSN',
-              'MZCacheView': 'List all files currently stored in the cache of Firefox/Mozilla browser',
-              'MZCookiesView': 'Alternative to the standard Cookie Manager provided by Firefox and Mozilla',
-              'NetBScanner': 'Scans all computers in the IP addresses range you choose, using NetBIOS protocol',
-              'NetConnectChoose': 'Set default Internet connection and view general connection information',
-              'Network Password Recovery': 'Recover network passwords on Windows XP/2003/Vista',
-              'NetResView': 'Displays the list of all network resources on your LAN',
-              'NetRouteView': 'GUI alternative to the standard route utility of Windows',
-              'NetworkConnectLog': 'Shows a log of connected/disconnected computers on your network',
-              'NetworkCountersWatch': 'Displays system counters for every network interface on your system',
-              'NetworkInterfacesView': 'Displays the list of all network adapters/interfaces installed on your system',
-              'NetworkLatencyView': 'Calculates the network latency (in milliseconds) for every new TCP connection',
-              'NetworkOpenedFiles': 'Displays the files that are currently opened by other computers on your network',
-              'NetworkTrafficView': 'Displays network traffic statistics on your network adapter',
-              'NetworkUsageView': 'Displays network usage information for Windows 8 and Windows 10',
-              'NirCmd': 'Do many useful tasks from command-line',
-              'NK2Edit': 'Full NK2 (AutoComplete) editor for Microsoft Outlook',
-              'NTFSLinksView': 'View the list of NTFS symbolic links/junctions in selected folder',
-              'OfficeIns': 'Displays the details of all installed Microsoft Office add-ins on your computer',
-              'OfflineRegistryFinder': 'Find data in external Registry files',
-              'OfflineRegistryView': 'View offline Registry files',
-              'OpenedFilesView': 'Displays the list of all opened files on your system',
-              'OpenSaveFilesView': 'Displays list of files that you previously opened',
-              'OpenWithView': 'Disable/enable items in the Open With dialog-box of Windows',
-              'OperaCacheView': 'Cache viewer for Opera Web browser',
-              'OperaPassView': 'Password recovery tool for Opera Web browser',
-              'OutlookAccountsView': 'View POP3/IMAP/SMTP passwords and account settings of Outlook',
-              'OutlookAddressBookView': 'Displays the details of all recipients stored in the address books of Outlook',
-              'OutlookAttachView': 'Extract multiple attachments from Outlook',
-              'OutlookStatView': 'Display a general statistics of your Outlook emails',
-              'PasswordFox': 'View passwords stored in Firefox Web browser',
-              'Password Security Scanner': 'Displays security information about passwords stored in your system',
-              'PingInfoView': 'Ping multiple host names and IP addresses',
-              'PreviousFilesRecovery': 'Find and recover files from Windows shadow copies',
-              'ProcessActivityView': 'Show the file activity for selected process',
-              'ProcessTCPSummary': 'Displays TCP connections summary',
-              'ProcessThreadsView': 'Displays extensive information about all threads of the process that you choose',
-              'Product Key Scanner': 'Find product keys stored in the Registry of Windows Operating system',
-              'ProduKey': 'Displays the CD-Keys of MS-Office/Windows installed on your computer',
-              'PropertySystemView': 'View/edit file properties',
-              'PstPassword': 'Recover lost password of Outlook PST file',
-              'QuickSetDNS': 'Change the DNS servers that are used for your Internet connection',
-              'Remote Desktop PassView': 'Reveals the password stored by Microsoft Remote Desktop utility',
-              'RecentFilesView': 'Display the list of recently opened files',
-              'RegDllView': 'Displays the list of all registered files',
-              'RegFileExport': 'Export offline Registry file to .reg file',
-              'RegFromApp': 'Creates .reg file according to Registry changes made by application',
-              'RegistryChangesView': 'Compares 2 snapshots of Windows Registry',
-              'RegScanner': 'Scan and find values in the Registry',
-              'ResourcesExtract': 'Extract resources from dll/ocx/exe files',
-              'RouterPassView': 'Recover passwords from router config file',
-              'RTMPDumpHelper': 'Download RTMP streams in conjunction with RTMPDump toolkit',
-              'RunAsDate': 'Run a program with the specified date',
-              'RunFromProcess': 'Run a program from another process that you choose',
-              'RuntimeClassesView': 'Displays the list of Windows Runtime (WinRT) classes',
-              'SafariCacheView': 'Cache viewer/extractor for Safari Web browser',
-              'SafariHistoryView': 'History viewer for Safari Web browser',
-              'SearchFilterView': 'View the search filters installed on your system',
-              'SearchMyFiles': 'Alternative to the standard Search For Files And Folders module of Windows',
-              'SecurityQuestionsView': 'View Windows 10 security questions',
-              'SecuritySoftView': 'Displays the list of AntiVirus/AntiSpyware/Firewall programs on your system',
-              'SeqDownload': 'Download sequence of images from the Web and create animation from them',
-              'ServiWin': 'Displays the list of installed drivers and services on your system',
-              'ShadowCopyView': 'View shadow copies on your system',
-              'ShellBagsView': 'Displays the list of all folder settings saved by Windows',
-              'ShellMenuNew': 'Disable/Enable items in the New submenu of Explorer',
-              'ShellExView': 'Displays the details of shell extensions installed on your computer',
-              'ShortcutsMan': 'Lists all shortcuts on your desktop/start menu',
-              'ShellMenuView': 'Disable/enable static menu items in context menu of Explorer',
-              'ShutdownPerformanceView': 'Displays the performance information of Windows shutdown process',
-              'SimpleCodeGenerator': 'QR Code Generator for Windows',
-              'SimpleProgramDebugger': 'Displays debugging events of a running program',
-              'SimpleWMIView': 'Displays the result of WMI queries in a simple table',
-              'SiteShoter': 'Save a screenshot of any Web page into a file',
-              'SkypeContactsView': 'Displays the list of Skype contacts stored in the local database file of Skype',
-              'SkypeLogView': 'View log files created by Skype',
-              'SmartSniff': 'Captures TCP/IP packets and view the captured data as sequence of conversations',
-              'SniffPass': 'Capture the passwords that pass through your network adapter',
-              'SocketSniff': 'Watch the Windows Sockets (WinSock) activity of the selected process',
-              'SoundVolumeView': 'View/change sound levels and save/load sound level profiles on Windows',
-              'SpecialFoldersView': 'Easily jump to special folders in your system',
-              'SoundVolumeCommandLine': 'Sound volume command-line tool for Windows',
-              'SysExporter': 'Grab the data stored in list-views, tree-views, list boxes, and combo boxes',
-              'TableTextCompare': 'Compare tab-delimited or comma-delimited (csv) files',
-              'TaskSchedulerView': 'View/Disable/Enable tasks from the Task Scheduler of Windows',
-              'TCPConnectProblemView': 'Monitor TCP connection problems',
-              'TcpLogView': 'Monitors the opened TCP connections on your system',
-              'TimeZonesView': 'Displays all world time zones',
-              'TurnedOnTimesView': 'View the time/date ranges that your computer was turned on',
-              'UninstallView': 'Shows installed programs on your system and allows you to uninstall them',
-              'URLProtocolView': 'View/disable/enable the URL protocols installed on your system',
-              'URLStringGrabber': 'Grab URL strings of Web sites from Internet Explorer',
-              'USBDeview': 'Lists all installed USB devices that you previously used',
-              'USBDriveLog': 'USB Drive Log For Windows 10',
-              'USBLogView': 'Records the details of any USB device that is plugged/unplugged into your system',
-              'UserAssistView': 'Decrypt and displays the list of all UserAssist entries',
-              'UserProfilesView': 'View user profiles information on your system',
-              'VaultPasswordView': 'Decrypts passwords stored in Windows Vault',
-              'VideoCacheView': 'Extract Web site video files from the cache of your Web browser',
-              'VNCPassView': 'Recover the passwords stored by the VNC tool',
-              'Volumouse': 'Adjust the volume of your speaker with the wheel of your mouse',
-              'WakeMeOnLan': 'Turn on one or more computers remotely by sending Wake-on-LAN (WOL) packet',
-              'WebBrowserBookmarksView': 'View all bookmarks of Chrome and Firefox Web browsers',
-              'WebBrowserPassView': 'Recover lost passwords from your Web browser',
-              'WebCacheImageInfo': 'Shows EXIF information of the images stored in Web browser cache',
-              'WebCamImageSave': 'Capture still images from your WebCam',
-              'WebCookiesSniffer': 'Captures Web site cookies and displays them in a simple table',
-              'WebSiteSniffer': 'Capture Web site files and save them on your hard drive',
-              'WebVideoCap': 'Capture Flash Video files and RTSP streams while watching them in a Web browser',
-              'WhatInStartup': 'Disable/enable/delete programs that are loaded at Windows startup',
-              'WhatIsHang': 'Get information about Windows software that hangs',
-              'WhoisCL': 'Get WHOIS information about a registered domain from command-line',
-              'WhoIsConnectedSniffer': 'Shows who connects to your network by listening to network packets',
-              'WhoisThisDomain': 'Get information about a registered domain from WHOIS server',
-              'WhosIP': 'Find all available information about an IP address from command-line',
-              'WifiChannelMonitor': 'Captures wifi traffic in monitor mode and displays AP/clients information',
-              'WifiDiagnosticsView': 'Wifi diagnostics tool for Windows',
-              'WifiHistoryView': 'Displays the history of connections to wireless networks on your computer',
-              'WifiInfoView': 'Displays extensive information about wireless networks in your area',
-              'WinCrashReport': 'Displays a report about crashed Windows application',
-              'WinDefLogView': 'Windows Defender Log Viewer',
-              'WinDefThreatsView': 'View Windows Defender threats of local and remote computer',
-              'WinFontsView': 'Display sample of all fonts installed on your system',
-              'WinLister': 'Displays the list of opened windows on your system',
-              'WinLogOnView': 'Displays logon/logoff times on Windows Vista/7/8/2008',
-              'WinMailPassRec': 'Password Recovery For Windows Mail App of Windows 10 and Windows 11',
-              'WinPrefetchView': 'View the Prefetch files (.pf) stored in your system',
-              'WinsockServicesView': 'View/Disable/Enable Winsock service providers installed on your system',
-              'Windows Updates History Viewer': 'Displays the history of Windows updates for your system',
-              'WirelessConnectionInfo': 'Displays general information and statistics about the active wifi connection',
-              'WirelessKeyView': 'Recovers lost wireless network keys (WEP/WPA) stored in your computer',
-              'WirelessNetConsole': 'View wireless networks information (console application)',
-              'WirelessNetView': 'Monitor the activity of wireless networks around you',
-              'Wireless Network Watcher': 'Shows who is connected to your wireless network',
-              'WinUpdatesList': 'Displays the list of all Windows updates (Service Packs and Hotfixes)'
-            },
+            name: 'NirLauncher',
+            desc: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. password, wifi oder registry. → launcher.nirsoft.net',
+            descHtml: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. <i>password</i>, <i>wifi</i> oder <i>registry</i>.<br><a class="nir-link" href="https://launcher.nirsoft.net/utilities_list.html" target="_blank">→ Vollständige Tool-Liste auf launcher.nirsoft.net</a>',
+            in: ['s'],
+            nir: { 'AdvancedRun': 'Run a program with different settings that you choose', 'AllThreadsView': 'Displays a list of all running threads in Windows', 'AlternateStreamView': 'Find all hidden alternate streams stored in the file system', 'AltStreamDump': 'Dumps the list of NTFS alternate streams', 'AppAudioConfig': 'View/change audio settings of applications', 'AppCompatibilityView': 'List of all programs that run with different compatibility setting', 'AppCrashView': 'Displays the details of all application crashes occurred in your system', 'AppNetworkCounter': 'Displays number of TCP/UDP bytes and packets sent/received by every application', 'AppReadWriteCounter': 'Displays read/write operations of every application running on your system', 'AppResourcesUsageView': 'View application resources usage information of Windows 10/11', 'AdapterWatch': 'Displays useful information about your network adapters', 'ActiveXHelper': 'View essential information about ActiveX components installed on your computer', 'BatteryHistoryView': 'Displays battery history information on Windows 11/10', 'BatteryInfoView': 'Displays battery information on laptops and netbooks', 'BlueScreenView': 'Show information about blue screen crashes occurred in your system', 'BluetoothCL': 'Show bluetooth devices list', 'BluetoothLEView': 'Monitors the activity of Bluetooth Low Energy devices around you', 'BluetoothLogView': 'Creates a log of Bluetooth activity in your area', 'BluetoothView': 'Monitors the activity of Bluetooth devices around you', 'BootPerformanceView': 'Displays the performance information of the boot process on Windows 11/10/8/7', 'BrowserAddonsView': 'Displays the details of all Web browser addons/plugins installed in your system', 'BrowserAutoFillView': 'View form autofill text stored by Chrome and Firefox Web browsers', 'BrowserDownloadsView': 'Displays the details of downloaded files of Chrome and Firefox Web browsers', 'BrowsingHistoryView': 'View browsing history of popular Web browsers', 'BulkFileChanger': 'Change date/time/attributes of multiple files', 'BulletsPassView': 'Reveals the passwords stored behind the bullets', 'ChromeCacheView': 'Chrome Browser Cache Viewer', 'ChromeCookiesView': 'Alternative to the standard internal cookies viewer of Google Chrome', 'ChromeHistoryView': 'View the browsing history of Chrome Web browser', 'ChromePass': 'Password recovery tool for Google Chrome Web browser', 'Clipboardic': 'Small and simple clipboard manager', 'ControlMyMonitor': 'View and modify the settings of your monitor', 'CountryTraceRoute': 'Fast Traceroute utility with IP country information', 'CurrPorts': 'Displays the list of all currently opened TCP/UDP ports on your computer', 'CurrProcess': 'Displays the list of all processes currently running on your system', 'CredentialsFileView': 'Decrypts Credentials files of Windows', 'CredHistView': 'Decrypt the CREDHIST file of Windows', 'CSVFileView': 'CSV/Tab-delimited file viewer and converter', 'DataProtectionDecryptor': 'Decrypt DPAPI-encrypted data of Windows', 'DeviceIOView': 'Watch the data transfer between a software or service and a device driver', 'DevManView': 'Alternative to the standard Device Manager of Windows', 'DHCPLogView': 'Displays DHCP requests sent by every device connect to your network', 'Dialupass': 'Recovers Dial-Up passwords in all versions of Windows', 'DiskCountersView': 'Show disk drive read/write counters', 'DiskSmartView': 'Retrieves S.M.A.R.T information from IDE/SATA disks', 'DLL Export Viewer': 'Lists DLL exported functions and their memory addresses for debugging', 'DNSDataView': 'Retrieve the DNS records (MX, NS, A, SOA) of the specified domains', 'DNSLookupView': 'DNS Lookup Viewer for Windows 11/10', 'DNSQuerySniffer': 'Network sniffer utility that shows the DNS queries sent on your system', 'DomainHostingView': 'Displays extensive information about a domain', 'DotNetResourcesExtract': 'Extract embedded resources from .NET applications', 'DownTester': 'Test your Internet download speed', 'DriveLetterView': 'View and change drive letter assignments', 'DriverView': 'Displays the list of all device drivers currently loaded on your system', 'DumpEDID': 'Dump EDID information into the console window', 'EdgeCookiesView': 'Display cookies from new versions of MS-Edge', 'EncryptedRegView': 'Scans the Registry and decrypts the data encrypted with DPAPI', 'ESEDatabaseView': 'View the content of ESE database files (.edb files)', 'EventLogChannelsView': 'View, Disable, Enable Event Log Channels', 'EventLogSourcesView': 'Displays the list of all event log sources installed on your system', 'ExecutedProgramsList': 'Displays programs and batch files that you previously executed on your system', 'ExifDataView': 'Displays the Exif data stored inside .jpg image files', 'ExtPassword': 'External Drive Password Recovery', 'FastResolver': 'Resolves multiple host names into IP addresses/MAC Addresses and vice versa', 'FavoritesView': 'Displays the list of all your Favorites/bookmarks in a single page', 'FBCacheView': 'Shows Facebook images stored in the cache of your Web browser', 'FileAccessErrorView': 'Displays file access error information', 'FileActivityWatch': 'Displays information about read/write/delete operations on your system', 'FileTypesMan': 'Alternative to the File Types manager of Windows', 'FirefoxDownloadsView': 'Displayed the list of downloaded files in Firefox', 'FirmwareTablesView': 'Displays a list of firmware tables (ACPI, SMBIOS) stored on your system', 'FlashCookiesView': 'View Flash cookies stored in your computer', 'FolderChangesView': 'Monitor folder/drive changes', 'FolderTimeUpdate': 'Updates the Modified Time of folders', 'FreeSpaceLogView': 'View log of free disk space on Windows', 'FullEventLogView': 'Event log viewer for Windows 10/8/7/Vista', 'FullUpdatesHistoryView': 'Displays the history of Windows 11 updates on your system', 'GDIView': 'Displays the list of GDI handles opened by every process', 'GetNir': 'Command line tool to extract values from tab-delimited and comma-delimited data', 'GUIPropView': 'Displays extensive information about all windows currently opened on your system', 'HandleCountersView': 'Shows handle counter for every process', 'HashMyFiles': 'Calculate the MD5/SHA1 hashes of your files', 'HeapMemView': 'View the content of all memory blocks allocated in the heap', 'HostedNetworkStarter': 'Create a wifi hotspot with your wireless network adapter', 'HotKeysList': 'Displays the list of hot keys that are currently registered on your system', 'HTMLAsText': 'Converts HTML documents to simple text files', 'HtmlDocEdit': 'Simple HTML designer/editor', 'IconsExtract': 'Extract icons and cursors from executable files (EXE, DLL, OCX, CPL)', 'IECacheView': 'List all files currently stored in the cache of Internet Explorer', 'IECookiesView': 'Displays the cookies that Internet Explorer stores on your computer', 'IEHistoryView': 'Displays the list of Web sites that you visited with IE Web browser', 'IE PassView': 'Recover passwords stored by Internet Explorer', 'ImageCacheViewer': 'Displays images stored in the cache of your Web browsers', 'InsideClipboard': 'Displays the content of all formats stored in the clipboard', 'InstalledAppView': 'View installed Windows 10 apps', 'InstalledCodec': 'List Codec drivers and DirectShow filters installed on your system', 'InstalledDriversList': 'Lists all device drivers that are currently installed on your system', 'InstalledPackagesView': 'Displays installed MSI packages on your system', 'IPInfoOffline': 'View country information about IP addresses', 'IPNeighborsView': 'View the IP neighbor table on Windows 10/8/7/Vista', 'IPNetInfo': 'Easily find all available information about IP address', 'IPPathTableView': 'IP Path Table Viewer', 'JumpListsView': 'Displays the information stored by the Jump Lists feature of Windows 7', 'KeyboardStateView': 'Shows the current state and virtual key code of every key you press', 'LANIPScanner': 'Local network scanner for Windows', 'LastActivityView': 'View the latest computer activity', 'LiveContactsView': 'View the details of all contacts in your Windows Live Messenger', 'LiveTcpUdpWatch': 'Displays live information about all TCP and UDP activity on your system', 'LoadedDllsView': 'Displays all DLL files loaded on your system', 'LostMyPassword': 'Password recovery tool for Windows', 'LSASecretsDump': 'Dump the LSA secrets from the Registry', 'LSASecretsView': 'Displays the list of all LSA secrets stored in the Registry on your computer', 'MACAddressView': 'MAC address lookup tool', 'MadPassExt': 'Extract the secret DPAPI password generated for your Microsoft account', 'Mail PassView': 'Recovers email passwords', 'ManageWirelessNetworks': 'Alternative tool to the standard Manage Wireless Networks of Windows', 'MMCSnapInsView': 'Displays the details of all MMC snap-ins installed on your system', 'MobileFileSearch': 'Search files inside a mobile device plugged to the USB port', 'MonitorInfoView': 'Displays essential information about your monitor', 'MZHistoryView': 'Displays the list of visited Web sites in Firefox/Mozilla/Netscape Web browsers', 'MessenPass': 'Recovers the passwords of instant messenger programs', 'MUICacheView': 'Edit/delete MUICache items in your system', 'MultiMonitorTool': 'Enable, disable, and set the primary monitor in Multi-Monitor system', 'MetarWeather': 'Decode METAR weather reports and display them in a simple weather report table', 'MyEventViewer': 'Simple alternative to the standard event viewer of Windows', 'MyLastSearch': 'View your latest searches with Google, Yahoo, and MSN', 'MZCacheView': 'List all files currently stored in the cache of Firefox/Mozilla browser', 'MZCookiesView': 'Alternative to the standard Cookie Manager provided by Firefox and Mozilla', 'NetBScanner': 'Scans all computers in the IP addresses range you choose, using NetBIOS protocol', 'NetConnectChoose': 'Set default Internet connection and view general connection information', 'Network Password Recovery': 'Recover network passwords on Windows XP/2003/Vista', 'NetResView': 'Displays the list of all network resources on your LAN', 'NetRouteView': 'GUI alternative to the standard route utility of Windows', 'NetworkConnectLog': 'Shows a log of connected/disconnected computers on your network', 'NetworkCountersWatch': 'Displays system counters for every network interface on your system', 'NetworkInterfacesView': 'Displays the list of all network adapters/interfaces installed on your system', 'NetworkLatencyView': 'Calculates the network latency (in milliseconds) for every new TCP connection', 'NetworkOpenedFiles': 'Displays the files that are currently opened by other computers on your network', 'NetworkTrafficView': 'Displays network traffic statistics on your network adapter', 'NetworkUsageView': 'Displays network usage information for Windows 8 and Windows 10', 'NirCmd': 'Do many useful tasks from command-line', 'NK2Edit': 'Full NK2 (AutoComplete) editor for Microsoft Outlook', 'NTFSLinksView': 'View the list of NTFS symbolic links/junctions in selected folder', 'OfficeIns': 'Displays the details of all installed Microsoft Office add-ins on your computer', 'OfflineRegistryFinder': 'Find data in external Registry files', 'OfflineRegistryView': 'View offline Registry files', 'OpenedFilesView': 'Displays the list of all opened files on your system', 'OpenSaveFilesView': 'Displays list of files that you previously opened', 'OpenWithView': 'Disable/enable items in the Open With dialog-box of Windows', 'OperaCacheView': 'Cache viewer for Opera Web browser', 'OperaPassView': 'Password recovery tool for Opera Web browser', 'OutlookAccountsView': 'View POP3/IMAP/SMTP passwords and account settings of Outlook', 'OutlookAddressBookView': 'Displays the details of all recipients stored in the address books of Outlook', 'OutlookAttachView': 'Extract multiple attachments from Outlook', 'OutlookStatView': 'Display a general statistics of your Outlook emails', 'PasswordFox': 'View passwords stored in Firefox Web browser', 'Password Security Scanner': 'Displays security information about passwords stored in your system', 'PingInfoView': 'Ping multiple host names and IP addresses', 'PreviousFilesRecovery': 'Find and recover files from Windows shadow copies', 'ProcessActivityView': 'Show the file activity for selected process', 'ProcessTCPSummary': 'Displays TCP connections summary', 'ProcessThreadsView': 'Displays extensive information about all threads of the process that you choose', 'Product Key Scanner': 'Find product keys stored in the Registry of Windows Operating system', 'ProduKey': 'Displays the CD-Keys of MS-Office/Windows installed on your computer', 'PropertySystemView': 'View/edit file properties', 'PstPassword': 'Recover lost password of Outlook PST file', 'QuickSetDNS': 'Change the DNS servers that are used for your Internet connection', 'Remote Desktop PassView': 'Reveals the password stored by Microsoft Remote Desktop utility', 'RecentFilesView': 'Display the list of recently opened files', 'RegDllView': 'Displays the list of all registered files', 'RegFileExport': 'Export offline Registry file to .reg file', 'RegFromApp': 'Creates .reg file according to Registry changes made by application', 'RegistryChangesView': 'Compares 2 snapshots of Windows Registry', 'RegScanner': 'Scan and find values in the Registry', 'ResourcesExtract': 'Extract resources from dll/ocx/exe files', 'RouterPassView': 'Recover passwords from router config file', 'RTMPDumpHelper': 'Download RTMP streams in conjunction with RTMPDump toolkit', 'RunAsDate': 'Run a program with the specified date', 'RunFromProcess': 'Run a program from another process that you choose', 'RuntimeClassesView': 'Displays the list of Windows Runtime (WinRT) classes', 'SafariCacheView': 'Cache viewer/extractor for Safari Web browser', 'SafariHistoryView': 'History viewer for Safari Web browser', 'SearchFilterView': 'View the search filters installed on your system', 'SearchMyFiles': 'Alternative to the standard Search For Files And Folders module of Windows', 'SecurityQuestionsView': 'View Windows 10 security questions', 'SecuritySoftView': 'Displays the list of AntiVirus/AntiSpyware/Firewall programs on your system', 'SeqDownload': 'Download sequence of images from the Web and create animation from them', 'ServiWin': 'Displays the list of installed drivers and services on your system', 'ShadowCopyView': 'View shadow copies on your system', 'ShellBagsView': 'Displays the list of all folder settings saved by Windows', 'ShellMenuNew': 'Disable/Enable items in the New submenu of Explorer', 'ShellExView': 'Displays the details of shell extensions installed on your computer', 'ShortcutsMan': 'Lists all shortcuts on your desktop/start menu', 'ShellMenuView': 'Disable/enable static menu items in context menu of Explorer', 'ShutdownPerformanceView': 'Displays the performance information of Windows shutdown process', 'SimpleCodeGenerator': 'QR Code Generator for Windows', 'SimpleProgramDebugger': 'Displays debugging events of a running program', 'SimpleWMIView': 'Displays the result of WMI queries in a simple table', 'SiteShoter': 'Save a screenshot of any Web page into a file', 'SkypeContactsView': 'Displays the list of Skype contacts stored in the local database file of Skype', 'SkypeLogView': 'View log files created by Skype', 'SmartSniff': 'Captures TCP/IP packets and view the captured data as sequence of conversations', 'SniffPass': 'Capture the passwords that pass through your network adapter', 'SocketSniff': 'Watch the Windows Sockets (WinSock) activity of the selected process', 'SoundVolumeView': 'View/change sound levels and save/load sound level profiles on Windows', 'SpecialFoldersView': 'Easily jump to special folders in your system', 'SoundVolumeCommandLine': 'Sound volume command-line tool for Windows', 'SysExporter': 'Grab the data stored in list-views, tree-views, list boxes, and combo boxes', 'TableTextCompare': 'Compare tab-delimited or comma-delimited (csv) files', 'TaskSchedulerView': 'View/Disable/Enable tasks from the Task Scheduler of Windows', 'TCPConnectProblemView': 'Monitor TCP connection problems', 'TcpLogView': 'Monitors the opened TCP connections on your system', 'TimeZonesView': 'Displays all world time zones', 'TurnedOnTimesView': 'View the time/date ranges that your computer was turned on', 'UninstallView': 'Shows installed programs on your system and allows you to uninstall them', 'URLProtocolView': 'View/disable/enable the URL protocols installed on your system', 'URLStringGrabber': 'Grab URL strings of Web sites from Internet Explorer', 'USBDeview': 'Lists all installed USB devices that you previously used', 'USBDriveLog': 'USB Drive Log For Windows 10', 'USBLogView': 'Records the details of any USB device that is plugged/unplugged into your system', 'UserAssistView': 'Decrypt and displays the list of all UserAssist entries', 'UserProfilesView': 'View user profiles information on your system', 'VaultPasswordView': 'Decrypts passwords stored in Windows Vault', 'VideoCacheView': 'Extract Web site video files from the cache of your Web browser', 'VNCPassView': 'Recover the passwords stored by the VNC tool', 'Volumouse': 'Adjust the volume of your speaker with the wheel of your mouse', 'WakeMeOnLan': 'Turn on one or more computers remotely by sending Wake-on-LAN (WOL) packet', 'WebBrowserBookmarksView': 'View all bookmarks of Chrome and Firefox Web browsers', 'WebBrowserPassView': 'Recover lost passwords from your Web browser', 'WebCacheImageInfo': 'Shows EXIF information of the images stored in Web browser cache', 'WebCamImageSave': 'Capture still images from your WebCam', 'WebCookiesSniffer': 'Captures Web site cookies and displays them in a simple table', 'WebSiteSniffer': 'Capture Web site files and save them on your hard drive', 'WebVideoCap': 'Capture Flash Video files and RTSP streams while watching them in a Web browser', 'WhatInStartup': 'Disable/enable/delete programs that are loaded at Windows startup', 'WhatIsHang': 'Get information about Windows software that hangs', 'WhoisCL': 'Get WHOIS information about a registered domain from command-line', 'WhoIsConnectedSniffer': 'Shows who connects to your network by listening to network packets', 'WhoisThisDomain': 'Get information about a registered domain from WHOIS server', 'WhosIP': 'Find all available information about an IP address from command-line', 'WifiChannelMonitor': 'Captures wifi traffic in monitor mode and displays AP/clients information', 'WifiDiagnosticsView': 'Wifi diagnostics tool for Windows', 'WifiHistoryView': 'Displays the history of connections to wireless networks on your computer', 'WifiInfoView': 'Displays extensive information about wireless networks in your area', 'WinCrashReport': 'Displays a report about crashed Windows application', 'WinDefLogView': 'Windows Defender Log Viewer', 'WinDefThreatsView': 'View Windows Defender threats of local and remote computer', 'WinFontsView': 'Display sample of all fonts installed on your system', 'WinLister': 'Displays the list of opened windows on your system', 'WinLogOnView': 'Displays logon/logoff times on Windows Vista/7/8/2008', 'WinMailPassRec': 'Password Recovery For Windows Mail App of Windows 10 and Windows 11', 'WinPrefetchView': 'View the Prefetch files (.pf) stored in your system', 'WinsockServicesView': 'View/Disable/Enable Winsock service providers installed on your system', 'Windows Updates History Viewer': 'Displays the history of Windows updates for your system', 'WirelessConnectionInfo': 'Displays general information and statistics about the active wifi connection', 'WirelessKeyView': 'Recovers lost wireless network keys (WEP/WPA) stored in your computer', 'WirelessNetConsole': 'View wireless networks information (console application)', 'WirelessNetView': 'Monitor the activity of wireless networks around you', 'Wireless Network Watcher': 'Shows who is connected to your wireless network', 'WinUpdatesList': 'Displays the list of all Windows updates (Service Packs and Hotfixes)' },
             nirOverview: '<b>🔑 Passwörter:</b> ProduKey · WebBrowserPassView · WirelessKeyView · ChromePass · VaultPasswordView · LSASecretsDump · EncryptedRegView<br><b>🌐 Netzwerk:</b> CurrPorts · SmartSniff · WifiInfoView · DNSQuerySniffer · NetworkLatencyView · PingInfoView<br><b>🔍 Forensik:</b> LastActivityView · USBDeview · ShellBagsView · ExecutedProgramsList · WinLogOnView<br><b>🌍 Browser:</b> BrowsingHistoryView · ChromeCacheView · ChromeCookiesView · MZCacheView<br><b>🖥️ System:</b> BlueScreenView · ServiWin · DriverView · ProcessActivityView · DevManView<br><b>📋 Registry:</b> RegistryChangesView · RegScanner · OfflineRegistryFinder<br><b>📁 Dateien:</b> SearchMyFiles · HashMyFiles · FolderChangesView · NTFSLinksView'
           },
         ]
       },
-
       {
         icon: '🔑', title: 'Keys & Passwörter', tools: [
           { name: 'ProduKey', desc: 'Windows + Office Lizenzkeys auslesen – Direktstart', in: ['s'] },
@@ -1096,7 +743,6 @@
           { name: 'Lazesoft Windows Recovery', desc: 'Bootprobleme beheben & Passwörter zurücksetzen', in: ['h'], tier: 2 },
         ]
       },
-
       {
         icon: '🪟', title: 'Windows-Optimierung & Registry', tools: [
           { name: 'O&O ShutUp10++', desc: 'Datenschutz & Telemetrie deaktivieren', in: ['s'] },
@@ -1117,7 +763,6 @@
           { name: 'Wise Registry Cleaner', desc: 'Registry bereinigen & defragmentieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🔍', title: 'Forensik & Prozess-Analyse', tools: [
           { name: 'USBDeview', desc: 'Alle USB-Geräte die je angeschlossen waren', in: ['s'] },
@@ -1141,7 +786,6 @@
           { name: 'PNGOptimizer', desc: 'PNG-Dateien verlustfrei komprimieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🌐', title: 'Netzwerk & Diagnose', tools: [
           { name: 'NetAdapter Repair', desc: 'Netzwerkadapter reparieren & zurücksetzen', in: ['s'] },
@@ -1157,7 +801,6 @@
           { name: 'Mozilla Firefox', desc: 'Alternativer Browser im PE', in: ['h'], tier: 2 },
         ]
       },
-
       {
         icon: '🖥️', title: 'Hardware-Info', tools: [
           { name: 'HWiNFO64', desc: 'Vollständige Hardware-Diagnose – Temps, Voltages, Sensoren', in: ['h', 'm', 's'] },
@@ -1175,7 +818,6 @@
           { name: 'BatExpert', desc: 'Akku-Diagnose: Kapazität, Ladezyklen, Health', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🔥', title: 'Stress-Tests & RAM-Tests', tools: [
           { name: 'OCCT', desc: 'All-in-One Stress-Test – CPU, GPU, RAM & Netzteil', in: ['s'] },
@@ -1186,7 +828,6 @@
           { name: 'HDAT2', desc: 'DOS-basierter Low-Level HDD Bad Sector Scanner', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🔧', title: 'System-Reparatur & Bereinigung', tools: [
           { name: 'Windows Repair (Tweaking.com)', desc: 'Repariert kaputte Windows-Funktionen (Registry, Update, Firewall)', in: ['s'] },
@@ -1203,7 +844,6 @@
           { name: 'ClassicShutdown', desc: 'Klassisches Windows-Herunterfahren-Menü im PE', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🚗', title: 'Treiber', tools: [
           { name: 'Snappy Driver Installer Origin (SDIO)', desc: 'Treiber sichern, wiederherstellen & aktualisieren – riesige Offline-Datenbank', in: ['m', 's'] },
@@ -1212,7 +852,6 @@
           { name: 'Auslogics Driver Updater', desc: 'Treiber-Updates mit integrierter Backup-Funktion', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🖥️', title: 'Fernwartung', tools: [
           { name: 'AnyDesk', desc: 'Fernwartung ohne Installation', in: ['h', 'm', 's'] },
@@ -1221,7 +860,6 @@
           { name: 'Discord', desc: 'Kommunikation mit dem Kunden während der Reparatur', in: ['m'] },
         ]
       },
-
       {
         icon: '🔌', title: 'USB-Tools & Brennen', tools: [
           { name: 'Ventoy', desc: 'Neuen USB-Stick mit Ventoy aufsetzen', in: ['s'] },
@@ -1234,7 +872,6 @@
           { name: 'IsoBurner', desc: 'ISO-Dateien auf CD/DVD brennen', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '📁', title: 'Datei-Manager & Dateiverwaltung', tools: [
           { name: 'Total Commander', desc: 'Klassischer Dual-Pane-Dateimanager', in: ['h'], tier: 2 },
@@ -1255,7 +892,6 @@
           { name: 'UUID/GUID Generator', desc: 'Eindeutige IDs für Tests & Konfigurationen generieren', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🎨', title: 'Medien, Bilder & Sonstiges', tools: [
           { name: 'AbiWord', desc: 'Schlanke Textverarbeitung, Word-Dokumente lesen & bearbeiten', in: ['m'], tier: 2 },
@@ -1276,7 +912,6 @@
           { name: 'PNotes', desc: 'Haftnotizen auf dem Desktop', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '🎮', title: 'Spiele & Unterhaltung', tools: [
           { name: '3D Pinball', desc: 'Klassischer Space Cadet Pinball', in: ['m'], tier: 2 },
@@ -1288,7 +923,6 @@
           { name: 'Wabbitemu', desc: 'TI-Taschenrechner-Emulator (TI-83/84)', in: ['m'], tier: 2 },
         ]
       },
-
       {
         icon: '💽', title: 'ISOs – Ventoy-Bootmenü', tools: [
           { name: 'ESET SysRescue Live', desc: 'Bootbarer Offline-Virenscanner – unabhängig von Windows', in: ['h'] },
@@ -1300,22 +934,18 @@
           { name: 'Super GRUB2 Disk', desc: 'Startet Systeme die nach Updates nicht mehr booten (ISO)', in: ['s'] },
         ]
       },
-
     ];
 
-    // ── State ──────────────────────────────────────────────────────
     const filters = new Set();
     let query = '';
 
-    // ── Filter ─────────────────────────────────────────────────────
     function setFilter(f) {
-      if (f === null) { filters.clear(); }
-      else { filters.has(f) ? filters.delete(f) : filters.add(f); }
-      const map = { all: null, h: 'h', m: 'm', s: 's' };
-      for (const [id, key] of Object.entries(map)) {
-        const active = key === null ? filters.size === 0 : filters.has(key);
-        document.getElementById('btn-' + id).className = 'btn' + (active ? ' active-' + id : '');
-      }
+      if (f === null) filters.clear();
+      else filters.has(f) ? filters.delete(f) : filters.add(f);
+      document.querySelectorAll('.btn[data-src]').forEach(btn => {
+        const k = btn.dataset.src;
+        btn.classList.toggle('active', k === 'all' ? filters.size === 0 : filters.has(k));
+      });
       applyVisibility();
     }
 
@@ -1325,17 +955,14 @@
       return true;
     }
 
-    // ── Search ─────────────────────────────────────────────────────
     function onSearch(val) {
       query = val.toLowerCase().trim();
       document.querySelector('.quickaccess').style.display = query ? 'none' : '';
-      document.getElementById('qa-grid').style.display = query ? 'none' : '';
       document.querySelectorAll('.category').forEach(cat => {
         const catHit = query && cat.querySelector('.cat-title').textContent.toLowerCase().includes(query);
         const toolHit = [...cat.querySelectorAll('.tool-card')].some(c => {
-          for (const attr of c.attributes) {
+          for (const attr of c.attributes)
             if (attr.name.startsWith('data-') && attr.value && attr.value.toLowerCase().includes(query)) return true;
-          }
           return c.innerText && c.innerText.toLowerCase().includes(query);
         });
         cat.querySelector('.cat-header').classList.toggle('cat-match', catHit);
@@ -1345,7 +972,6 @@
       applyVisibility();
     }
 
-    // ── Expand / Collapse all ──────────────────────────────────────
     function expandCollapseAll() {
       const cats = document.querySelectorAll('.category');
       const open = [...cats].some(c => c.classList.contains('open'));
@@ -1353,23 +979,18 @@
       document.getElementById('btn-expand').textContent = open ? '▶ Alle aufklappen' : '▼ Alle einklappen';
     }
 
-    // ── Visibility ─────────────────────────────────────────────────
     function applyVisibility() {
       let vis = 0, vH = 0, vM = 0, vS = 0;
       document.querySelectorAll('.tool-card').forEach(card => {
         const inc = card.dataset.in.split(',');
         const tier2hidden = card.classList.contains('tier2') && card.classList.contains('tier2-hidden');
-
         let nirMatches = [];
         if (query && card.dataset.nir) {
           const nir = JSON.parse(card.dataset.nir);
-          for (const [toolName, toolDesc] of Object.entries(nir)) {
-            if (toolName.toLowerCase().includes(query) || toolDesc.toLowerCase().includes(query)) {
+          for (const [toolName, toolDesc] of Object.entries(nir))
+            if (toolName.toLowerCase().includes(query) || toolDesc.toLowerCase().includes(query))
               nirMatches.push({ toolName, toolDesc });
-            }
-          }
         }
-
         const nameDescMatch = !query || card.dataset.name.includes(query) || card.dataset.desc.includes(query);
         const show = !tier2hidden && matchesFilter(inc) && (!query || nameDescMatch || nirMatches.length > 0);
         card.classList.toggle('hidden', !show);
@@ -1385,19 +1006,13 @@
             nirResult.innerHTML = '';
             if (placeholder) placeholder.style.display = '';
             if (!query) {
-              card.querySelector('.tool-info-box')?.classList.remove('open');
-              const btn = card.querySelector('.tool-info-toggle');
-              if (btn) btn.querySelector('.nir-toggle-text').textContent = 'Ausgewählte Tools anzeigen';
+              card.querySelector('.info-box')?.classList.remove('open');
+              const btn = card.querySelector('.info-toggle');
+              if (btn) btn.querySelector('.toggle-text').textContent = 'Ausgewählte Tools anzeigen';
             }
           }
         }
-
-        if (show) {
-          vis++;
-          if (inc.includes('h')) vH++;
-          if (inc.includes('m')) vM++;
-          if (inc.includes('s')) vS++;
-        }
+        if (show) { vis++; if (inc.includes('h')) vH++; if (inc.includes('m')) vM++; if (inc.includes('s')) vS++; }
       });
       document.querySelectorAll('.category').forEach(cat => {
         cat.style.display = [...cat.querySelectorAll('.tool-card')].some(c => !c.classList.contains('hidden')) ? '' : 'none';
@@ -1409,7 +1024,6 @@
       updateTier2Buttons();
     }
 
-    // ── Tier 2 state ───────────────────────────────────────────────
     let tier2Global = false;
 
     function updateTier2Buttons() {
@@ -1421,12 +1035,8 @@
           const inc = c.dataset.in.split(',');
           return matchesFilter(inc) && (!query || c.dataset.name.includes(query) || c.dataset.desc.includes(query));
         });
-        if (visibleTier2.length === 0) {
-          btn.style.display = 'none';
-        } else {
-          btn.style.display = '';
-          btn.textContent = isOpen ? `− ${visibleTier2.length} weitere ausblenden` : `+ ${visibleTier2.length} weitere anzeigen`;
-        }
+        if (visibleTier2.length === 0) btn.style.display = 'none';
+        else { btn.style.display = ''; btn.textContent = isOpen ? `− ${visibleTier2.length} weitere ausblenden` : `+ ${visibleTier2.length} weitere anzeigen`; }
       });
     }
 
@@ -1448,65 +1058,56 @@
       applyVisibility();
     }
 
-    // ── Render ─────────────────────────────────────────────────────
     function dots(inc) {
       return ['h', 'm', 's'].map(k =>
-        `<div class="pdot ${inc.includes(k) ? 'pdot-' + k : 'pdot-off'}"></div>`
+        `<div class="pdot"${inc.includes(k) ? ` data-src="${k}"` : ''}></div>`
       ).join('');
     }
 
     function badges(inc) {
       const labels = { h: "Hiren's", m: 'MediCat', s: 'Standalone' };
       return ['h', 'm', 's'].filter(k => inc.includes(k))
-        .map(k => `<span class="badge badge-${k}">${labels[k]}</span>`).join('');
+        .map(k => `<span class="badge" data-src="${k}">${labels[k]}</span>`).join('');
     }
 
     function render() {
-      const totalTools = data.reduce((sum, cat) => sum + cat.tools.length, 0);
-      document.getElementById('cnt-all').textContent = totalTools;
+      document.getElementById('cnt-all').textContent = data.reduce((s, c) => s + c.tools.length, 0);
       document.getElementById('categories').innerHTML = data.map(cat => {
-        const tier1 = cat.tools.filter(t => t.tier !== 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        const tier2 = cat.tools.filter(t => t.tier === 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
-        const sortedTools = [...tier1, ...tier2];
-        const cards = sortedTools.map(t => {
-          const isTier2 = t.tier === 2;
+        const sorted = [
+          ...cat.tools.filter(t => t.tier !== 2).sort((a, b) => a.name.localeCompare(b.name, 'de')),
+          ...cat.tools.filter(t => t.tier === 2).sort((a, b) => a.name.localeCompare(b.name, 'de'))
+        ];
+        const cards = sorted.map(t => {
           const nirData = t.nir ? JSON.stringify(t.nir) : '';
-          const infoHtml = t.nirOverview
-            ? `<div class="nir-wrap">
-            <div class="nir-search-area">
-              <div class="nir-search-result"></div>
-            </div>
-            <button class="tool-info-toggle" onclick="this.querySelector('.nir-arrow').classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.nir-toggle-text').textContent=this.nextElementSibling.classList.contains('open')?'Ausgewählte Tools ausblenden':'Ausgewählte Tools anzeigen'"><span class="nir-arrow">▶</span> <span class="nir-toggle-text">Ausgewählte Tools anzeigen</span></button>
-            <div class="tool-info-box">${t.nirOverview}</div>
-          </div>`
-            : '';
-          return `<div class="tool-card${isTier2 ? ' tier2 tier2-hidden' : ''}" data-in="${t.in.join(',')}" data-name="${t.name.toLowerCase()}" data-desc="${t.desc.toLowerCase()}"${nirData ? ` data-nir='${nirData}'` : ''}>
-        <div class="tool-top"><div class="pdots" title="● Hiren's ● MediCat ● Standalone">${dots(t.in)}</div><div class="tool-name">${t.name}</div></div>
-        <div class="tool-desc">${t.descHtml || t.desc}</div>
-        ${infoHtml}
-        <div class="tool-badges">${badges(t.in)}</div>
-      </div>`;
+          const infoHtml = t.nirOverview ? `<div class="nir-wrap">
+              <div class="nir-search-area"><div class="nir-search-result"></div></div>
+              <button class="info-toggle" onclick="this.querySelector('.toggle-arrow').classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.toggle-text').textContent=this.nextElementSibling.classList.contains('open')?'Ausgewählte Tools ausblenden':'Ausgewählte Tools anzeigen'">
+                <span class="toggle-arrow">▶</span> <span class="toggle-text">Ausgewählte Tools anzeigen</span>
+              </button>
+              <div class="info-box">${t.nirOverview}</div>
+            </div>` : '';
+          return `<div class="tool-card${t.tier === 2 ? ' tier2 tier2-hidden' : ''}" data-in="${t.in.join(',')}" data-name="${t.name.toLowerCase()}" data-desc="${t.desc.toLowerCase()}"${nirData ? ` data-nir='${nirData}'` : ''}>
+            <div class="tool-top"><div class="pdots" title="● Hiren's ● MediCat ● Standalone">${dots(t.in)}</div><div class="tool-name">${t.name}</div></div>
+            <div class="tool-desc">${t.descHtml || t.desc}</div>
+            ${infoHtml}
+            <div class="tool-badges">${badges(t.in)}</div>
+          </div>`;
         }).join('');
 
         const tier2Count = cat.tools.filter(t => t.tier === 2).length;
-        const tier2Btn = tier2Count > 0
-          ? `<button class="tier2-btn" onclick="toggleTier2(this.closest('.category'))">+ ${tier2Count} weitere anzeigen</button>`
-          : '';
-
         return `<div class="category open">
-      <div class="cat-header" onclick="this.closest('.category').classList.toggle('open')">
-        <span>${cat.icon}</span>
-        <span class="cat-title">${cat.title}</span>
-        <span class="cat-count">${cat.tools.length} Tools</span>
-        <span class="cat-chevron">▶</span>
-      </div>
-      <div class="tools-grid">${cards}</div>
-      ${tier2Btn}
-    </div>`;
+          <div class="cat-header" onclick="this.closest('.category').classList.toggle('open')">
+            <span>${cat.icon}</span>
+            <span class="cat-title">${cat.title}</span>
+            <span class="cat-count">${cat.tools.length} Tools</span>
+            <span class="cat-chevron">▶</span>
+          </div>
+          <div class="tools-grid">${cards}</div>
+          ${tier2Count ? `<button class="tier2-btn" onclick="toggleTier2(this.closest('.category'))">+ ${tier2Count} weitere anzeigen</button>` : ''}
+        </div>`;
       }).join('');
     }
 
-    // ── Quick Access ───────────────────────────────────────────────
     const quickTools = [
       { name: 'CrystalDiskInfo', cat: 'HDD Diagnose', in: ['h', 'm', 's'] },
       { name: 'HWiNFO64', cat: 'Hardware-Info', in: ['h', 'm', 's'] },
@@ -1527,22 +1128,19 @@
     ];
 
     function renderQuickAccess() {
-      document.getElementById('qa-grid').innerHTML = quickTools.map(t => {
-        return `<div class="qa-card" title="${t.cat}" onclick="highlightTool('${t.name.replace(/'/g, "\\'")}')">
-      <div class="qa-card-name">${t.name}</div>
-      <div class="qa-card-cat">${t.cat}</div>
-      <div class="qa-dots">${['h', 'm', 's'].map(k =>
-          `<div class="pdot ${t.in.includes(k) ? 'pdot-' + k : 'pdot-off'}"></div>`
-        ).join('')}</div>
-    </div>`;
-      }).join('');
+      document.getElementById('qa-grid').innerHTML = quickTools.map(t =>
+        `<div class="qa-card" title="${t.cat}" onclick="highlightTool('${t.name.replace(/'/g, "\\'")}')">
+          <div class="qa-card-name">${t.name}</div>
+          <div class="qa-card-cat">${t.cat}</div>
+          <div class="qa-dots">${['h', 'm', 's'].map(k => `<div class="pdot"${t.in.includes(k) ? ` data-src="${k}"` : ''}></div>`).join('')}</div>
+        </div>`
+      ).join('');
     }
 
     function highlightTool(name) {
       document.querySelectorAll('.category').forEach(c => c.classList.add('open'));
       const card = [...document.querySelectorAll('.tool-card')].find(c =>
-        c.dataset.name === name.toLowerCase() ||
-        c.dataset.name.startsWith(name.toLowerCase().split(' ')[0])
+        c.dataset.name === name.toLowerCase() || c.dataset.name.startsWith(name.toLowerCase().split(' ')[0])
       );
       if (!card) return;
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
