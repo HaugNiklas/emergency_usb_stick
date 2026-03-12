@@ -1,5 +1,8 @@
 # 🛠️ Ventoy USB Toolkit
 
+
+NOCH NICHT FERTIG IST IN AKTIVER BEARBEITUNG
+
 > Persönlicher IT-Rettungsstick auf Basis von [Ventoy](https://www.ventoy.net).  
 > Dieses Repository enthält **keine Binaries oder ISOs** – nur Dokumentation, Konfiguration und Download-Scripts.  
 > Alle verlinkten Tools sind Freeware/Open Source oder haben eine Portable-Lizenz.
