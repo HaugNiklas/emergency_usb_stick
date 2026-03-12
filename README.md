@@ -1,6 +1,5 @@
 # 🛠️ Ventoy USB Toolkit
 
-
 NOCH NICHT FERTIG IST IN AKTIVER BEARBEITUNG
 
 > Persönlicher IT-Rettungsstick auf Basis von [Ventoy](https://www.ventoy.net).  
@@ -17,7 +16,7 @@ NOCH NICHT FERTIG IST IN AKTIVER BEARBEITUNG
 
 ## 📁 Struktur des USB-Sticks
 
-```
+```De
 USB-Stick/
 ├── ISOs/
 │   ├── Windows/               ← Win 10 / Win 11 ISOs
@@ -116,7 +115,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🪟 Windows-Optimierung
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **O&O ShutUp10++** | Datenschutz & Telemetrie deaktivieren | [Download](https://www.oo-software.com/en/shutup10) |
 | **O&O AppBuster** | Vorinstallierte Bloatware entfernen | [Download](https://www.oo-software.com/en/ooappbuster) |
 | **Autoruns** | Autostart-Einträge verwalten (SysInternals) | [Download](https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns) |
@@ -126,7 +125,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 💾 Festplatte & Speicher
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **CrystalDiskMark** | Lese-/Schreibgeschwindigkeit testen | [Download](https://crystalmark.info/en/software/crystaldiskmark/) |
 | **CrystalDiskInfo** | SMART-Daten & HDD/SSD-Health überwachen | [Download](https://crystalmark.info/en/software/crystaldiskinfo/) |
 | **WizTree** | Speicherplatzbelegung (NTFS direkt, sehr schnell) | [Download](https://www.diskanalyzer.com/) |
@@ -140,7 +139,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🛡️ Sicherheit & Viren
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Malwarebytes Portable** | On-Demand Malware-Scanner (Free: kein Echtzeit-Schutz) | [Download](https://www.malwarebytes.com/) |
 | **Emsisoft Emergency Kit** | Portable Malware-Scanner, kein Install nötig | [Download](https://www.emsisoft.com/en/home/emergencykit/) |
 | **Dr. Web CureIt!** | Scanner mit anderer Engine – findet was andere übersehen | [Download](https://free.drweb.com/cureit/) |
@@ -156,7 +155,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 > ⚡ **Wichtig:** Vor jeder größeren Reparatur ein Image erstellen!
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Macrium Reflect Free** | System-Backup & Images erstellen, bootfähige Rettungs-USB erstellen | [Download](https://www.macrium.com/reflectfree.aspx) |
 | **Unstoppable Copier** | Kopiert Dateien von beschädigten Datenträgern trotz Lesefehler | [Download](https://www.roadkil.net/program.php?ProgramID=29) |
 | **Clonezilla Live** | Festplatten & Partitionen 1:1 klonen (ISO → Bootmenü) | [Download](https://clonezilla.org/downloads.php) |
@@ -166,10 +165,11 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🔑 Keys & Passwörter
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **NirLauncher** | Komplettpaket aller NirSoft-Tools | [Download](https://www.nirsoft.net/utils/nirlauncher.html) |
 
 **Enthaltene Tools für Keys & Passwörter:**
+
 - [ProduKey](https://www.nirsoft.net/utils/product_cd_key_viewer.html) → Windows + Office Lizenzkeys auslesen
 - [WebBrowserPassView](https://www.nirsoft.net/utils/web_browser_password.html) → Gespeicherte Browser-Passwörter
 - [WirelessKeyView](https://www.nirsoft.net/utils/wireless_key.html) → WLAN-Passwörter anzeigen
@@ -179,7 +179,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🔍 Forensik & Analyse
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **USBDeview** *(NirSoft)* | Alle USB-Geräte die je angeschlossen waren | [Download](https://www.nirsoft.net/utils/usb_devices_view.html) |
 | **LastActivityView** *(NirSoft)* | Vollständige Zeitlinie aller Aktionen auf dem PC | [Download](https://www.nirsoft.net/utils/computer_activity_view.html) |
 | **BrowsingHistoryView** *(NirSoft)* | Browser-Verlauf aller Browser auf einmal anzeigen | [Download](https://www.nirsoft.net/utils/browsing_history_view.html) |
@@ -194,7 +194,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🌐 Netzwerk & Diagnose
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **NetAdapter Repair** | Netzwerkadapter reparieren & zurücksetzen | [Download](https://www.bleepingcomputer.com/download/netadapter-repair-all-in-one/) |
 | **Advanced IP Scanner** | Alle Geräte im Netzwerk finden | [Download](https://www.advanced-ip-scanner.com/) |
 | **TCPView** *(SysInternals)* | Netzwerkverbindungen live überwachen | [Download](https://learn.microsoft.com/en-us/sysinternals/downloads/tcpview) |
@@ -207,7 +207,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🖥️ Hardware-Info
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **HWiNFO64** | Vollständige Hardware-Diagnose – Temps, Voltages, Sensoren | [Download](https://www.hwinfo.com/download/) |
 | **CPU-Z** | CPU, RAM & Mainboard Details | [Download](https://www.cpuid.com/softwares/cpu-z.html) |
 | **GPU-Z** | GPU-Details, VRAM, Takt & Sensoren | [Download](https://www.techpowerup.com/gpuz/) |
@@ -219,7 +219,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🔥 Stress-Tests
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **OCCT** | All-in-One Stress-Test – CPU, GPU, RAM & Netzteil | [Download](https://www.ocbase.com/) |
 | **Prime95** | CPU Stress-Test & Stabilitätstest (Goldstandard) | [Download](https://www.mersenne.org/download/) |
 | **FurMark** | Aggressivster GPU Stress-Test | [Download](https://geeks3d.com/furmark/) |
@@ -232,7 +232,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🔧 System-Reparatur
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Windows Repair (Tweaking.com)** | Repariert kaputte Windows-Funktionen (Registry, Update, Firewall usw.) | [Download](https://www.tweaking.com/content/page/windows_repair_all_in_one.html) |
 | **FixWin 11** | Windows-Probleme per Knopfdruck beheben | [Download](https://www.thewindowsclub.com/fixwin-for-windows-11) |
 | **RunAsTool** | Programme als Admin starten ohne Admin-Passwort | [Download](https://www.sordum.org/8266/runastool-v1-7/) |
@@ -245,7 +245,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🗃️ Datenrettung
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Recuva Portable** | Gelöschte Dateien einfach wiederherstellen | [Download](https://www.ccleaner.com/recuva/download) |
 | **TestDisk / PhotoRec** | Partitionen & Dateien tief wiederherstellen | [Download](https://www.cgsecurity.org/wiki/TestDisk_Download) |
 
@@ -256,14 +256,16 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 📀 ISO / Boot (Ventoy-Bootmenü)
 
 ### 🪟 Windows
+
 | ISO | Beschreibung | Download |
-|-----|-------------|---------|
+| ------ | ------------- | --------- |
 | **Windows 11** | Neuinstallation | [Microsoft Media Creation Tool](https://www.microsoft.com/de-de/software-download/windows11) |
 | **Windows 10** | Neuinstallation | [Microsoft Media Creation Tool](https://www.microsoft.com/de-de/software-download/windows10) |
 
 ### 🛠️ Rettung & Reparatur
+
 | ISO | Beschreibung | Download |
-|-----|-------------|---------|
+| ------ | ------------- | --------- |
 | **Hiren's BootCD PE** | All-in-One Rettungssystem (Win PE + viele Tools) | [Download](https://www.hirensbootcd.org/download/) |
 | **ESET SysRescue Live** | Bootbarer Offline-Virenscanner | [Download](https://www.eset.com/int/support/sysrescue/) |
 | **Memtest86+** | RAM-Test außerhalb von Windows | [Download](https://www.memtest.org/) |
@@ -273,8 +275,9 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 | **Super GRUB2 Disk** | Startet Systeme die nach Updates nicht mehr booten | [Download](https://www.supergrubdisk.org/) |
 
 ### 🐧 Linux Live
+
 | ISO | Beschreibung | Download |
-|-----|-------------|---------|
+| ------ | ------------- | --------- |
 | **SystemRescue** | Mächtiges Linux-Rettungssystem (inkl. GParted) | [Download](https://www.system-rescue.org/Download/) |
 | **Ubuntu Live** | Dateien retten wenn Windows nicht bootet – einfachste GUI | [Download](https://ubuntu.com/download/desktop) |
 | **Linux Mint Live** | Windows-ähnlich, ideal für Einsteiger & Dateirettung | [Download](https://linuxmint.com/download.php) |
@@ -285,7 +288,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🖥️ Fernwartung
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **AnyDesk Portable** | Fernwartung ohne Installation | [Download](https://anydesk.com/en/downloads/windows) |
 
 ---
@@ -293,7 +296,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 🚗 Treiber
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Snappy Driver Installer Origin (SDIO)** | Treiber sichern, wiederherstellen & aktualisieren – riesige Offline-Datenbank | [Download](https://www.glenn.delahoy.com/snappy-driver-installer-origin/) |
 
 ---
@@ -301,7 +304,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 ## 📦 Sonstiges Portable
 
 | Tool | Beschreibung | Download |
-|------|-------------|---------|
+| ------ | ------------- | --------- |
 | **Everything** | Blitzschnelle Dateisuche | [Download](https://www.voidtools.com/) |
 | **FastCopy** | Sehr schnelles Kopieren & Sichern | [Download](https://fastcopy.jp/en/) |
 | **Bulk Rename Utility** | Massenhaftes Umbenennen | [Download](https://www.bulkrenameutility.co.uk/) |
