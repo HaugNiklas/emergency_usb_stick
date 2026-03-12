@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ventoy USB Toolkit – Übersicht</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap');
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #151820;
+      --border: #252a35;
+      --text: #c8cdd8;
+      --muted: #5a6178;
+      --accent: #00aaff;
+      --h: #f97316;
+      --m: #a855f7;
+      --s: #00aaff;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem 1.5rem 4rem
+    }
+
+    /* ── Layout ── */
+    header,
+    .legend,
+    .controls,
+    .stats-bar,
+    .categories {
+      max-width: 1100px;
+      margin-inline: auto
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem
+    }
+
+    h1 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -.02em;
+      margin-bottom: .4rem
+    }
+
+    h1 span {
+      color: var(--accent)
+    }
+
+    .subtitle {
+      font-size: .8rem;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-block: 1.5rem
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .8rem
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1rem
+    }
+
+    .search-input {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8rem;
+      padding: .45rem .9rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 260px;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent)
+    }
+
+    .search-input::placeholder {
+      color: var(--muted)
+    }
+
+    .filter-sep {
+      width: 1px;
+      height: 1.2rem;
+      background: var(--border);
+      margin-inline: .25rem
+    }
+
+    .filter-label,
+    .filter-hint {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted)
+    }
+
+    .filter-label {
+      font-size: .7rem
+    }
+
+    .filter-hint {
+      font-size: .68rem
+    }
+
+    .btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem;
+      padding: .3rem .85rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+    }
+
+    .btn:hover {
+      color: #fff;
+      border-color: var(--accent)
+    }
+
+    .btn.active-all {
+      color: #fff;
+      background: rgba(0, 170, 255, .1);
+      border-color: var(--accent)
+    }
+
+    .btn.active-h {
+      color: #fff;
+      background: rgba(249, 115, 22, .18);
+      border-color: var(--h)
+    }
+
+    .btn.active-m {
+      color: #fff;
+      background: rgba(168, 85, 247, .18);
+      border-color: var(--m)
+    }
+
+    .btn.active-s {
+      color: #fff;
+      background: rgba(0, 170, 255, .18);
+      border-color: var(--s)
+    }
+
+    .btn-expand {
+      margin-left: auto
+    }
+
+    /* ── Stats ── */
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem
+    }
+
+    .stat {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .75rem
+    }
+
+    .stat-num {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      display: block
+    }
+
+    .stat-num.orange {
+      color: var(--h)
+    }
+
+    .stat-num.purple {
+      color: var(--m)
+    }
+
+    .stat-num.blue {
+      color: var(--s)
+    }
+
+    .stat-num.green {
+      color: #6ee7b7
+    }
+
+    .stat-label {
+      color: var(--muted)
+    }
+
+    /* ── Categories ── */
+    .categories {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem
+    }
+
+    .category {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden
+    }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .7rem 1rem;
+      background: rgba(255, 255, 255, .03);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .cat-header:hover {
+      background: rgba(255, 255, 255, .06)
+    }
+
+    .cat-header.cat-match {
+      border-left: 2px solid var(--accent)
+    }
+
+    .cat-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .8rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .cat-count {
+      margin-left: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      color: var(--muted)
+    }
+
+    .cat-chevron {
+      font-size: .7rem;
+      color: var(--muted);
+      transition: transform .2s;
+      flex-shrink: 0
+    }
+
+    .category.open .cat-chevron {
+      transform: rotate(90deg)
+    }
+
+    /* ── Tools grid ── */
+    .tools-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1px;
+      background: var(--border)
+    }
+
+    .category.open .tools-grid {
+      display: grid
+    }
+
+    .tool-card {
+      background: var(--surface);
+      padding: .75rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      transition: background .1s
+    }
+
+    .tool-card:hover {
+      background: #1a1f2e
+    }
+
+    .tool-card.hidden {
+      display: none
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem
+    }
+
+    .tool-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.3
+    }
+
+    .tool-desc,
+    .tool-badges {
+      padding-left: 1.1rem
+    }
+
+    .tool-desc {
+      font-size: .75rem;
+      color: var(--muted);
+      line-height: 1.6
+    }
+
+    .nir-wrap {
+      margin-top: .4rem
+    }
+
+    .tool-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem
+    }
+
+    /* ── Presence dots ── */
+    .pdots {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-shrink: 0;
+      margin-top: 4px
+    }
+
+    .pdot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%
+    }
+
+    .pdot-off {
+      background: #252a35
+    }
+
+    .pdot-h {
+      background: var(--h)
+    }
+
+    .pdot-m {
+      background: var(--m)
+    }
+
+    .pdot-s {
+      background: var(--s)
+    }
+
+    /* ── Tier 2 ── */
+    .tool-card.tier2 {
+      opacity: .55
+    }
+
+    .tool-card.tier2-hidden {
+      display: none
+    }
+
+    .tier2-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .68rem;
+      padding: .3rem .75rem;
+      border-radius: 2px;
+      cursor: pointer;
+      border: 1px dashed var(--border);
+      background: transparent;
+      color: var(--muted);
+      margin: .6rem 1rem;
+      display: none;
+      transition: all .15s;
+    }
+
+    .category.open .tier2-btn {
+      display: inline-block
+    }
+
+    .tier2-btn:hover {
+      color: #fff;
+      border-color: var(--muted)
+    }
+
+    /* ── Tool Info Box ── */
+    .tool-info-toggle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem;
+      color: var(--accent);
+      cursor: pointer;
+      padding-left: 1.1rem;
+      margin-top: .6rem;
+      margin-bottom: .5rem;
+      display: block;
+      background: none;
+      border: none;
+      text-align: left;
+      padding-top: .5rem;
+      padding-bottom: .5rem;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      width: calc(100% - 1.1rem)
+    }
+
+    .tool-info-toggle:hover {
+      text-decoration: underline
+    }
+
+    .nir-arrow {
+      display: inline-block;
+      transition: transform .2s;
+      font-size: .55rem;
+      vertical-align: middle
+    }
+
+    .nir-arrow.open {
+      transform: rotate(90deg)
+    }
+
+    .tool-info-box {
+      display: none;
+      margin: .4rem 1.1rem 0;
+      padding: .5rem .7rem;
+      background: rgba(0, 170, 255, .06);
+      border-left: 2px solid var(--accent);
+      border-radius: 2px;
+      font-size: .72rem;
+      color: var(--text);
+      line-height: 1.8
+    }
+
+    .tool-info-box b {
+      color: var(--accent);
+      font-weight: 600
+    }
+
+    .tool-info-box.open {
+      display: block
+    }
+
+    .nir-search-area {
+      margin: .7rem 1.1rem .2rem;
+      font-size: .72rem
+    }
+
+    .nir-found-label {
+      color: var(--accent);
+      font-size: .68rem;
+      margin-bottom: .2rem;
+      font-weight: 600
+    }
+
+    .nir-search-result:not(:empty) {
+      margin-bottom: .3rem
+    }
+
+    .nir-hit {
+      color: #fff;
+      font-size: .72rem;
+      line-height: 1.6
+    }
+
+    .nir-hit b {
+      color: var(--accent)
+    }
+
+    .nir-placeholder {
+      color: var(--muted);
+      font-size: .68rem;
+      line-height: 1.6
+    }
+
+    .nir-link {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    .nir-link:hover {
+      text-decoration: underline
+    }
+
+    /* ── Badges ── */
+    .badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .65rem;
+      padding: .1rem .4rem;
+      border-radius: 2px;
+      font-weight: 600;
+      letter-spacing: .03em
+    }
+
+    .badge-h {
+      background: rgba(249, 115, 22, .15);
+      color: var(--h);
+      border: 1px solid rgba(249, 115, 22, .3)
+    }
+
+    .badge-m {
+      background: rgba(168, 85, 247, .15);
+      color: var(--m);
+      border: 1px solid rgba(168, 85, 247, .3)
+    }
+
+    .badge-s {
+      background: rgba(0, 170, 255, .12);
+      color: var(--s);
+      border: 1px solid rgba(0, 170, 255, .25)
+    }
+
+    /* ── Quick Access ── */
+    .quickaccess {
+      max-width: 1100px;
+      margin-inline: auto;
+      margin-bottom: 2rem
+    }
+
+    .qa-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .7rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: .6rem
+    }
+
+    .qa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: .5rem
+    }
+
+    .qa-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: .55rem .75rem;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+      cursor: default;
+      transition: background .1s, border-color .1s;
+    }
+
+    .qa-card:hover {
+      background: #1a1f2e;
+      border-color: var(--accent)
+    }
+
+    .qa-card-name {
+      font-size: .8rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      line-height: 1.2
+    }
+
+    .qa-card-cat {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: .62rem;
+      color: var(--muted)
+    }
+
+    .qa-dots {
+      display: flex;
+      gap: 3px;
+      margin-top: .1rem
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🛠️ Ventoy USB Toolkit <span>//</span> Tool-Übersicht</h1>
+    <div class="subtitle">Quellen: hirensbootcd.org/download (v1.0.8) ·
+      docs.medicat.dev/usb/tools/portable-apps/list-of-portapps · README (Standalone)</div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="dot" style="background:var(--h)"></div>In Hiren's BootCD PE
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:var(--m)"></div>In MediCat PortableApps
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:var(--s)"></div>Standalone im Tools-Ordner
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:#252a35;border:1px solid #3a4055"></div>Nicht enthalten
+    </div>
+  </div>
+
+  <div class="controls">
+    <input class="search-input" type="text" placeholder="Tool oder Kategorie suchen…" oninput="onSearch(this.value)">
+    <div class="filter-sep"></div>
+    <span class="filter-label">FILTER:</span>
+    <button class="btn active-all" id="btn-all" onclick="setFilter(null)">Alle</button>
+    <button class="btn" id="btn-h" onclick="setFilter('h')">Hiren's</button>
+    <button class="btn" id="btn-m" onclick="setFilter('m')">MediCat</button>
+    <button class="btn" id="btn-s" onclick="setFilter('s')">Standalone</button>
+
+    <button class="btn btn-expand" id="btn-expand" onclick="expandCollapseAll()">▼ Alle einklappen</button>
+    <button class="btn" id="btn-tier2" onclick="toggleAllTier2()" style="margin-left:.5rem">+ Erweiterte
+      anzeigen</button>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num" id="cnt-all">–</span><span class="stat-label">Tools gesamt</span></div>
+    <div class="stat"><span class="stat-num orange" id="cnt-h">–</span><span class="stat-label">in Hiren's</span></div>
+    <div class="stat"><span class="stat-num purple" id="cnt-m">–</span><span class="stat-label">in MediCat</span></div>
+    <div class="stat"><span class="stat-num blue" id="cnt-s">–</span><span class="stat-label">Standalone</span></div>
+    <div class="stat"><span class="stat-num green" id="cnt-vis">–</span><span class="stat-label">sichtbar</span></div>
+  </div>
+
+  <div class="quickaccess">
+    <div class="qa-title">⚡ Schnellzugriff – Wichtigste Tools</div>
+    <div class="qa-grid" id="qa-grid"></div>
+  </div>
+
+  <div class="categories" id="categories"></div>
+
+  <script>
+    const data = [
+
+      {
+        icon: '💽', title: 'BCD & MBR / Boot-Reparatur', tools: [
+          { name: 'BootIce', desc: 'MBR/PBR bearbeiten, BCD verwalten, USB-Boot-Fix', in: ['h'] },
+          { name: 'EasyBCD', desc: 'Windows Bootloader grafisch konfigurieren', in: ['h'] },
+          { name: 'Boot Repair Disk', desc: 'Linux-basierte Boot-Reparatur für GRUB & Windows', in: ['m'], tier: 2 },
+          { name: 'BootIt Bare Metal', desc: 'Erweiterte Partition & Boot-Verwaltung (ISO)', in: ['m'], tier: 2 },
+          { name: 'EasyUEFI', desc: 'UEFI-Booteinträge verwalten, reparieren & sichern', in: ['m'], tier: 2 },
+          { name: 'Rescatux', desc: 'Linux-Rettungssystem für Boot & GRUB-Reparatur (ISO)', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '💾', title: 'Festplatte – Diagnose & SMART', tools: [
+          { name: 'CrystalDiskInfo', desc: 'SMART-Daten & HDD/SSD-Health überwachen', in: ['h', 'm', 's'] },
+          { name: 'CrystalDiskMark', desc: 'Lese-/Schreibgeschwindigkeit benchmarken', in: ['m', 's'] },
+          { name: 'HDDScan', desc: 'Oberflächentest, Bad Sector Scan, tiefe Diagnose', in: ['h'] },
+          { name: 'HDTune', desc: 'HDD-Benchmark & Error-Scan', in: ['h'], tier: 2 },
+          { name: 'GSmartControl', desc: 'Grafische SMART-Oberfläche, alle Laufwerke', in: ['h'], tier: 2 },
+          { name: 'WD Data Lifeguard Diagnostics', desc: 'Western-Digital-Laufwerke testen & diagnostizieren', in: ['h'], tier: 2 },
+          { name: 'Victoria', desc: 'Low-Level HDD-Diagnose & Bad Sector Remapping', in: ['h', 'm', 's'] },
+          { name: 'HDDExpert', desc: 'SMART-Analyse mit Empfehlungen & Risikostufe', in: ['m'] },
+          { name: 'SSD Life', desc: 'SSD-Lebenserwartung und Health im Blick behalten', in: ['m'], tier: 2 },
+          { name: 'SSD-Z', desc: 'SSD-Details: Controller, Flash-Typ, Firmware', in: ['m'], tier: 2 },
+          { name: 'SSD Fresh Plus', desc: 'SSD-Optimierungen unter Windows anpassen', in: ['m'], tier: 2 },
+          { name: 'CheckDisk GUI', desc: 'Grafische Oberfläche für chkdsk', in: ['h'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '📊', title: 'Festplatte – Speicherplatz-Analyse', tools: [
+          { name: 'WizTree', desc: 'Speicherplatzbelegung (NTFS direkt, sehr schnell)', in: ['s'] },
+          { name: 'WinDirStat', desc: 'Speicherbelegung als Treemap-Visualisierung', in: ['m'], tier: 2 },
+          { name: 'TreeSize', desc: 'Kompakte Ordnergrößen-Übersicht', in: ['h'] },
+        ]
+      },
+
+      {
+        icon: '🗂️', title: 'Festplatte – Partitionsverwaltung', tools: [
+          { name: 'AOMEI Partition Assistant', desc: 'Partitionen verschieben, verkleinern & verwalten', in: ['h', 's'] },
+          { name: 'Macrorit Partition Expert', desc: 'Partition Resize/Merge/Clone – Technician Edition', in: ['h', 'm'] },
+          { name: 'Macrorit Partition Extender', desc: 'Partitionen schnell & sicher vergrößern', in: ['h'], tier: 2 },
+          { name: 'EaseUS Partition Master', desc: 'Partitionsverwaltung mit Datenrettungs-Funktionen', in: ['h'], tier: 2 },
+          { name: 'DiskGenius', desc: 'Profi-All-in-One: Partitionen, Datenrettung, Image', in: ['h'] },
+          { name: 'Macrorit NTFS to FAT', desc: 'Dateisystem ohne Datenverlust konvertieren', in: ['m'], tier: 2 },
+          { name: 'FAT32 Formatter', desc: 'Laufwerke >32 GB mit FAT32 formatieren', in: ['m'], tier: 2 },
+          { name: 'NTFS Permission Tool', desc: 'NTFS-Berechtigungen einsehen & reparieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🔄', title: 'Festplatte – Defragmentierung', tools: [
+          { name: 'Defraggler', desc: 'Defragmentierung einzelner Dateien oder Laufwerke', in: ['h', 'm'] },
+          { name: 'Auslogics Disk Defrag Pro', desc: 'Schnelle Defragmentierung mit Optimierungsoptionen', in: ['m'] },
+          { name: 'UltraDefrag', desc: 'Open-Source-Defragmenter, auch für Systemdateien', in: ['m'], tier: 2 },
+          { name: 'JkDefrag', desc: 'Leichtgewichtiger Defragmenter, sehr schnell', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🗑️', title: 'Festplatte – Sicheres Löschen', tools: [
+          { name: 'HDD Low Level Format Tool', desc: 'Festplatte auf Hardwareebene nullen', in: ['h'] },
+          { name: 'Eraser', desc: 'Dateien & freien Speicher sicher überschreiben (DoD-Standard)', in: ['h'] },
+        ]
+      },
+
+      {
+        icon: '🔩', title: 'Festplatte – Spezialformate & Virtual Disk', tools: [
+          { name: 'HxD Hex Editor', desc: 'Hex-Editor für direkte Disk- und RAM-Bearbeitung', in: ['h', 'm'], tier: 2 },
+          { name: 'HDHacker', desc: 'Boot-Sektor / MBR lesen, schreiben & sichern', in: ['m'], tier: 2 },
+          { name: 'ImDisk Virtual Disk Driver', desc: 'ISO/IMG als virtuelles Laufwerk einbinden', in: ['h'], tier: 2 },
+          { name: 'DiskInternals Linux Reader', desc: 'Ext2/3/4 Linux-Partitionen unter Windows lesen', in: ['h'], tier: 2 },
+          { name: 'Paragon AppleFS for Windows', desc: 'Apple HFS+/APFS-Volumes unter Windows öffnen', in: ['h'], tier: 2 },
+          { name: 'Disk2vhd', desc: 'Laufendes System direkt als VHD-Image exportieren', in: ['h', 'm'], tier: 2 },
+          { name: 'VHD2Disk', desc: 'VHD-Image auf physische Festplatte zurückschreiben', in: ['m'], tier: 2 },
+          { name: 'VHD Manager', desc: 'VHD-Dateien erstellen, mounten & verwalten', in: ['m'], tier: 2 },
+          { name: 'VHD Tool++', desc: 'Erweitertes VHD-Verwaltungstool', in: ['m'], tier: 2 },
+          { name: 'SD Formatter', desc: 'SD-Karten nach offenem Standard korrekt formatieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '💿', title: 'Backup & Imaging', tools: [
+          { name: 'Macrium Reflect', desc: 'System-Backup & Images erstellen (Goldstandard)', in: ['h', 's'] },
+          { name: 'AOMEI Backupper', desc: 'System- & Datei-Backup mit vielen Optionen', in: ['h'] },
+          { name: 'Acronis Cyber Protect', desc: 'Professionelles Image-Backup & Restore', in: ['h'], tier: 2 },
+          { name: 'Acronis True Image', desc: 'Vollständiges System-Backup & Klonen', in: ['m'], tier: 2 },
+          { name: 'Drive Snapshot', desc: 'Backup laufender Systeme ohne Neustart', in: ['h'], tier: 2 },
+          { name: 'DriveImage XML', desc: 'Leichtgewichtiges Drive-Imaging im XML-Format', in: ['h'], tier: 2 },
+          { name: 'Lazesoft Disk Image & Clone', desc: 'Bootfähige Laufwerke klonen & Images erstellen', in: ['h'], tier: 2 },
+          { name: 'EaseUS Todo Backup', desc: 'Backup & Imaging mit einfacher Bedienung', in: ['m'], tier: 2 },
+          { name: 'MiniTool ShadowMaker', desc: 'Backup, Klonen & Wiederherstellung', in: ['m'], tier: 2 },
+          { name: 'Rescuezilla', desc: 'Einfaches Cloning & Imaging – Clonezilla-Frontend', in: ['m'], tier: 2 },
+          { name: 'Symantec Ghost', desc: 'Klassisches Disk-Imaging & Klonen', in: ['m'], tier: 2 },
+          { name: 'WinToHDD', desc: 'Windows auf andere Festplatte/Partition klonen', in: ['m'], tier: 2 },
+          { name: 'WinToUSB', desc: 'Windows-To-Go auf USB-Stick installieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🗃️', title: 'Datenrettung', tools: [
+          { name: 'Recuva', desc: 'Gelöschte Dateien einfach wiederherstellen', in: ['h', 'm', 's'] },
+          { name: 'Unstoppable Copier', desc: 'Kopiert Dateien von beschädigten Datenträgern trotz Lesefehler', in: ['h', 'm', 's'] },
+          { name: 'TestDisk / PhotoRec', desc: 'Partitionen & Dateien tief wiederherstellen', in: ['h', 's'] },
+          { name: 'DMDE', desc: 'Disk-Map & Datenrettung bis auf Sektor-Ebene', in: ['h'], tier: 2 },
+          { name: 'ReclaiMe', desc: 'RAID- und Partition-Wiederherstellung', in: ['h'], tier: 2 },
+          { name: 'Lazesoft Data Recovery', desc: 'Datenrettung von formatierten/gelöschten Laufwerken', in: ['h'], tier: 2 },
+          { name: 'Puran Data Recovery', desc: 'Tiefes Scannen nach verlorenen Partitionen', in: ['h'], tier: 2 },
+          { name: 'Puran File Recovery', desc: 'Gelöschte Dateien schnell wiederherstellen', in: ['h'], tier: 2 },
+          { name: 'R-Drive Image', desc: 'Professionelles Disk-Imaging & Datenrettung', in: ['m'], tier: 2 },
+          { name: 'RS RAID Retrieve', desc: 'Datenrettung aus defekten RAID-Verbünden', in: ['m'], tier: 2 },
+          { name: 'EaseUS Data Recovery Wizard', desc: 'Datenrettung mit einfacher Oberfläche (max. 2 GB gratis)', in: ['m'], tier: 2 },
+          { name: 'MiniTool Power Data Recovery', desc: 'Datenrettung mit einfacher Oberfläche (1 GB gratis)', in: ['m'], tier: 2 },
+          { name: 'Elcomsoft System Recovery', desc: 'Windows-Passwörter & Zugänge zurücksetzen', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🛡️', title: 'Sicherheit & Viren', tools: [
+          { name: 'Malwarebytes', desc: 'On-Demand Malware-Scanner (Free: kein Echtzeit-Schutz)', in: ['m', 's'] },
+          { name: 'Emsisoft Emergency Kit', desc: 'Portable Malware-Scanner, kein Install nötig', in: ['s'] },
+          { name: 'Dr. Web CureIt!', desc: 'Scanner mit anderer Engine – findet was andere übersehen', in: ['m', 's'] },
+          { name: 'Kaspersky TDSSKiller', desc: 'Spezialist für Rootkits & Bootkits', in: ['m', 's'] },
+          { name: 'McAfee Stinger', desc: 'Schneller Malware-Quickscan, sehr leichtgewichtig', in: ['h', 'm'], tier: 2 },
+          { name: 'ESET Online Scanner', desc: 'Tiefgreifender ESET-Scanner ohne Vollinstallation', in: ['h'] },
+          { name: 'Panda Cloud Cleaner', desc: 'Cloud-basierter Malware-Scanner', in: ['m'], tier: 2 },
+          { name: 'Malware Hunter Pro', desc: 'Proaktiver Malware-Scanner & Entferner', in: ['m'], tier: 2 },
+          { name: 'SUPERAntiSpyware', desc: 'Spyware, Adware & Trojaner entfernen', in: ['m'], tier: 2 },
+          { name: 'HijackThis', desc: 'Browser-Hijacker & verdächtige Starteinträge aufspüren', in: ['m'], tier: 2 },
+          { name: 'Ransomware Decryption Tools', desc: 'No More Ransom Entschlüsselungs-Sammlung', in: ['m', 's'] },
+          { name: 'VeraCrypt', desc: 'Verschlüsselte Container erstellen & öffnen', in: ['h', 'm', 's'] },
+          { name: 'Tor Browser', desc: 'Anonymes Surfen über das Tor-Netzwerk', in: ['m'] },
+          { name: 'OpenVPN Portable', desc: 'VPN-Verbindung direkt vom Stick aufbauen', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '⚙️', title: 'Microsoft – SysInternals Suite', tools: [
+          {
+            name: 'SysInternals Suite', desc: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. process, disk oder network.', descHtml: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. <i>process</i>, <i>disk</i> oder <i>network</i>.<br><a class="nir-link" href="https://learn.microsoft.com/en-us/sysinternals/downloads/" target="_blank">→ Vollständige Tool-Liste auf learn.microsoft.com</a>', in: ['h'],
+            nir: {
+              'AccessChk': 'Command-line tool for viewing effective permissions on files, registry keys, services, processes and kernel objects',
+              'AccessEnum': 'Shows who has what access to directories, files and Registry keys — find holes in permissions',
+              'AdExplorer': 'Advanced Active Directory viewer and editor',
+              'AdInsight': 'LDAP real-time monitoring tool for troubleshooting Active Directory client applications',
+              'AdRestore': 'Undelete Active Directory objects',
+              'Autologon': 'Bypass password screen during logon',
+              'Autoruns': 'See what programs are configured to startup automatically when your system boots and you log in',
+              'BgInfo': 'Automatically display relevant information about a Windows computer on the desktop background',
+              'CacheSet': 'Program that allows you to control the Cache Manager working set size',
+              'ClockRes': 'View the resolution of the system clock',
+              'Contig': 'Defragment individual files or create new files that are contiguous',
+              'Coreinfo': 'Shows mapping between logical processors and the physical processor, NUMA node, socket and cache topology',
+              'Ctrl2Cap': 'Kernel-mode driver that remaps Caps Lock key to Ctrl',
+              'DebugView': 'Monitor debug output on your local machine or across the Internet without an active debugger',
+              'Desktops': 'Create up to four virtual desktops and switch between them using hotkeys',
+              'Disk2vhd': 'Simplifies migration of physical systems into virtual machines (P2V)',
+              'DiskExt': 'Display volume disk-mappings',
+              'DiskMon': 'Capture all hard disk activity or acts as a software disk activity light in system tray',
+              'DiskView': 'Graphical disk sector viewer',
+              'DU': 'Report the disk space usage for the directory you specify',
+              'EFSDump': 'View information for encrypted files',
+              'FindLinks': 'Reports the file index and any hard links that exist for the specified file',
+              'Handle': 'Show what files are open by which processes',
+              'Hex2dec': 'Convert hex numbers to decimal and vice versa',
+              'Junction': 'Create Win2K NTFS symbolic links',
+              'LDMDump': 'Dump the contents of the Logical Disk Manager database',
+              'ListDLLs': 'List all DLLs that are currently loaded, including version numbers and full paths',
+              'LiveKd': 'Use Microsoft kernel debuggers to examine a live system',
+              'LoadOrder': 'See the order in which devices are loaded on your Windows system',
+              'LogonSessions': 'List the active logon sessions on a system',
+              'MoveFile': 'Schedule move and delete commands for the next reboot',
+              'NotMyFault': 'Crash, hang, and cause kernel memory leaks on your Windows system (for testing)',
+              'NTFSInfo': 'Detailed information about NTFS volumes including MFT size and location',
+              'PendMoves': 'Enumerate file rename and delete commands that will execute at next boot',
+              'PipeList': 'Display named pipes on your system',
+              'PortMon': 'Monitor serial and parallel port activity',
+              'ProcDump': 'Capture process dumps for CPU spikes, hung windows or unhandled exceptions',
+              'Process Explorer': 'Find out what files, registry keys and objects processes have open, which DLLs they have loaded',
+              'Process Monitor': 'Monitor file system, Registry, process, thread and DLL activity in real-time',
+              'PsExec': 'Execute processes on remote systems',
+              'PsFile': 'Show files opened remotely',
+              'PsGetSid': 'Display the SID of a computer or user',
+              'PsInfo': 'Obtain information about a system',
+              'PsKill': 'Kill processes by name or process ID',
+              'PsList': 'List detailed information about processes',
+              'PsLoggedOn': 'Show users logged on to a local or remote system',
+              'PsLogList': 'Dump event log records',
+              'PsPasswd': 'Change account passwords',
+              'PsPing': 'Measure network performance including latency and bandwidth',
+              'PsService': 'View and control services',
+              'PsShutdown': 'Shutdown or reboot a computer',
+              'PsSuspend': 'Suspend and resume processes',
+              'PsTools': 'Suite of command-line utilities for managing local and remote Windows systems',
+              'RAMMap': 'Advanced physical memory usage analysis — see exactly how Windows is using RAM',
+              'RDCMan': 'Manage multiple remote desktop connections',
+              'RegDelNull': 'Scan and delete Registry keys with embedded null-characters',
+              'RegJump': 'Jump to a registry path directly in Regedit',
+              'RU': 'View the registry space usage for the specified registry key',
+              'SDelete': 'Securely overwrite sensitive files and cleanse free space (DoD-compliant)',
+              'ShareEnum': 'Scan file shares on your network and view their security settings',
+              'ShellRunas': 'Launch programs as a different user via right-click context menu',
+              'Sigcheck': 'Show file version, timestamp, and digital signature details — verify file integrity',
+              'Streams': 'Reveal NTFS alternate streams in files',
+              'Strings': 'Search for ANSI and Unicode strings in binary images',
+              'Sync': 'Flush cached data to disk',
+              'Sysmon': 'Monitor and log system activity including processes, network connections and file changes',
+              'TCPView': 'Live view of all TCP and UDP endpoints, including local and remote addresses and state',
+              'VMMap': 'Analyze virtual memory usage of a specific process in detail',
+              'VolumeID': 'Set the Volume ID of FAT or NTFS drives',
+              'WhoIs': 'WHOIS lookup for domain registration information',
+              'WinObj': 'Display information about the Windows Object Manager namespace',
+              'ZoomIt': 'Screen zoom, annotation and recording tool for presentations'
+            },
+            nirOverview: '<b>🔍 Prozesse:</b> Process Explorer · Process Monitor · ProcDump · PsList · PsKill · VMMap<br><b>🚀 Autostart:</b> Autoruns · BgInfo · Desktops<br><b>🌐 Netzwerk:</b> TCPView · PsPing · PsTools · WhoIs · PortMon<br><b>💾 Festplatte:</b> DiskView · Disk2vhd · DU · SDelete · Contig · DiskMon<br><b>🔒 Sicherheit:</b> AccessChk · AccessEnum · Sigcheck · Sysmon · Streams<br><b>📋 Registry:</b> Autoruns · RegJump · RegDelNull · RU · AdExplorer<br><b>🖥️ System-Info:</b> PsInfo · Coreinfo · RAMMap · LogonSessions · Handle · ListDLLs<br><b>🔧 Remote:</b> PsExec · PsLoggedOn · PsLogList · PsService · PsShutdown · RDCMan'
+          },
+        ]
+      },
+
+      {
+        icon: '🧰', title: 'NirSoft – NirLauncher', tools: [
+          {
+            name: 'NirLauncher', desc: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. password, wifi oder registry. → launcher.nirsoft.net', descHtml: 'Tippe oben in die Suche um in allen 200+ NirSoft-Tools zu suchen — z.B. <i>password</i>, <i>wifi</i> oder <i>registry</i>.<br><a class="nir-link" href="https://launcher.nirsoft.net/utilities_list.html" target="_blank">→ Vollständige Tool-Liste auf launcher.nirsoft.net</a>', in: ['s'],
+            nir: {
+              'AdvancedRun': 'Run a program with different settings that you choose',
+              'AllThreadsView': 'Displays a list of all running threads in Windows',
+              'AlternateStreamView': 'Find all hidden alternate streams stored in the file system',
+              'AltStreamDump': 'Dumps the list of NTFS alternate streams',
+              'AppAudioConfig': 'View/change audio settings of applications',
+              'AppCompatibilityView': 'List of all programs that run with different compatibility setting',
+              'AppCrashView': 'Displays the details of all application crashes occurred in your system',
+              'AppNetworkCounter': 'Displays number of TCP/UDP bytes and packets sent/received by every application',
+              'AppReadWriteCounter': 'Displays read/write operations of every application running on your system',
+              'AppResourcesUsageView': 'View application resources usage information of Windows 10/11',
+              'AdapterWatch': 'Displays useful information about your network adapters',
+              'ActiveXHelper': 'View essential information about ActiveX components installed on your computer',
+              'BatteryHistoryView': 'Displays battery history information on Windows 11/10',
+              'BatteryInfoView': 'Displays battery information on laptops and netbooks',
+              'BlueScreenView': 'Show information about blue screen crashes occurred in your system',
+              'BluetoothCL': 'Show bluetooth devices list',
+              'BluetoothLEView': 'Monitors the activity of Bluetooth Low Energy devices around you',
+              'BluetoothLogView': 'Creates a log of Bluetooth activity in your area',
+              'BluetoothView': 'Monitors the activity of Bluetooth devices around you',
+              'BootPerformanceView': 'Displays the performance information of the boot process on Windows 11/10/8/7',
+              'BrowserAddonsView': 'Displays the details of all Web browser addons/plugins installed in your system',
+              'BrowserAutoFillView': 'View form autofill text stored by Chrome and Firefox Web browsers',
+              'BrowserDownloadsView': 'Displays the details of downloaded files of Chrome and Firefox Web browsers',
+              'BrowsingHistoryView': 'View browsing history of popular Web browsers',
+              'BulkFileChanger': 'Change date/time/attributes of multiple files',
+              'BulletsPassView': 'Reveals the passwords stored behind the bullets',
+              'ChromeCacheView': 'Chrome Browser Cache Viewer',
+              'ChromeCookiesView': 'Alternative to the standard internal cookies viewer of Google Chrome',
+              'ChromeHistoryView': 'View the browsing history of Chrome Web browser',
+              'ChromePass': 'Password recovery tool for Google Chrome Web browser',
+              'Clipboardic': 'Small and simple clipboard manager',
+              'ControlMyMonitor': 'View and modify the settings of your monitor',
+              'CountryTraceRoute': 'Fast Traceroute utility with IP country information',
+              'CurrPorts': 'Displays the list of all currently opened TCP/UDP ports on your computer',
+              'CurrProcess': 'Displays the list of all processes currently running on your system',
+              'CredentialsFileView': 'Decrypts Credentials files of Windows',
+              'CredHistView': 'Decrypt the CREDHIST file of Windows',
+              'CSVFileView': 'CSV/Tab-delimited file viewer and converter',
+              'DataProtectionDecryptor': 'Decrypt DPAPI-encrypted data of Windows',
+              'DeviceIOView': 'Watch the data transfer between a software or service and a device driver',
+              'DevManView': 'Alternative to the standard Device Manager of Windows',
+              'DHCPLogView': 'Displays DHCP requests sent by every device connect to your network',
+              'Dialupass': 'Recovers Dial-Up passwords in all versions of Windows',
+              'DiskCountersView': 'Show disk drive read/write counters',
+              'DiskSmartView': 'Retrieves S.M.A.R.T information from IDE/SATA disks',
+              'DLL Export Viewer': 'Lists DLL exported functions and their memory addresses for debugging',
+              'DNSDataView': 'Retrieve the DNS records (MX, NS, A, SOA) of the specified domains',
+              'DNSLookupView': 'DNS Lookup Viewer for Windows 11/10',
+              'DNSQuerySniffer': 'Network sniffer utility that shows the DNS queries sent on your system',
+              'DomainHostingView': 'Displays extensive information about a domain',
+              'DotNetResourcesExtract': 'Extract embedded resources from .NET applications',
+              'DownTester': 'Test your Internet download speed',
+              'DriveLetterView': 'View and change drive letter assignments',
+              'DriverView': 'Displays the list of all device drivers currently loaded on your system',
+              'DumpEDID': 'Dump EDID information into the console window',
+              'EdgeCookiesView': 'Display cookies from new versions of MS-Edge',
+              'EncryptedRegView': 'Scans the Registry and decrypts the data encrypted with DPAPI',
+              'ESEDatabaseView': 'View the content of ESE database files (.edb files)',
+              'EventLogChannelsView': 'View, Disable, Enable Event Log Channels',
+              'EventLogSourcesView': 'Displays the list of all event log sources installed on your system',
+              'ExecutedProgramsList': 'Displays programs and batch files that you previously executed on your system',
+              'ExifDataView': 'Displays the Exif data stored inside .jpg image files',
+              'ExtPassword': 'External Drive Password Recovery',
+              'FastResolver': 'Resolves multiple host names into IP addresses/MAC Addresses and vice versa',
+              'FavoritesView': 'Displays the list of all your Favorites/bookmarks in a single page',
+              'FBCacheView': 'Shows Facebook images stored in the cache of your Web browser',
+              'FileAccessErrorView': 'Displays file access error information',
+              'FileActivityWatch': 'Displays information about read/write/delete operations on your system',
+              'FileTypesMan': 'Alternative to the File Types manager of Windows',
+              'FirefoxDownloadsView': 'Displayed the list of downloaded files in Firefox',
+              'FirmwareTablesView': 'Displays a list of firmware tables (ACPI, SMBIOS) stored on your system',
+              'FlashCookiesView': 'View Flash cookies stored in your computer',
+              'FolderChangesView': 'Monitor folder/drive changes',
+              'FolderTimeUpdate': 'Updates the Modified Time of folders',
+              'FreeSpaceLogView': 'View log of free disk space on Windows',
+              'FullEventLogView': 'Event log viewer for Windows 10/8/7/Vista',
+              'FullUpdatesHistoryView': 'Displays the history of Windows 11 updates on your system',
+              'GDIView': 'Displays the list of GDI handles opened by every process',
+              'GetNir': 'Command line tool to extract values from tab-delimited and comma-delimited data',
+              'GUIPropView': 'Displays extensive information about all windows currently opened on your system',
+              'HandleCountersView': 'Shows handle counter for every process',
+              'HashMyFiles': 'Calculate the MD5/SHA1 hashes of your files',
+              'HeapMemView': 'View the content of all memory blocks allocated in the heap',
+              'HostedNetworkStarter': 'Create a wifi hotspot with your wireless network adapter',
+              'HotKeysList': 'Displays the list of hot keys that are currently registered on your system',
+              'HTMLAsText': 'Converts HTML documents to simple text files',
+              'HtmlDocEdit': 'Simple HTML designer/editor',
+              'IconsExtract': 'Extract icons and cursors from executable files (EXE, DLL, OCX, CPL)',
+              'IECacheView': 'List all files currently stored in the cache of Internet Explorer',
+              'IECookiesView': 'Displays the cookies that Internet Explorer stores on your computer',
+              'IEHistoryView': 'Displays the list of Web sites that you visited with IE Web browser',
+              'IE PassView': 'Recover passwords stored by Internet Explorer',
+              'ImageCacheViewer': 'Displays images stored in the cache of your Web browsers',
+              'InsideClipboard': 'Displays the content of all formats stored in the clipboard',
+              'InstalledAppView': 'View installed Windows 10 apps',
+              'InstalledCodec': 'List Codec drivers and DirectShow filters installed on your system',
+              'InstalledDriversList': 'Lists all device drivers that are currently installed on your system',
+              'InstalledPackagesView': 'Displays installed MSI packages on your system',
+              'IPInfoOffline': 'View country information about IP addresses',
+              'IPNeighborsView': 'View the IP neighbor table on Windows 10/8/7/Vista',
+              'IPNetInfo': 'Easily find all available information about IP address',
+              'IPPathTableView': 'IP Path Table Viewer',
+              'JumpListsView': 'Displays the information stored by the Jump Lists feature of Windows 7',
+              'KeyboardStateView': 'Shows the current state and virtual key code of every key you press',
+              'LANIPScanner': 'Local network scanner for Windows',
+              'LastActivityView': 'View the latest computer activity',
+              'LiveContactsView': 'View the details of all contacts in your Windows Live Messenger',
+              'LiveTcpUdpWatch': 'Displays live information about all TCP and UDP activity on your system',
+              'LoadedDllsView': 'Displays all DLL files loaded on your system',
+              'LostMyPassword': 'Password recovery tool for Windows',
+              'LSASecretsDump': 'Dump the LSA secrets from the Registry',
+              'LSASecretsView': 'Displays the list of all LSA secrets stored in the Registry on your computer',
+              'MACAddressView': 'MAC address lookup tool',
+              'MadPassExt': 'Extract the secret DPAPI password generated for your Microsoft account',
+              'Mail PassView': 'Recovers email passwords',
+              'ManageWirelessNetworks': 'Alternative tool to the standard Manage Wireless Networks of Windows',
+              'MMCSnapInsView': 'Displays the details of all MMC snap-ins installed on your system',
+              'MobileFileSearch': 'Search files inside a mobile device plugged to the USB port',
+              'MonitorInfoView': 'Displays essential information about your monitor',
+              'MZHistoryView': 'Displays the list of visited Web sites in Firefox/Mozilla/Netscape Web browsers',
+              'MessenPass': 'Recovers the passwords of instant messenger programs',
+              'MUICacheView': 'Edit/delete MUICache items in your system',
+              'MultiMonitorTool': 'Enable, disable, and set the primary monitor in Multi-Monitor system',
+              'MetarWeather': 'Decode METAR weather reports and display them in a simple weather report table',
+              'MyEventViewer': 'Simple alternative to the standard event viewer of Windows',
+              'MyLastSearch': 'View your latest searches with Google, Yahoo, and MSN',
+              'MZCacheView': 'List all files currently stored in the cache of Firefox/Mozilla browser',
+              'MZCookiesView': 'Alternative to the standard Cookie Manager provided by Firefox and Mozilla',
+              'NetBScanner': 'Scans all computers in the IP addresses range you choose, using NetBIOS protocol',
+              'NetConnectChoose': 'Set default Internet connection and view general connection information',
+              'Network Password Recovery': 'Recover network passwords on Windows XP/2003/Vista',
+              'NetResView': 'Displays the list of all network resources on your LAN',
+              'NetRouteView': 'GUI alternative to the standard route utility of Windows',
+              'NetworkConnectLog': 'Shows a log of connected/disconnected computers on your network',
+              'NetworkCountersWatch': 'Displays system counters for every network interface on your system',
+              'NetworkInterfacesView': 'Displays the list of all network adapters/interfaces installed on your system',
+              'NetworkLatencyView': 'Calculates the network latency (in milliseconds) for every new TCP connection',
+              'NetworkOpenedFiles': 'Displays the files that are currently opened by other computers on your network',
+              'NetworkTrafficView': 'Displays network traffic statistics on your network adapter',
+              'NetworkUsageView': 'Displays network usage information for Windows 8 and Windows 10',
+              'NirCmd': 'Do many useful tasks from command-line',
+              'NK2Edit': 'Full NK2 (AutoComplete) editor for Microsoft Outlook',
+              'NTFSLinksView': 'View the list of NTFS symbolic links/junctions in selected folder',
+              'OfficeIns': 'Displays the details of all installed Microsoft Office add-ins on your computer',
+              'OfflineRegistryFinder': 'Find data in external Registry files',
+              'OfflineRegistryView': 'View offline Registry files',
+              'OpenedFilesView': 'Displays the list of all opened files on your system',
+              'OpenSaveFilesView': 'Displays list of files that you previously opened',
+              'OpenWithView': 'Disable/enable items in the Open With dialog-box of Windows',
+              'OperaCacheView': 'Cache viewer for Opera Web browser',
+              'OperaPassView': 'Password recovery tool for Opera Web browser',
+              'OutlookAccountsView': 'View POP3/IMAP/SMTP passwords and account settings of Outlook',
+              'OutlookAddressBookView': 'Displays the details of all recipients stored in the address books of Outlook',
+              'OutlookAttachView': 'Extract multiple attachments from Outlook',
+              'OutlookStatView': 'Display a general statistics of your Outlook emails',
+              'PasswordFox': 'View passwords stored in Firefox Web browser',
+              'Password Security Scanner': 'Displays security information about passwords stored in your system',
+              'PingInfoView': 'Ping multiple host names and IP addresses',
+              'PreviousFilesRecovery': 'Find and recover files from Windows shadow copies',
+              'ProcessActivityView': 'Show the file activity for selected process',
+              'ProcessTCPSummary': 'Displays TCP connections summary',
+              'ProcessThreadsView': 'Displays extensive information about all threads of the process that you choose',
+              'Product Key Scanner': 'Find product keys stored in the Registry of Windows Operating system',
+              'ProduKey': 'Displays the CD-Keys of MS-Office/Windows installed on your computer',
+              'PropertySystemView': 'View/edit file properties',
+              'PstPassword': 'Recover lost password of Outlook PST file',
+              'QuickSetDNS': 'Change the DNS servers that are used for your Internet connection',
+              'Remote Desktop PassView': 'Reveals the password stored by Microsoft Remote Desktop utility',
+              'RecentFilesView': 'Display the list of recently opened files',
+              'RegDllView': 'Displays the list of all registered files',
+              'RegFileExport': 'Export offline Registry file to .reg file',
+              'RegFromApp': 'Creates .reg file according to Registry changes made by application',
+              'RegistryChangesView': 'Compares 2 snapshots of Windows Registry',
+              'RegScanner': 'Scan and find values in the Registry',
+              'ResourcesExtract': 'Extract resources from dll/ocx/exe files',
+              'RouterPassView': 'Recover passwords from router config file',
+              'RTMPDumpHelper': 'Download RTMP streams in conjunction with RTMPDump toolkit',
+              'RunAsDate': 'Run a program with the specified date',
+              'RunFromProcess': 'Run a program from another process that you choose',
+              'RuntimeClassesView': 'Displays the list of Windows Runtime (WinRT) classes',
+              'SafariCacheView': 'Cache viewer/extractor for Safari Web browser',
+              'SafariHistoryView': 'History viewer for Safari Web browser',
+              'SearchFilterView': 'View the search filters installed on your system',
+              'SearchMyFiles': 'Alternative to the standard Search For Files And Folders module of Windows',
+              'SecurityQuestionsView': 'View Windows 10 security questions',
+              'SecuritySoftView': 'Displays the list of AntiVirus/AntiSpyware/Firewall programs on your system',
+              'SeqDownload': 'Download sequence of images from the Web and create animation from them',
+              'ServiWin': 'Displays the list of installed drivers and services on your system',
+              'ShadowCopyView': 'View shadow copies on your system',
+              'ShellBagsView': 'Displays the list of all folder settings saved by Windows',
+              'ShellMenuNew': 'Disable/Enable items in the New submenu of Explorer',
+              'ShellExView': 'Displays the details of shell extensions installed on your computer',
+              'ShortcutsMan': 'Lists all shortcuts on your desktop/start menu',
+              'ShellMenuView': 'Disable/enable static menu items in context menu of Explorer',
+              'ShutdownPerformanceView': 'Displays the performance information of Windows shutdown process',
+              'SimpleCodeGenerator': 'QR Code Generator for Windows',
+              'SimpleProgramDebugger': 'Displays debugging events of a running program',
+              'SimpleWMIView': 'Displays the result of WMI queries in a simple table',
+              'SiteShoter': 'Save a screenshot of any Web page into a file',
+              'SkypeContactsView': 'Displays the list of Skype contacts stored in the local database file of Skype',
+              'SkypeLogView': 'View log files created by Skype',
+              'SmartSniff': 'Captures TCP/IP packets and view the captured data as sequence of conversations',
+              'SniffPass': 'Capture the passwords that pass through your network adapter',
+              'SocketSniff': 'Watch the Windows Sockets (WinSock) activity of the selected process',
+              'SoundVolumeView': 'View/change sound levels and save/load sound level profiles on Windows',
+              'SpecialFoldersView': 'Easily jump to special folders in your system',
+              'SoundVolumeCommandLine': 'Sound volume command-line tool for Windows',
+              'SysExporter': 'Grab the data stored in list-views, tree-views, list boxes, and combo boxes',
+              'TableTextCompare': 'Compare tab-delimited or comma-delimited (csv) files',
+              'TaskSchedulerView': 'View/Disable/Enable tasks from the Task Scheduler of Windows',
+              'TCPConnectProblemView': 'Monitor TCP connection problems',
+              'TcpLogView': 'Monitors the opened TCP connections on your system',
+              'TimeZonesView': 'Displays all world time zones',
+              'TurnedOnTimesView': 'View the time/date ranges that your computer was turned on',
+              'UninstallView': 'Shows installed programs on your system and allows you to uninstall them',
+              'URLProtocolView': 'View/disable/enable the URL protocols installed on your system',
+              'URLStringGrabber': 'Grab URL strings of Web sites from Internet Explorer',
+              'USBDeview': 'Lists all installed USB devices that you previously used',
+              'USBDriveLog': 'USB Drive Log For Windows 10',
+              'USBLogView': 'Records the details of any USB device that is plugged/unplugged into your system',
+              'UserAssistView': 'Decrypt and displays the list of all UserAssist entries',
+              'UserProfilesView': 'View user profiles information on your system',
+              'VaultPasswordView': 'Decrypts passwords stored in Windows Vault',
+              'VideoCacheView': 'Extract Web site video files from the cache of your Web browser',
+              'VNCPassView': 'Recover the passwords stored by the VNC tool',
+              'Volumouse': 'Adjust the volume of your speaker with the wheel of your mouse',
+              'WakeMeOnLan': 'Turn on one or more computers remotely by sending Wake-on-LAN (WOL) packet',
+              'WebBrowserBookmarksView': 'View all bookmarks of Chrome and Firefox Web browsers',
+              'WebBrowserPassView': 'Recover lost passwords from your Web browser',
+              'WebCacheImageInfo': 'Shows EXIF information of the images stored in Web browser cache',
+              'WebCamImageSave': 'Capture still images from your WebCam',
+              'WebCookiesSniffer': 'Captures Web site cookies and displays them in a simple table',
+              'WebSiteSniffer': 'Capture Web site files and save them on your hard drive',
+              'WebVideoCap': 'Capture Flash Video files and RTSP streams while watching them in a Web browser',
+              'WhatInStartup': 'Disable/enable/delete programs that are loaded at Windows startup',
+              'WhatIsHang': 'Get information about Windows software that hangs',
+              'WhoisCL': 'Get WHOIS information about a registered domain from command-line',
+              'WhoIsConnectedSniffer': 'Shows who connects to your network by listening to network packets',
+              'WhoisThisDomain': 'Get information about a registered domain from WHOIS server',
+              'WhosIP': 'Find all available information about an IP address from command-line',
+              'WifiChannelMonitor': 'Captures wifi traffic in monitor mode and displays AP/clients information',
+              'WifiDiagnosticsView': 'Wifi diagnostics tool for Windows',
+              'WifiHistoryView': 'Displays the history of connections to wireless networks on your computer',
+              'WifiInfoView': 'Displays extensive information about wireless networks in your area',
+              'WinCrashReport': 'Displays a report about crashed Windows application',
+              'WinDefLogView': 'Windows Defender Log Viewer',
+              'WinDefThreatsView': 'View Windows Defender threats of local and remote computer',
+              'WinFontsView': 'Display sample of all fonts installed on your system',
+              'WinLister': 'Displays the list of opened windows on your system',
+              'WinLogOnView': 'Displays logon/logoff times on Windows Vista/7/8/2008',
+              'WinMailPassRec': 'Password Recovery For Windows Mail App of Windows 10 and Windows 11',
+              'WinPrefetchView': 'View the Prefetch files (.pf) stored in your system',
+              'WinsockServicesView': 'View/Disable/Enable Winsock service providers installed on your system',
+              'Windows Updates History Viewer': 'Displays the history of Windows updates for your system',
+              'WirelessConnectionInfo': 'Displays general information and statistics about the active wifi connection',
+              'WirelessKeyView': 'Recovers lost wireless network keys (WEP/WPA) stored in your computer',
+              'WirelessNetConsole': 'View wireless networks information (console application)',
+              'WirelessNetView': 'Monitor the activity of wireless networks around you',
+              'Wireless Network Watcher': 'Shows who is connected to your wireless network',
+              'WinUpdatesList': 'Displays the list of all Windows updates (Service Packs and Hotfixes)'
+            },
+            nirOverview: '<b>🔑 Passwörter:</b> ProduKey · WebBrowserPassView · WirelessKeyView · ChromePass · VaultPasswordView · LSASecretsDump · EncryptedRegView<br><b>🌐 Netzwerk:</b> CurrPorts · SmartSniff · WifiInfoView · DNSQuerySniffer · NetworkLatencyView · PingInfoView<br><b>🔍 Forensik:</b> LastActivityView · USBDeview · ShellBagsView · ExecutedProgramsList · WinLogOnView<br><b>🌍 Browser:</b> BrowsingHistoryView · ChromeCacheView · ChromeCookiesView · MZCacheView<br><b>🖥️ System:</b> BlueScreenView · ServiWin · DriverView · ProcessActivityView · DevManView<br><b>📋 Registry:</b> RegistryChangesView · RegScanner · OfflineRegistryFinder<br><b>📁 Dateien:</b> SearchMyFiles · HashMyFiles · FolderChangesView · NTFSLinksView'
+          },
+        ]
+      },
+
+      {
+        icon: '🔑', title: 'Keys & Passwörter', tools: [
+          { name: 'ProduKey', desc: 'Windows + Office Lizenzkeys auslesen – Direktstart', in: ['s'] },
+          { name: 'ShowKeyPlus', desc: 'Windows-Produkt-Key & OEM-Key auslesen', in: ['h'], tier: 2 },
+          { name: 'RecoverKeysPortable', desc: 'Lizenzkeys für hunderte installierter Programme', in: ['m'], tier: 2 },
+          { name: 'WebBrowserPassView', desc: 'Gespeicherte Browser-Passwörter anzeigen – Direktstart', in: ['s'] },
+          { name: 'WirelessKeyView', desc: 'WLAN-Passwörter anzeigen', in: ['m', 's'] },
+          { name: 'Lazesoft Password Recovery', desc: 'Windows-Passwort zurücksetzen (grafisch)', in: ['h'], tier: 2 },
+          { name: 'NT Password Edit', desc: 'Windows-Passwort direkt in SAM-Datei ändern', in: ['h'], tier: 2 },
+          { name: 'Windows Login Unlocker', desc: 'Gesperrte Windows-Accounts entsperren', in: ['h'], tier: 2 },
+          { name: 'Lazesoft Windows Recovery', desc: 'Bootprobleme beheben & Passwörter zurücksetzen', in: ['h'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🪟', title: 'Windows-Optimierung & Registry', tools: [
+          { name: 'O&O ShutUp10++', desc: 'Datenschutz & Telemetrie deaktivieren', in: ['s'] },
+          { name: 'O&O AppBuster', desc: 'Vorinstallierte Bloatware entfernen', in: ['s'] },
+          { name: 'Autoruns', desc: 'Autostart-Einträge verwalten', in: ['h', 'm', 's'] },
+          { name: 'WinNTSetup', desc: 'Windows von USB/PE aus installieren & tweaken', in: ['h'], tier: 2 },
+          { name: 'Attribute Changer', desc: 'Datei- & Ordner-Attribute inkl. Zeitstempel ändern', in: ['h'], tier: 2 },
+          { name: 'Change Keyboard Layout', desc: 'Tastaturlayout im PE schnell wechseln', in: ['h'], tier: 2 },
+          { name: 'Regshot', desc: 'Registry-Vorher/Nachher-Vergleich – Änderungen erkennen', in: ['h', 'm'], tier: 2 },
+          { name: 'Registry Backup', desc: 'Registry-Sicherung & automatische Wiederherstellung', in: ['h'] },
+          { name: 'Dependency Walker', desc: 'DLL-Abhängigkeiten von .exe-Dateien analysieren', in: ['h'], tier: 2 },
+          { name: 'PowerShell Core', desc: 'Moderner PowerShell 7-Interpreter im PE', in: ['h'] },
+          { name: 'RegAlyzer', desc: 'Erweiterte Registry-Suche & -Bearbeitung', in: ['m'], tier: 2 },
+          { name: 'Registry Workshop', desc: 'Mächtiger Registry-Editor mit Suche & Vergleich', in: ['m'], tier: 2 },
+          { name: 'RegOwnershipEx', desc: 'Registry-Schlüsselbesitz übernehmen', in: ['m'], tier: 2 },
+          { name: 'RegistryManager', desc: 'Registry-Hives laden, vergleichen & exportieren', in: ['m'], tier: 2 },
+          { name: 'Registry Loader PE', desc: 'Offline-Registry eines anderen Windows-Systems laden', in: ['m'], tier: 2 },
+          { name: 'Wise Registry Cleaner', desc: 'Registry bereinigen & defragmentieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🔍', title: 'Forensik & Prozess-Analyse', tools: [
+          { name: 'USBDeview', desc: 'Alle USB-Geräte die je angeschlossen waren', in: ['s'] },
+          { name: 'LastActivityView', desc: 'Vollständige Zeitlinie aller PC-Aktionen', in: ['s'] },
+          { name: 'BrowsingHistoryView', desc: 'Browser-Verlauf aller Browser auf einmal', in: ['s'] },
+          { name: 'ShellBagsView', desc: 'Welche Ordner wurden wann geöffnet – auch gelöschte', in: ['s'] },
+          { name: 'WhatChanged', desc: 'Systemänderungen vor/nach einer Installation', in: ['m'], tier: 2 },
+          { name: 'Process Explorer', desc: 'Erweiterter Task-Manager, VirusTotal-Integration', in: ['h', 'm', 's'] },
+          { name: 'Process Hacker', desc: 'Speicher, Handles, Netzwerk live einsehen', in: ['m'], tier: 2 },
+          { name: 'System Explorer', desc: 'Task-Manager-Ersatz mit Datei-Infos & VirusTotal', in: ['m'], tier: 2 },
+          { name: 'DTask Manager', desc: 'Kompakter Prozess-Manager mit erweiterten Kill-Optionen', in: ['m'], tier: 2 },
+          { name: 'VMMap', desc: 'Virtuellen Speicher eines Prozesses analysieren', in: ['h', 'm'], tier: 2 },
+          { name: 'ExamDiff Pro', desc: 'Datei- und Verzeichnisvergleich (Diff-Tool)', in: ['h'], tier: 2 },
+          { name: 'WinMerge', desc: 'Textdateien und Ordner vergleichen & zusammenführen', in: ['h'], tier: 2 },
+          { name: 'MD5 Hasher', desc: 'Datei-Prüfsummen berechnen & Integrität prüfen', in: ['m'], tier: 2 },
+          { name: 'RapidCRC Unicode', desc: 'CRC/MD5/SHA-Prüfsummen erzeugen & validieren', in: ['m'], tier: 2 },
+          { name: 'PCI-Z', desc: 'Unbekannte PCI-Geräte identifizieren', in: ['m'], tier: 2 },
+          { name: 'dotNET Inspector', desc: '.NET-Assemblies und -Versionen auf einem System analysieren', in: ['m'], tier: 2 },
+          { name: 'Error Lookup', desc: 'Windows-Fehlercodes in Klartext übersetzen', in: ['m'], tier: 2 },
+          { name: 'XN Resource Editor', desc: 'Ressourcen in .exe/.dll-Dateien anzeigen & bearbeiten', in: ['m'], tier: 2 },
+          { name: 'PNGOptimizer', desc: 'PNG-Dateien verlustfrei komprimieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🌐', title: 'Netzwerk & Diagnose', tools: [
+          { name: 'NetAdapter Repair', desc: 'Netzwerkadapter reparieren & zurücksetzen', in: ['s'] },
+          { name: 'Advanced IP Scanner', desc: 'Alle Geräte im lokalen Netzwerk finden', in: ['s'] },
+          { name: 'TCPView', desc: 'Netzwerkverbindungen live überwachen', in: ['h', 's'] },
+          { name: 'WifiInfoView', desc: 'WLAN-Netzwerke analysieren', in: ['s'], tier: 2 },
+          { name: 'NetworkLatencyView', desc: 'Netzwerklatenz zu allen Hops messen', in: ['s'], tier: 2 },
+          { name: 'Wireshark', desc: 'Netzwerkverkehr mitschneiden & analysieren', in: ['m', 's'] },
+          { name: 'PENetwork', desc: 'Netzwerkkonfiguration direkt im Windows PE anpassen', in: ['h'], tier: 2 },
+          { name: 'WinSCP', desc: 'SFTP/FTP/SCP-Client – Dateien sicher übertragen', in: ['h', 'm'], tier: 2 },
+          { name: 'PuTTY / KiTTY', desc: 'SSH/Telnet-Terminal-Client', in: ['h', 'm'], tier: 2 },
+          { name: 'Google Chrome', desc: 'Browser im PE für Recherche & Downloads', in: ['h'], tier: 2 },
+          { name: 'Mozilla Firefox', desc: 'Alternativer Browser im PE', in: ['h'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🖥️', title: 'Hardware-Info', tools: [
+          { name: 'HWiNFO64', desc: 'Vollständige Hardware-Diagnose – Temps, Voltages, Sensoren', in: ['h', 'm', 's'] },
+          { name: 'AIDA64', desc: 'RAM-Timings & detaillierte Mainboard-Analyse', in: ['m'] },
+          { name: 'CPU-Z', desc: 'CPU, RAM & Mainboard Details', in: ['h', 'm', 's'] },
+          { name: 'GPU-Z', desc: 'GPU-Details, VRAM, Takt & Sensoren', in: ['h', 'm', 's'] },
+          { name: 'Speccy', desc: 'Übersichtliche Systemzusammenfassung inkl. Temperaturen', in: ['h', 'm'], tier: 2 },
+          { name: 'RAMMap', desc: 'Windows RAM-Nutzung detailliert analysieren', in: ['h', 'm'], tier: 2 },
+          { name: 'RAMExpert', desc: 'RAM-Informationen & Belegung einfach anzeigen', in: ['m'], tier: 2 },
+          { name: 'BlueScreenView', desc: 'BSOD-Crashdumps analysieren – fehlerhaften Treiber finden', in: ['m', 's'] },
+          { name: 'DriverView', desc: 'Alle installierten Treiber auf einen Blick', in: ['s'], tier: 2 },
+          { name: 'Dead Pixel Tester', desc: 'Monitor auf Pixelfehler testen', in: ['m'], tier: 2 },
+          { name: 'Aqua Key Test', desc: 'Tastatur-Tasten einzeln auf Funktion prüfen', in: ['h'], tier: 2 },
+          { name: 'CDInfo', desc: 'Optische Laufwerke & Medien analysieren', in: ['m'], tier: 2 },
+          { name: 'BatExpert', desc: 'Akku-Diagnose: Kapazität, Ladezyklen, Health', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🔥', title: 'Stress-Tests & RAM-Tests', tools: [
+          { name: 'OCCT', desc: 'All-in-One Stress-Test – CPU, GPU, RAM & Netzteil', in: ['s'] },
+          { name: 'Prime95', desc: 'CPU Stress-Test & Stabilitätstest (Goldstandard)', in: ['s'] },
+          { name: 'FurMark', desc: 'Aggressivster GPU Stress-Test', in: ['s'] },
+          { name: 'Memtest86+', desc: 'RAM-Test außerhalb Windows (Ventoy ISO)', in: ['m'] },
+          { name: 'Ultimate Boot CD (UBCD)', desc: 'Hardware-Diagnose-Sammlung für ältere Systeme', in: ['m'], tier: 2 },
+          { name: 'HDAT2', desc: 'DOS-basierter Low-Level HDD Bad Sector Scanner', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🔧', title: 'System-Reparatur & Bereinigung', tools: [
+          { name: 'Windows Repair (Tweaking.com)', desc: 'Repariert kaputte Windows-Funktionen (Registry, Update, Firewall)', in: ['s'] },
+          { name: 'FixWin 11', desc: 'Windows-Probleme per Knopfdruck beheben', in: ['s'], tier: 2 },
+          { name: 'RunAsTool', desc: 'Programme als Admin ohne Admin-Passwort starten', in: ['s'], tier: 2 },
+          { name: 'DDU (Display Driver Uninstaller)', desc: 'Grafiktreiber rückstandslos entfernen', in: ['m', 's'] },
+          { name: 'BleachBit', desc: 'Tiefe Systemreinigung, open source', in: ['m'], tier: 2 },
+          { name: 'CCleaner', desc: 'System- & Registry-Reinigung, Browser-Cache leeren', in: ['m'], tier: 2 },
+          { name: 'Wise Disk Cleaner', desc: 'Festplatte bereinigen & Junk-Dateien löschen', in: ['m'], tier: 2 },
+          { name: 'IObit Unlocker', desc: 'Blockierte Dateien löschen/verschieben', in: ['m', 's'], tier: 2 },
+          { name: 'EaseUS Todo PCTrans', desc: 'Daten & Programme zwischen PCs oder Laufwerken migrieren', in: ['m'], tier: 2 },
+          { name: 'SUMo', desc: 'Software-Update-Monitor – veraltete Programme finden', in: ['m'], tier: 2 },
+          { name: 'DUMo', desc: 'Driver-Update-Monitor – veraltete Treiber finden', in: ['m'], tier: 2 },
+          { name: 'ClassicShutdown', desc: 'Klassisches Windows-Herunterfahren-Menü im PE', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🚗', title: 'Treiber', tools: [
+          { name: 'Snappy Driver Installer Origin (SDIO)', desc: 'Treiber sichern, wiederherstellen & aktualisieren – riesige Offline-Datenbank', in: ['m', 's'] },
+          { name: 'Driver Booster', desc: 'Treiber-Update-Tool mit großer Online-Datenbank', in: ['m'], tier: 2 },
+          { name: 'Driver Talent Pro', desc: 'Treiber sichern, aktualisieren & wiederherstellen', in: ['m'], tier: 2 },
+          { name: 'Auslogics Driver Updater', desc: 'Treiber-Updates mit integrierter Backup-Funktion', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🖥️', title: 'Fernwartung', tools: [
+          { name: 'AnyDesk', desc: 'Fernwartung ohne Installation', in: ['h', 'm', 's'] },
+          { name: 'AeroAdmin', desc: 'Kostenlose Fernwartung, kein Account nötig', in: ['h'], tier: 2 },
+          { name: 'Telegram Desktop', desc: 'Messenger – Kommunikation & Datei-Transfer im Einsatz', in: ['m'] },
+          { name: 'Discord', desc: 'Kommunikation mit dem Kunden während der Reparatur', in: ['m'] },
+        ]
+      },
+
+      {
+        icon: '🔌', title: 'USB-Tools & Brennen', tools: [
+          { name: 'Ventoy', desc: 'Neuen USB-Stick mit Ventoy aufsetzen', in: ['s'] },
+          { name: 'Rufus', desc: 'Bootfähige USBs erstellen (Alternative für Einzelsticks)', in: ['h', 'm', 's'] },
+          { name: 'ImageUSB', desc: 'Byte-für-Byte USB-Images erstellen & schreiben', in: ['h'], tier: 2 },
+          { name: 'balenaEtcher', desc: 'Images auf USB-Sticks & SD-Karten flashen', in: ['m'], tier: 2 },
+          { name: 'WinUSB', desc: 'Windows-ISO direkt auf USB-Stick schreiben', in: ['m'], tier: 2 },
+          { name: 'CDBurnerXP', desc: 'CD/DVD/Blu-ray brennen', in: ['h'], tier: 2 },
+          { name: 'BurnAware', desc: 'Optische Medien brennen & ISO erstellen', in: ['m'], tier: 2 },
+          { name: 'IsoBurner', desc: 'ISO-Dateien auf CD/DVD brennen', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '📁', title: 'Datei-Manager & Dateiverwaltung', tools: [
+          { name: 'Total Commander', desc: 'Klassischer Dual-Pane-Dateimanager', in: ['h'], tier: 2 },
+          { name: 'Explorer++', desc: 'Tabbed Windows Explorer-Alternative', in: ['m'], tier: 2 },
+          { name: 'Q-Dir', desc: 'Viergeteilter Dateimanager für maximale Übersicht', in: ['m'], tier: 2 },
+          { name: 'WinNc', desc: 'Norton-Commander-Style Dateimanager', in: ['m'], tier: 2 },
+          { name: 'Command Prompt Portable', desc: 'Portable Kommandozeile mit erweitertem PATH', in: ['m'], tier: 2 },
+          { name: 'Everything', desc: 'Blitzschnelle Dateisuche auf NTFS', in: ['s'] },
+          { name: 'FastCopy', desc: 'Sehr schnelles Kopieren & Sichern von Dateien', in: ['s'] },
+          { name: 'Bulk Rename Utility', desc: 'Massenhaftes Datei-Umbenennen nach Regeln', in: ['s'], tier: 2 },
+          { name: '7-Zip', desc: 'Archivhandling (alle Formate)', in: ['h', 'm', 's'] },
+          { name: 'Notepad++', desc: 'Configs & Logs komfortabel bearbeiten', in: ['h', 'm', 's'] },
+          { name: 'PowerISO', desc: 'ISO-Dateien erstellen, bearbeiten & mounten', in: ['m'], tier: 2 },
+          { name: 'UltraISO', desc: 'ISO-Editor & Bootable-USB-Creator', in: ['m'], tier: 2 },
+          { name: 'MediaCreationTool (Win 10/11)', desc: 'Windows 10 und 11 ISO direkt herunterladen', in: ['m'] },
+          { name: 'MediaCreationTool (Win 8.1)', desc: 'Windows 8.1 ISO herunterladen', in: ['m'], tier: 2 },
+          { name: 'Windows ISO Downloader', desc: 'Ältere Windows-ISO-Versionen herunterladen', in: ['m'], tier: 2 },
+          { name: 'UUID/GUID Generator', desc: 'Eindeutige IDs für Tests & Konfigurationen generieren', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🎨', title: 'Medien, Bilder & Sonstiges', tools: [
+          { name: 'AbiWord', desc: 'Schlanke Textverarbeitung, Word-Dokumente lesen & bearbeiten', in: ['m'], tier: 2 },
+          { name: 'FSViewer', desc: 'Schneller Bildbetrachter', in: ['h'], tier: 2 },
+          { name: 'IrfanView', desc: 'Bildbetrachter & Konverter', in: ['h', 'm'] },
+          { name: 'XnView', desc: 'Bildbetrachter & Konverter mit Batch-Funktion', in: ['m'], tier: 2 },
+          { name: 'Paint.NET', desc: 'Bildbearbeitung mit Ebenen-Unterstützung', in: ['m'] },
+          { name: 'Lightscreen', desc: 'Screenshot-Tool mit automatischer Speicherung', in: ['m'], tier: 2 },
+          { name: 'VLC Media Player', desc: 'Öffnet jeden Video- & Audioformat', in: ['h'] },
+          { name: 'FreeTube', desc: 'YouTube-Client ohne Werbung', in: ['m'], tier: 2 },
+          { name: 'Sumatra PDF', desc: 'Schlanker PDF-Viewer', in: ['h', 'm'] },
+          { name: 'Free Office', desc: 'Office-Suite (Writer, Calc, Presentation) im PE', in: ['h'], tier: 2 },
+          { name: 'ONLY OFFICE', desc: 'Moderne Office-Suite, Word/Excel/PPT-kompatibel', in: ['m'], tier: 2 },
+          { name: 'DeepL', desc: 'KI-Übersetzer – Texte im Einsatz übersetzen', in: ['m'], tier: 2 },
+          { name: 'Easy Translator', desc: 'Kompakter Übersetzer für Texte', in: ['m'], tier: 2 },
+          { name: 'NVDA Screen Reader', desc: 'Bildschirmvorleseprogramm für Barrierefreiheit', in: ['h'] },
+          { name: 'On-Screen Keyboard', desc: 'Bildschirmtastatur – nützlich bei defekter Tastatur', in: ['m'], tier: 2 },
+          { name: 'PNotes', desc: 'Haftnotizen auf dem Desktop', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '🎮', title: 'Spiele & Unterhaltung', tools: [
+          { name: '3D Pinball', desc: 'Klassischer Space Cadet Pinball', in: ['m'], tier: 2 },
+          { name: 'KoboDeluxe', desc: 'Arkade-Shooter', in: ['m'], tier: 2 },
+          { name: 'Mines Perfect', desc: 'Minesweeper-Klon', in: ['m'], tier: 2 },
+          { name: 'Quick Solitaire', desc: 'Solitaire-Kartenspiel', in: ['m'], tier: 2 },
+          { name: 'Sudoku', desc: 'Sudoku-Rätselspiel', in: ['m'], tier: 2 },
+          { name: 'TileWorld', desc: "Chip's Challenge Puzzle-Spiel", in: ['m'] },
+          { name: 'Wabbitemu', desc: 'TI-Taschenrechner-Emulator (TI-83/84)', in: ['m'], tier: 2 },
+        ]
+      },
+
+      {
+        icon: '💽', title: 'ISOs – Ventoy-Bootmenü', tools: [
+          { name: 'ESET SysRescue Live', desc: 'Bootbarer Offline-Virenscanner – unabhängig von Windows', in: ['h'] },
+          { name: 'ShredOS', desc: 'Festplatten sicher löschen vor PC-Verkauf (DoD-Standard)', in: ['s'] },
+          { name: 'SystemRescue', desc: 'Mächtiges Linux-Rettungssystem inkl. GParted', in: ['s'] },
+          { name: 'Ubuntu Live', desc: 'Dateien retten wenn Windows nicht bootet – einfachste GUI', in: ['s'] },
+          { name: 'Linux Mint Live', desc: 'Windows-ähnlich, ideal für Einsteiger & Dateirettung', in: ['s'] },
+          { name: 'Tails OS', desc: 'Anonym surfen, alles verschlüsselt, hinterlässt keine Spuren', in: ['s'] },
+          { name: 'Super GRUB2 Disk', desc: 'Startet Systeme die nach Updates nicht mehr booten (ISO)', in: ['s'] },
+        ]
+      },
+
+    ];
+
+    // ── State ──────────────────────────────────────────────────────
+    const filters = new Set();
+    let query = '';
+
+    // ── Filter ─────────────────────────────────────────────────────
+    function setFilter(f) {
+      if (f === null) { filters.clear(); }
+      else { filters.has(f) ? filters.delete(f) : filters.add(f); }
+      const map = { all: null, h: 'h', m: 'm', s: 's' };
+      for (const [id, key] of Object.entries(map)) {
+        const active = key === null ? filters.size === 0 : filters.has(key);
+        document.getElementById('btn-' + id).className = 'btn' + (active ? ' active-' + id : '');
+      }
+      applyVisibility();
+    }
+
+    function matchesFilter(inc) {
+      if (!filters.size) return true;
+      for (const f of filters) if (!inc.includes(f)) return false;
+      return true;
+    }
+
+    // ── Search ─────────────────────────────────────────────────────
+    function onSearch(val) {
+      query = val.toLowerCase().trim();
+      document.querySelector('.quickaccess').style.display = query ? 'none' : '';
+      document.getElementById('qa-grid').style.display = query ? 'none' : '';
+      document.querySelectorAll('.category').forEach(cat => {
+        const catHit = query && cat.querySelector('.cat-title').textContent.toLowerCase().includes(query);
+        const toolHit = [...cat.querySelectorAll('.tool-card')].some(c =>
+          c.dataset.name.includes(query) || c.dataset.desc.includes(query));
+        cat.querySelector('.cat-header').classList.toggle('cat-match', catHit);
+        if (catHit || toolHit) cat.classList.add('open');
+        else if (query) cat.classList.remove('open');
+      });
+      applyVisibility();
+    }
+
+    // ── Expand / Collapse all ──────────────────────────────────────
+    function expandCollapseAll() {
+      const cats = document.querySelectorAll('.category');
+      const open = [...cats].some(c => c.classList.contains('open'));
+      cats.forEach(c => c.classList.toggle('open', !open));
+      document.getElementById('btn-expand').textContent = open ? '▶ Alle aufklappen' : '▼ Alle einklappen';
+    }
+
+    // ── Visibility ─────────────────────────────────────────────────
+    function applyVisibility() {
+      let vis = 0, vH = 0, vM = 0, vS = 0;
+      document.querySelectorAll('.tool-card').forEach(card => {
+        const inc = card.dataset.in.split(',');
+        const tier2hidden = card.classList.contains('tier2') && card.classList.contains('tier2-hidden');
+
+        // NirSoft sub-tool search
+        let nirMatches = [];
+        if (query && card.dataset.nir) {
+          const nir = JSON.parse(card.dataset.nir);
+          for (const [toolName, toolDesc] of Object.entries(nir)) {
+            if (toolName.toLowerCase().includes(query) || toolDesc.toLowerCase().includes(query)) {
+              nirMatches.push({ toolName, toolDesc });
+            }
+          }
+        }
+
+        const nameDescMatch = !query || card.dataset.name.includes(query) || card.dataset.desc.includes(query);
+        const show = !tier2hidden && matchesFilter(inc) && (!query || nameDescMatch || nirMatches.length > 0);
+        card.classList.toggle('hidden', !show);
+
+        // update nir search result box
+        const nirResult = card.querySelector('.nir-search-result');
+        if (nirResult) {
+          const placeholder = card.querySelector('.nir-placeholder');
+          if (nirMatches.length > 0) {
+            nirResult.innerHTML = `<div class="nir-found-label">Gefunden in ${card.dataset.name.charAt(0).toUpperCase() + card.dataset.name.slice(1)}:</div>` +
+              nirMatches.map(m => `<div class="nir-hit">🔍 <b>${m.toolName}</b> — ${m.toolDesc}</div>`).join('');
+            if (placeholder) placeholder.style.display = 'none';
+          } else {
+            nirResult.innerHTML = '';
+            if (placeholder) placeholder.style.display = '';
+            if (!query) {
+              card.querySelector('.tool-info-box')?.classList.remove('open');
+              const btn = card.querySelector('.tool-info-toggle');
+              if (btn) btn.textContent = '📋 Ausgewählte Tools anzeigen';
+            }
+          }
+        }
+
+        if (show) {
+          vis++;
+          if (inc.includes('h')) vH++;
+          if (inc.includes('m')) vM++;
+          if (inc.includes('s')) vS++;
+        }
+      });
+      document.querySelectorAll('.category').forEach(cat => {
+        cat.style.display = [...cat.querySelectorAll('.tool-card')].some(c => !c.classList.contains('hidden')) ? '' : 'none';
+      });
+      document.getElementById('cnt-vis').textContent = vis;
+      document.getElementById('cnt-h').textContent = vH;
+      document.getElementById('cnt-m').textContent = vM;
+      document.getElementById('cnt-s').textContent = vS;
+      updateTier2Buttons();
+    }
+
+    // ── Tier 2 state ───────────────────────────────────────────────
+    let tier2Global = false;
+
+    function updateTier2Buttons() {
+      document.querySelectorAll('.category').forEach(cat => {
+        const btn = cat.querySelector('.tier2-btn');
+        if (!btn) return;
+        const isOpen = cat.dataset.tier2 === 'open';
+        // count tier2 cards that match current filter (not hidden by filter, only by tier2-hidden)
+        const visibleTier2 = [...cat.querySelectorAll('.tool-card.tier2')].filter(c => {
+          const inc = c.dataset.in.split(',');
+          return matchesFilter(inc) && (!query || c.dataset.name.includes(query) || c.dataset.desc.includes(query));
+        });
+        if (visibleTier2.length === 0) {
+          btn.style.display = 'none';
+        } else {
+          btn.style.display = '';
+          btn.textContent = isOpen ? `− ${visibleTier2.length} weitere ausblenden` : `+ ${visibleTier2.length} weitere anzeigen`;
+        }
+      });
+    }
+
+    function toggleTier2(catEl) {
+      const open = catEl.dataset.tier2 === 'open';
+      catEl.dataset.tier2 = open ? '' : 'open';
+      catEl.querySelectorAll('.tool-card.tier2').forEach(c => c.classList.toggle('tier2-hidden', open));
+      applyVisibility();
+    }
+
+    function toggleAllTier2() {
+      tier2Global = !tier2Global;
+      document.querySelectorAll('.category').forEach(cat => {
+        if (!cat.querySelector('.tool-card.tier2')) return;
+        cat.dataset.tier2 = tier2Global ? 'open' : '';
+        cat.querySelectorAll('.tool-card.tier2').forEach(c => c.classList.toggle('tier2-hidden', !tier2Global));
+      });
+      document.getElementById('btn-tier2').textContent = tier2Global ? '− Erweiterte ausblenden' : '+ Erweiterte anzeigen';
+      applyVisibility();
+    }
+
+    // ── Render ─────────────────────────────────────────────────────
+    function dots(inc) {
+      return ['h', 'm', 's'].map(k =>
+        `<div class="pdot ${inc.includes(k) ? 'pdot-' + k : 'pdot-off'}"></div>`
+      ).join('');
+    }
+
+    function badges(inc) {
+      const labels = { h: "Hiren's", m: 'MediCat', s: 'Standalone' };
+      return ['h', 'm', 's'].filter(k => inc.includes(k))
+        .map(k => `<span class="badge badge-${k}">${labels[k]}</span>`).join('');
+    }
+
+    function render() {
+      const totalTools = data.reduce((sum, cat) => sum + cat.tools.length, 0);
+      document.getElementById('cnt-all').textContent = totalTools;
+      document.getElementById('categories').innerHTML = data.map(cat => {
+        // Tools sortieren: erst Tier 1 (ohne tier:2), dann Tier 2, jeweils alphabetisch
+        const tier1 = cat.tools.filter(t => t.tier !== 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        const tier2 = cat.tools.filter(t => t.tier === 2).sort((a, b) => a.name.localeCompare(b.name, 'de'));
+        const sortedTools = [...tier1, ...tier2];
+        const cards = sortedTools.map(t => {
+          const isTier2 = t.tier === 2;
+          const nirData = t.nir ? JSON.stringify(t.nir) : '';
+          const infoHtml = t.nirOverview
+            ? `<div class="nir-wrap">
+            <div class="nir-search-area">
+              <div class="nir-search-result"></div>
+            </div>
+            <button class="tool-info-toggle" onclick="this.querySelector('.nir-arrow').classList.toggle('open');this.nextElementSibling.classList.toggle('open');this.querySelector('.nir-toggle-text').textContent=this.nextElementSibling.classList.contains('open')?'Ausgewählte Tools ausblenden':'Ausgewählte Tools anzeigen'"><span class="nir-arrow">▶</span> <span class="nir-toggle-text">Ausgewählte Tools anzeigen</span></button>
+            <div class="tool-info-box">${t.nirOverview}</div>
+          </div>`
+            : '';
+          return `<div class="tool-card${isTier2 ? ' tier2 tier2-hidden' : ''}" data-in="${t.in.join(',')}" data-name="${t.name.toLowerCase()}" data-desc="${t.desc.toLowerCase()}"${nirData ? ` data-nir='${nirData}'` : ''}>
+        <div class="tool-top"><div class="pdots" title="● Hiren's ● MediCat ● Standalone">${dots(t.in)}</div><div class="tool-name">${t.name}</div></div>
+        <div class="tool-desc">${t.descHtml || t.desc}</div>
+        ${infoHtml}
+        <div class="tool-badges">${badges(t.in)}</div>
+      </div>`;
+        }).join('');
+
+        const tier2Count = cat.tools.filter(t => t.tier === 2).length;
+        const tier2Btn = tier2Count > 0
+          ? `<button class="tier2-btn" onclick="toggleTier2(this.closest('.category'))">+ ${tier2Count} weitere anzeigen</button>`
+          : '';
+
+        return `<div class="category open">
+      <div class="cat-header" onclick="this.closest('.category').classList.toggle('open')">
+        <span>${cat.icon}</span>
+        <span class="cat-title">${cat.title}</span>
+        <span class="cat-count">${cat.tools.length} Tools</span>
+        <span class="cat-chevron">▶</span>
+      </div>
+      <div class="tools-grid">${cards}</div>
+      ${tier2Btn}
+    </div>`;
+      }).join('');
+    }
+
+    // ── Quick Access ───────────────────────────────────────────────
+    const quickTools = [
+      { name: 'CrystalDiskInfo', cat: 'HDD Diagnose', in: ['h', 'm', 's'] },
+      { name: 'HWiNFO64', cat: 'Hardware-Info', in: ['h', 'm', 's'] },
+      { name: 'CPU-Z', cat: 'Hardware-Info', in: ['h', 'm', 's'] },
+      { name: 'Macrium Reflect', cat: 'Backup & Imaging', in: ['h', 's'] },
+      { name: 'Recuva', cat: 'Datenrettung', in: ['h', 'm', 's'] },
+      { name: 'TestDisk / PhotoRec', cat: 'Datenrettung', in: ['h', 's'] },
+      { name: 'Autoruns', cat: 'Windows / Registry', in: ['h', 'm', 's'] },
+      { name: 'Windows Repair (Tweaking.com)', cat: 'System-Reparatur', in: ['s'] },
+      { name: 'DDU (Display Driver Uninstaller)', cat: 'System-Reparatur', in: ['m', 's'] },
+      { name: 'Malwarebytes', cat: 'Sicherheit', in: ['m', 's'] },
+      { name: 'VeraCrypt', cat: 'Sicherheit', in: ['h', 'm', 's'] },
+      { name: 'AnyDesk', cat: 'Fernwartung', in: ['h', 'm', 's'] },
+      { name: 'Victoria', cat: 'HDD Diagnose', in: ['h', 'm', 's'] },
+      { name: 'Process Explorer', cat: 'Forensik', in: ['h', 'm', 's'] },
+      { name: 'Wireshark', cat: 'Netzwerk', in: ['m', 's'] },
+      { name: 'Snappy Driver Installer Origin (SDIO)', cat: 'Treiber', in: ['m', 's'] },
+    ];
+
+    // ── Sort ───────────────────────────────────────────────────────
+
+    function renderQuickAccess() {
+      document.getElementById('qa-grid').innerHTML = quickTools.map(t => {
+        return `<div class="qa-card" title="${t.cat}" onclick="highlightTool('${t.name.replace(/'/g, "\\'")}')">
+      <div class="qa-card-name">${t.name}</div>
+      <div class="qa-card-cat">${t.cat}</div>
+      <div class="qa-dots">${['h', 'm', 's'].map(k =>
+          `<div class="pdot ${t.in.includes(k) ? 'pdot-' + k : 'pdot-off'}"></div>`
+        ).join('')}</div>
+    </div>`;
+      }).join('');
+    }
+
+    function highlightTool(name) {
+      // expand all cats, then scroll to the tool card
+      document.querySelectorAll('.category').forEach(c => c.classList.add('open'));
+      const card = [...document.querySelectorAll('.tool-card')].find(c =>
+        c.dataset.name === name.toLowerCase() ||
+        c.dataset.name.startsWith(name.toLowerCase().split(' ')[0])
+      );
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.transition = 'background .1s';
+      card.style.background = 'rgba(0,170,255,.18)';
+      setTimeout(() => card.style.background = '', 1800);
+    }
+
+    render();
+    renderQuickAccess();
+  </script>
+</body>
+
+</html>
