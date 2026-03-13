@@ -83,21 +83,6 @@
             font-size: .8rem
         }
 
-        .open-all {
-            font-size: .75rem;
-            color: var(--accent);
-            background: transparent;
-            border: 1px solid var(--border);
-            padding: .35rem .6rem;
-            border-radius: 4px;
-            cursor: pointer
-        }
-
-        .open-all:hover {
-            border-color: var(--accent);
-            color: var(--white);
-        }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -166,7 +151,7 @@
                     <div class="section-title">Sicherheit</div>
                     <div class="section-sub">Tools für Verschlüsselung, VPN & Malware-Scans</div>
                 </div>
-                <button class="open-all" onclick="openAll('security')">alle öffnen</button>
+                <!-- 'Alle öffnen' entfernt -->
             </div>
             <div class="grid" id="security"></div>
         </div>
@@ -179,7 +164,7 @@
                     <div class="section-title">Generell</div>
                     <div class="section-sub">Nützliche allgemeine Tools</div>
                 </div>
-                <button class="open-all" onclick="openAll('general')">alle öffnen</button>
+                <!-- 'Alle öffnen' entfernt -->
             </div>
             <div class="grid" id="general"></div>
         </div>
@@ -230,10 +215,7 @@
             });
         }
 
-        function openAll(category) {
-            // Öffnet alle Links seriell (Browser kann Pop-up-Blocker aktivieren)
-            tools[category].forEach(t => window.open(t.url, '_blank'));
-        }
+        // 'Alle öffnen' Funktion entfernt — Feature deaktiviert per Nutzerwunsch.
 
         renderCards('security');
         renderCards('general');
