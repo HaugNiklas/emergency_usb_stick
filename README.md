@@ -64,6 +64,16 @@ Das interaktive **Dashboard** (`_SETUP/dashboard.html`) zeigt alle Tools aller Q
 
 ---
 
+## 🖥️ Software Launcher (schneller Link-Übersicht)
+
+Im Ordner `_SETUP` liegt eine zusätzliche, schlanke HTML-Seite zum schnellen Öffnen offizieller Download-Seiten: `_SETUP/software-launcher.html`.
+
+- Diese Seite ist optisch an die Übersicht (`ventoy-toolkit-overview.html`) angepasst (Farben, Schriftart, Kartendesign).
+- Enthält direkte Links zu wichtigen Tools (nur offizielle Download-Seiten, keine Binaries).
+- Datei kann direkt vom Stick geöffnet werden (z. B. `file://`-Pfad) oder auf den Root des Sticks kopiert werden.
+
+---
+
 ## ⚙️ Ventoy Konfiguration
 
 Die `ventoy/ventoy.json` sorgt für ein übersichtliches Bootmenü mit Kategorien und lesbaren Namen.  

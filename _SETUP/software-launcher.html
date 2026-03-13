@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Launcher</title>
+    <style>
+        :root {
+            --white: #fff;
+            --bg: #001;
+            --surface: #112;
+            --border: #223;
+            --text: #CDE;
+            --muted: #567;
+            --accent: #AAE;
+            --accent-bg: #AAE3;
+            --card-bg: #0f1418;
+            --card-border: #203040;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding: 2rem;
+        }
+
+        header {
+            max-width: 1100px;
+            margin: 0 auto 1.25rem auto;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0 0 .25rem 0;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 1rem auto 0 auto;
+        }
+
+        .section {
+            margin-bottom: 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: .75rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: .6rem;
+        }
+
+        .section-title {
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: .8rem
+        }
+
+        .open-all {
+            font-size: .75rem;
+            color: var(--accent);
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: .35rem .6rem;
+            border-radius: 4px;
+            cursor: pointer
+        }
+
+        .open-all:hover {
+            border-color: var(--accent);
+            color: var(--white);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: .6rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: .7rem .8rem;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+            transition: background .12s, border-color .12s;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: var(--accent);
+        }
+
+        .card-name {
+            font-size: .95rem;
+            font-weight: 600;
+            margin-bottom: .25rem;
+        }
+
+        .card-desc {
+            font-size: .78rem;
+            color: var(--muted);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 1rem 0;
+        }
+
+        footer {
+            max-width: 1100px;
+            margin: 1rem auto 0 auto;
+            color: var(--muted);
+            font-size: .8rem
+        }
+
+        @media (max-width:560px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Software Launcher</h1>
+        <div class="subtitle">Schneller Zugriff auf offizielle Download-Seiten – gestaltet passend zur Ventoy-Übersicht.
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">Sicherheit</div>
+                    <div class="section-sub">Tools für Verschlüsselung, VPN & Malware-Scans</div>
+                </div>
+                <button class="open-all" onclick="openAll('security')">alle öffnen</button>
+            </div>
+            <div class="grid" id="security"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">Generell</div>
+                    <div class="section-sub">Nützliche allgemeine Tools</div>
+                </div>
+                <button class="open-all" onclick="openAll('general')">alle öffnen</button>
+            </div>
+            <div class="grid" id="general"></div>
+        </div>
+
+    </div>
+
+    <footer>Hinweis: Diese Seite enthält keine Binaries — nur Links zu offiziellen Seiten. Datei auf dem Stick:
+        <code>_SETUP/software-launcher.html</code>
+    </footer>
+
+    <script>
+        const tools = {
+            security: [
+                { name: "KeePassXC", desc: "Passwort-Manager (lokal)", url: "https://keepassxc.org/download/" },
+                { name: "Proton Pass", desc: "Passwort-Manager (Cloud)", url: "https://proton.me/pass/download" },
+                { name: "Tor Browser", desc: "Anonymes Surfen", url: "https://www.torproject.org/download/" },
+                { name: "ProtonVPN", desc: "VPN", url: "https://protonvpn.com/download" },
+                { name: "VeraCrypt", desc: "Verschlüsselung", url: "https://veracrypt.fr/en/Downloads.html" },
+                { name: "Bitwarden", desc: "Cloud-Passwörter", url: "https://bitwarden.com/download/" },
+                { name: "Malwarebytes", desc: "Einmal-Scan", url: "https://www.malwarebytes.com/mwb-download" },
+                { name: "uBlock Origin", desc: "Adblock (Browser-Addon)", url: "https://ublockorigin.com/" },
+            ],
+            general: [
+                { name: "Zen Browser", desc: "Firefox-basiert", url: "https://zen-browser.app/" },
+                { name: "Firefox", desc: "Browser", url: "https://www.mozilla.org/de/firefox/" },
+                { name: "Brave", desc: "Browser", url: "https://brave.com/de/download/" },
+                { name: "Discord", desc: "Chat & Voice", url: "https://discord.com/download" },
+                { name: "LibreOffice", desc: "Office-Suite", url: "https://www.libreoffice.org/download/download/" },
+                { name: "VLC", desc: "Mediaplayer", url: "https://www.videolan.org/vlc/" },
+                { name: "7-Zip", desc: "Archiv-Tool", url: "https://www.7-zip.org/download.html" },
+                { name: "qBittorrent", desc: "Torrent-Client", url: "https://www.qbittorrent.org/download" },
+                { name: "Notepad++", desc: "Texteditor", url: "https://notepad-plus-plus.org/downloads/" },
+                { name: "Thunderbird", desc: "E-Mail-Client", url: "https://www.thunderbird.net/de/" },
+            ]
+        };
+
+        function renderCards(category) {
+            const container = document.getElementById(category);
+            container.innerHTML = '';
+            tools[category].forEach(t => {
+                const a = document.createElement('a');
+                a.className = 'card';
+                a.href = t.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.innerHTML = `<div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div>`;
+                container.appendChild(a);
+            });
+        }
+
+        function openAll(category) {
+            // Öffnet alle Links seriell (Browser kann Pop-up-Blocker aktivieren)
+            tools[category].forEach(t => window.open(t.url, '_blank'));
+        }
+
+        renderCards('security');
+        renderCards('general');
+    </script>
+</body>
+
+</html>
