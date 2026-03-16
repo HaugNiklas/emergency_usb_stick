@@ -642,7 +642,7 @@
       },
       {
         icon: '🔩', title: 'Festplatte – Spezialformate & Virtual Disk', tools: [
-          { name: 'HxD Hex Editor', desc: 'Hex-Editor für direkte Disk- und RAM-Bearbeitung', in: ['h', 'm'], tier: 2 },
+          { name: 'HxD Hex Editor', desc: 'Hex-Editor für direkte Disk- und RAM-Bearbeitung', in: ['h', 'm', 's'] },
           { name: 'HDHacker', desc: 'Boot-Sektor / MBR lesen, schreiben & sichern', in: ['m'], tier: 2 },
           { name: 'ImDisk Virtual Disk Driver', desc: 'ISO/IMG als virtuelles Laufwerk einbinden', in: ['h'], tier: 2 },
           { name: 'DiskInternals Linux Reader', desc: 'Ext2/3/4 Linux-Partitionen unter Windows lesen', in: ['h'], tier: 2 },
@@ -694,6 +694,7 @@
           { name: 'Emsisoft Emergency Kit', desc: 'Portable Malware-Scanner, kein Install nötig', in: ['s'] },
           { name: 'Dr. Web CureIt!', desc: 'Scanner mit anderer Engine – findet was andere übersehen', in: ['m', 's'] },
           { name: 'Kaspersky TDSSKiller', desc: 'Spezialist für Rootkits & Bootkits', in: ['m', 's'] },
+          { name: 'RKill', desc: 'Stoppt laufende Malware-Prozesse vor dem Scanner-Lauf – immer zuerst ausführen', in: ['s'] },
           { name: 'McAfee Stinger', desc: 'Schneller Malware-Quickscan, sehr leichtgewichtig', in: ['h', 'm'], tier: 2 },
           { name: 'ESET Online Scanner', desc: 'Tiefgreifender ESET-Scanner ohne Vollinstallation', in: ['h'] },
           { name: 'Panda Cloud Cleaner', desc: 'Cloud-basierter Malware-Scanner', in: ['m'], tier: 2 },
@@ -702,6 +703,7 @@
           { name: 'HijackThis', desc: 'Browser-Hijacker & verdächtige Starteinträge aufspüren', in: ['m'], tier: 2 },
           { name: 'Ransomware Decryption Tools', desc: 'No More Ransom Entschlüsselungs-Sammlung', in: ['m', 's'] },
           { name: 'VeraCrypt', desc: 'Verschlüsselte Container erstellen & öffnen', in: ['h', 'm', 's'] },
+          { name: 'ProtonVPN', desc: 'VPN-Client – sichere & verschlüsselte Verbindung vom Stick', in: ['s'] },
           { name: 'Tor Browser', desc: 'Anonymes Surfen über das Tor-Netzwerk', in: ['m'] },
           { name: 'OpenVPN Portable', desc: 'VPN-Verbindung direkt vom Stick aufbauen', in: ['m'], tier: 2 },
         ]
@@ -712,7 +714,7 @@
             name: 'SysInternals Suite',
             desc: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. process, disk oder network.',
             descHtml: 'Tippe oben in die Suche um in allen 70+ SysInternals-Tools zu suchen — z.B. <i>process</i>, <i>disk</i> oder <i>network</i>.<br><a class="nir-link" href="https://learn.microsoft.com/en-us/sysinternals/downloads/" target="_blank">→ Vollständige Tool-Liste auf learn.microsoft.com</a>',
-            in: ['h'],
+            in: ['h', 's'],
             nir: { 'AccessChk': 'Command-line tool for viewing effective permissions on files, registry keys, services, processes and kernel objects', 'AccessEnum': 'Shows who has what access to directories, files and Registry keys — find holes in permissions', 'AdExplorer': 'Advanced Active Directory viewer and editor', 'AdInsight': 'LDAP real-time monitoring tool for troubleshooting Active Directory client applications', 'AdRestore': 'Undelete Active Directory objects', 'Autologon': 'Bypass password screen during logon', 'Autoruns': 'See what programs are configured to startup automatically when your system boots and you log in', 'BgInfo': 'Automatically display relevant information about a Windows computer on the desktop background', 'CacheSet': 'Program that allows you to control the Cache Manager working set size', 'ClockRes': 'View the resolution of the system clock', 'Contig': 'Defragment individual files or create new files that are contiguous', 'Coreinfo': 'Shows mapping between logical processors and the physical processor, NUMA node, socket and cache topology', 'Ctrl2Cap': 'Kernel-mode driver that remaps Caps Lock key to Ctrl', 'DebugView': 'Monitor debug output on your local machine or across the Internet without an active debugger', 'Desktops': 'Create up to four virtual desktops and switch between them using hotkeys', 'Disk2vhd': 'Simplifies migration of physical systems into virtual machines (P2V)', 'DiskExt': 'Display volume disk-mappings', 'DiskMon': 'Capture all hard disk activity or acts as a software disk activity light in system tray', 'DiskView': 'Graphical disk sector viewer', 'DU': 'Report the disk space usage for the directory you specify', 'EFSDump': 'View information for encrypted files', 'FindLinks': 'Reports the file index and any hard links that exist for the specified file', 'Handle': 'Show what files are open by which processes', 'Hex2dec': 'Convert hex numbers to decimal and vice versa', 'Junction': 'Create Win2K NTFS symbolic links', 'LDMDump': 'Dump the contents of the Logical Disk Manager database', 'ListDLLs': 'List all DLLs that are currently loaded, including version numbers and full paths', 'LiveKd': 'Use Microsoft kernel debuggers to examine a live system', 'LoadOrder': 'See the order in which devices are loaded on your Windows system', 'LogonSessions': 'List the active logon sessions on a system', 'MoveFile': 'Schedule move and delete commands for the next reboot', 'NotMyFault': 'Crash, hang, and cause kernel memory leaks on your Windows system (for testing)', 'NTFSInfo': 'Detailed information about NTFS volumes including MFT size and location', 'PendMoves': 'Enumerate file rename and delete commands that will execute at next boot', 'PipeList': 'Display named pipes on your system', 'PortMon': 'Monitor serial and parallel port activity', 'ProcDump': 'Capture process dumps for CPU spikes, hung windows or unhandled exceptions', 'Process Explorer': 'Find out what files, registry keys and objects processes have open, which DLLs they have loaded', 'Process Monitor': 'Monitor file system, Registry, process, thread and DLL activity in real-time', 'PsExec': 'Execute processes on remote systems', 'PsFile': 'Show files opened remotely', 'PsGetSid': 'Display the SID of a computer or user', 'PsInfo': 'Obtain information about a system', 'PsKill': 'Kill processes by name or process ID', 'PsList': 'List detailed information about processes', 'PsLoggedOn': 'Show users logged on to a local or remote system', 'PsLogList': 'Dump event log records', 'PsPasswd': 'Change account passwords', 'PsPing': 'Measure network performance including latency and bandwidth', 'PsService': 'View and control services', 'PsShutdown': 'Shutdown or reboot a computer', 'PsSuspend': 'Suspend and resume processes', 'PsTools': 'Suite of command-line utilities for managing local and remote Windows systems', 'RAMMap': 'Advanced physical memory usage analysis — see exactly how Windows is using RAM', 'RDCMan': 'Manage multiple remote desktop connections', 'RegDelNull': 'Scan and delete Registry keys with embedded null-characters', 'RegJump': 'Jump to a registry path directly in Regedit', 'RU': 'View the registry space usage for the specified registry key', 'SDelete': 'Securely overwrite sensitive files and cleanse free space (DoD-compliant)', 'ShareEnum': 'Scan file shares on your network and view their security settings', 'ShellRunas': 'Launch programs as a different user via right-click context menu', 'Sigcheck': 'Show file version, timestamp, and digital signature details — verify file integrity', 'Streams': 'Reveal NTFS alternate streams in files', 'Strings': 'Search for ANSI and Unicode strings in binary images', 'Sync': 'Flush cached data to disk', 'Sysmon': 'Monitor and log system activity including processes, network connections and file changes', 'TCPView': 'Live view of all TCP and UDP endpoints, including local and remote addresses and state', 'VMMap': 'Analyze virtual memory usage of a specific process in detail', 'VolumeID': 'Set the Volume ID of FAT or NTFS drives', 'WhoIs': 'WHOIS lookup for domain registration information', 'WinObj': 'Display information about the Windows Object Manager namespace', 'ZoomIt': 'Screen zoom, annotation and recording tool for presentations' },
             nirOverview: '<b>🔍 Prozesse:</b> Process Explorer · Process Monitor · ProcDump · PsList · PsKill · VMMap<br><b>🚀 Autostart:</b> Autoruns · BgInfo · Desktops<br><b>🌐 Netzwerk:</b> TCPView · PsPing · PsTools · WhoIs · PortMon<br><b>💾 Festplatte:</b> DiskView · Disk2vhd · DU · SDelete · Contig · DiskMon<br><b>🔒 Sicherheit:</b> AccessChk · AccessEnum · Sigcheck · Sysmon · Streams<br><b>📋 Registry:</b> Autoruns · RegJump · RegDelNull · RU · AdExplorer<br><b>🖥️ System-Info:</b> PsInfo · Coreinfo · RAMMap · LogonSessions · Handle · ListDLLs<br><b>🔧 Remote:</b> PsExec · PsLoggedOn · PsLogList · PsService · PsShutdown · RDCMan'
           },
@@ -790,6 +792,7 @@
         icon: '🌐', title: 'Netzwerk & Diagnose', tools: [
           { name: 'NetAdapter Repair', desc: 'Netzwerkadapter reparieren & zurücksetzen', in: ['s'] },
           { name: 'Advanced IP Scanner', desc: 'Alle Geräte im lokalen Netzwerk finden', in: ['s'] },
+          { name: 'Angry IP Scanner', desc: 'Leichtgewichtiger portabler Netzwerkscanner – schnell & ohne Installation', in: ['s'] },
           { name: 'TCPView', desc: 'Netzwerkverbindungen live überwachen', in: ['h', 's'] },
           { name: 'WifiInfoView', desc: 'WLAN-Netzwerke analysieren', in: ['s'], tier: 2 },
           { name: 'NetworkLatencyView', desc: 'Netzwerklatenz zu allen Hops messen', in: ['s'], tier: 2 },
@@ -831,6 +834,7 @@
       {
         icon: '🔧', title: 'System-Reparatur & Bereinigung', tools: [
           { name: 'Windows Repair (Tweaking.com)', desc: 'Repariert kaputte Windows-Funktionen (Registry, Update, Firewall)', in: ['s'] },
+          { name: 'DISM++', desc: 'Offline Windows-Komponentenreparatur & Cleanup ohne PE – direkt unter laufendem Windows', in: ['s'] },
           { name: 'FixWin 11', desc: 'Windows-Probleme per Knopfdruck beheben', in: ['s'], tier: 2 },
           { name: 'RunAsTool', desc: 'Programme als Admin ohne Admin-Passwort starten', in: ['s'], tier: 2 },
           { name: 'DDU (Display Driver Uninstaller)', desc: 'Grafiktreiber rückstandslos entfernen', in: ['m', 's'] },
@@ -925,7 +929,9 @@
       },
       {
         icon: '💽', title: 'ISOs – Ventoy-Bootmenü', tools: [
-          { name: 'ESET SysRescue Live', desc: 'Bootbarer Offline-Virenscanner – unabhängig von Windows', in: ['h'] },
+          { name: 'ESET SysRescue Live', desc: 'Bootbarer Offline-Virenscanner – unabhängig von Windows', in: ['s'] },
+          { name: 'Kaspersky Rescue Disk', desc: 'Bootbarer Offline-Virenscanner mit starker Kaspersky-Engine', in: ['s'] },
+          { name: 'Clonezilla', desc: 'Goldstandard für Disk-Cloning – Partitionen & Laufwerke 1:1 klonen (ISO)', in: ['s'] },
           { name: 'ShredOS', desc: 'Festplatten sicher löschen vor PC-Verkauf (DoD-Standard)', in: ['s'] },
           { name: 'SystemRescue', desc: 'Mächtiges Linux-Rettungssystem inkl. GParted', in: ['s'] },
           { name: 'Ubuntu Live', desc: 'Dateien retten wenn Windows nicht bootet – einfachste GUI', in: ['s'] },
@@ -1118,6 +1124,7 @@
       { name: 'Autoruns', cat: 'Windows / Registry', in: ['h', 'm', 's'] },
       { name: 'Windows Repair (Tweaking.com)', cat: 'System-Reparatur', in: ['s'] },
       { name: 'DDU (Display Driver Uninstaller)', cat: 'System-Reparatur', in: ['m', 's'] },
+      { name: 'RKill', cat: 'Sicherheit', in: ['s'] },
       { name: 'Malwarebytes', cat: 'Sicherheit', in: ['m', 's'] },
       { name: 'VeraCrypt', cat: 'Sicherheit', in: ['h', 'm', 's'] },
       { name: 'AnyDesk', cat: 'Fernwartung', in: ['h', 'm', 's'] },

@@ -17,11 +17,11 @@
 
 ## 📁 Struktur des USB-Sticks
 
-```de
+```
 USB-Stick/
 ├── ISOs/
 │   ├── Windows/               ← Win 10 / Win 11 ISOs
-│   ├── Rettung/               ← Hiren's, ESET, Memtest86+, UBCD, Clonezilla, ShredOS
+│   ├── Rettung/               ← Hiren's, ESET, Kaspersky Rescue, Memtest86+, UBCD, Clonezilla, ShredOS
 │   └── Linux/                 ← SystemRescue, Ubuntu, Mint, Tails
 ├── Tools/
 │   ├── 01_Windows-Optimierung/
@@ -103,6 +103,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
         { "dir": "/ISOs/Rettung", "alias": "🛠️  Rettung & Reparatur" },
         { "image": "/ISOs/Rettung/Hirens-BootCD-PE.iso", "alias": "Hiren's BootCD PE – Allzweck-Rettungssystem" },
         { "image": "/ISOs/Rettung/ESET-SysRescue.iso", "alias": "ESET SysRescue Live – Virenscanner (Offline)" },
+        { "image": "/ISOs/Rettung/Kaspersky-Rescue-Disk.iso", "alias": "Kaspersky Rescue Disk – Virenscanner (Offline)" },
         { "image": "/ISOs/Rettung/Memtest86plus.iso", "alias": "Memtest86+ – RAM-Test" },
         { "image": "/ISOs/Rettung/UBCD.iso", "alias": "Ultimate Boot CD – Hardware-Diagnose Sammlung" },
         { "image": "/ISOs/Rettung/Clonezilla.iso", "alias": "Clonezilla – Festplatten & Partitionen klonen" },
@@ -120,6 +121,7 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
         { "key": "Win10",        "class": "windows" },
         { "key": "Hirens",       "class": "hiren" },
         { "key": "ESET",         "class": "linux" },
+        { "key": "Kaspersky",    "class": "linux" },
         { "key": "Memtest",      "class": "memtest" },
         { "key": "UBCD",         "class": "linux" },
         { "key": "Clonezilla",   "class": "linux" },
@@ -156,19 +158,24 @@ Datei in den `/ventoy/` Ordner auf dem Stick kopieren.
 | **Victoria** | Low-Level HDD-Diagnose & Bad Sector Remapping | [Download](https://hdd.by/victoria/) |
 | **WizTree** | Speicherplatzbelegung (NTFS direkt, sehr schnell) | [Download](https://www.diskanalyzer.com/) |
 | **AOMEI Partition Assistant** | Partitionen verschieben, verkleinern & verwalten | [Download](https://www.aomeitech.com/aomei-partition-assistant.html) |
+| **HxD Hex Editor** | Hex-Editor für direkte Disk- und RAM-Bearbeitung | [Download](https://mh-nexus.de/en/hxd/) |
 
 ---
 
 ## 🛡️ Sicherheit & Viren
 
+> 💡 **Empfohlene Reihenfolge beim Malware-Einsatz:** RKill → Malwarebytes → Dr. Web CureIt! → Emsisoft Emergency Kit
+
 | Tool | Beschreibung | Download |
 | --- | --- | --- |
+| **RKill** | Stoppt laufende Malware-Prozesse – **immer zuerst ausführen** vor jedem Scanner | [Download](https://www.bleepingcomputer.com/download/rkill/) |
 | **Malwarebytes** | On-Demand Malware-Scanner (Free: kein Echtzeit-Schutz) | [Download](https://www.malwarebytes.com/) |
 | **Emsisoft Emergency Kit** | Portable Malware-Scanner, kein Install nötig | [Download](https://www.emsisoft.com/en/home/emergencykit/) |
 | **Dr. Web CureIt!** | Scanner mit anderer Engine – findet was andere übersehen | [Download](https://free.drweb.com/cureit/) |
 | **Kaspersky TDSSKiller** | Spezialist für Rootkits & Bootkits | [Download](https://support.kaspersky.com/viruses/disinfection/5350) |
 | **Ransomware Decryption Tools** | No More Ransom Entschlüsselungs-Sammlung | [Download](https://www.nomoreransom.org/) |
 | **VeraCrypt** | Verschlüsselte Container erstellen & öffnen | [Download](https://www.veracrypt.fr/en/Downloads.html) |
+| **ProtonVPN** | VPN-Client – sichere & verschlüsselte Verbindung vom Stick | [Download](https://protonvpn.com/download) |
 
 ---
 
@@ -270,6 +277,7 @@ Besonders nützliche enthaltene Tools:
 | --- | --- | --- |
 | **NetAdapter Repair** | Netzwerkadapter reparieren & zurücksetzen | [Download](https://www.bleepingcomputer.com/download/netadapter-repair-all-in-one/) |
 | **Advanced IP Scanner** | Alle Geräte im lokalen Netzwerk finden | [Download](https://www.advanced-ip-scanner.com/) |
+| **Angry IP Scanner** | Leichtgewichtiger portabler Netzwerkscanner – schnell & ohne Installation | [Download](https://angryip.org/download/) |
 | **TCPView** *(SysInternals)* | Netzwerkverbindungen live überwachen | [Download](https://learn.microsoft.com/en-us/sysinternals/downloads/tcpview) |
 | **Wireshark** | Netzwerkverkehr mitschneiden & analysieren | [Download](https://www.wireshark.org/download.html) |
 
@@ -304,6 +312,7 @@ Besonders nützliche enthaltene Tools:
 | Tool | Beschreibung | Download |
 | --- | --- | --- |
 | **Windows Repair (Tweaking.com)** | Repariert kaputte Windows-Funktionen (Registry, Update, Firewall usw.) | [Download](https://www.tweaking.com/content/page/windows_repair_all_in_one.html) |
+| **DISM++** | Offline Windows-Komponentenreparatur & Cleanup – direkt unter laufendem Windows, ohne PE | [Download](https://github.com/Chuyu-Team/Dism-Multi-language/releases) |
 | **DDU (Display Driver Uninstaller)** | Grafiktreiber rückstandslos entfernen | [Download](https://www.guru3d.com/download/display-driver-uninstaller-download/) |
 
 ---
@@ -363,10 +372,11 @@ Besonders nützliche enthaltene Tools:
 | ISO | Beschreibung | Download |
 | --- | --- | --- |
 | **Hiren's BootCD PE** | All-in-One Rettungssystem (Win PE + ~300 Tools) | [Download](https://www.hirensbootcd.org/download/) |
-| **ESET SysRescue Live** | Bootbarer Offline-Virenscanner | [Download](https://www.eset.com/int/support/sysrescue/) |
+| **ESET SysRescue Live** | Bootbarer Offline-Virenscanner (ESET-Engine) | [Download](https://www.eset.com/int/support/sysrescue/) |
+| **Kaspersky Rescue Disk** | Bootbarer Offline-Virenscanner (Kaspersky-Engine) | [Download](https://support.kaspersky.com/viruses/rescuedisk) |
 | **Memtest86+** | RAM-Test außerhalb von Windows | [Download](https://www.memtest.org/) |
 | **Ultimate Boot CD (UBCD)** | Hardware-Diagnose Sammlung, ergänzt Hiren's | [Download](https://www.ultimatebootcd.com/download.html) |
-| **Clonezilla Live** | Festplatten & Partitionen 1:1 klonen | [Download](https://clonezilla.org/downloads.php) |
+| **Clonezilla Live** | Festplatten & Partitionen 1:1 klonen (Goldstandard) | [Download](https://clonezilla.org/downloads.php) |
 | **ShredOS** | Festplatten sicher löschen vor PC-Verkauf (DoD-Standard) | [Download](https://github.com/PartialVolume/shredos.x86_64) |
 | **Super GRUB2 Disk** | Startet Systeme die nach Updates nicht mehr booten | [Download](https://www.supergrubdisk.org/) |
 
@@ -390,7 +400,3 @@ Besonders nützliche enthaltene Tools:
 - Standalone-Tools laufen direkt unter laufendem Windows
 
 ---
-
-## 📝 Lizenz
-
-Eigene Scripts und Konfigurationsdateien in diesem Repository: [MIT License](LICENSE)
