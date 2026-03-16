@@ -7,24 +7,74 @@
   <title>Ventoy USB Toolkit</title>
   <style>
     :root {
+      /* ── Farben ── */
+      /* Farben */
       --bg: #001;
+      /* Hintergrund */
       --sf: #112;
+      /* Oberflächenfarbe */
       --br: #223;
+      /* Rahmenfarbe */
       --tx: #CDE;
+      /* Textfarbe */
       --mu: #567;
+      /* Sekundärtext */
       --ac: #889;
+      /* Akzentfarbe */
       --ac2: #8893;
+      /* Akzentfarbe transparent */
       --ch: #F80;
+      /* Orange (Hiren's) */
       --ch2: #F803;
+      /* Orange transparent */
       --cm: #A0F;
+      /* Lila (MediCat) */
       --cm2: #A0F3;
+      /* Lila transparent */
       --cs: #09F;
+      /* Blau (Standalone) */
       --cs2: #09F3;
+      /* Blau transparent */
       --cl: #0D8;
+      /* Grün (Kategorien) */
       --cl2: #0D83;
+      /* Grün transparent */
       --cl-soft-bg: rgba(0, 220, 136, .1);
+      /* Grüner Hintergrund */
       --cl-soft-br: rgba(0, 220, 136, .25);
-      --ind: 1.1rem
+      /* Grüner Rahmen */
+      --ind: 1.1rem;
+      /* Einrückung */
+
+      /* Typografie-Skala */
+      --t-xs: .65rem;
+      /* Sehr klein: Badges, Labels, Code */
+      --t-sm: .75rem;
+      /* Klein: Beschreibungen, sekundärer Text */
+      --t-md: .8rem;
+      /* Standard-UI-Text */
+      --t-lg: .9rem;
+      /* Groß: Tool-Namen, leichte Hervorhebungen */
+      --t-xl: 1rem;
+      /* Sehr groß: Modal- und Kartentitel */
+
+      /* Radien */
+      --r: 2px;
+      /* Kleine Radien: Felder, Buttons, Badges, Icons */
+      --r-lg: 6px;
+      /* Große Radien: Modal, Download-Karten */
+
+      /* Übergänge */
+      --tr: .15s;
+      /* Standard Hover/Focus-Übergang */
+      --tr-m: .2s;
+      /* Transform-Animationen */
+
+      /* Typografie-Details */
+      --ls-caps: .06em;
+      /* Buchstabenabstand für Großbuchstaben */
+      --lh: 1.6;
+      /* Zeilenhöhe für Fließtext */
     }
 
 
@@ -102,13 +152,13 @@
 
     .field {
       padding: .45rem .7rem;
-      border-radius: 2px;
+      border-radius: var(--r);
       border: 1px solid var(--br);
       background: var(--sf);
       color: var(--tx);
-      font-size: .8rem;
+      font-size: var(--t-md);
       outline: none;
-      transition: border-color .15s;
+      transition: border-color var(--tr);
       width: 100%
     }
 
@@ -133,13 +183,13 @@
       white-space: nowrap;
       min-height: 2rem;
       padding: .35rem .85rem;
-      border-radius: 2px;
+      border-radius: var(--r);
       border: 1px solid var(--br);
       background: var(--sf);
       color: var(--tx);
-      font-size: .75rem;
+      font-size: var(--t-sm);
       cursor: pointer;
-      transition: all .15s;
+      transition: all var(--tr);
       user-select: none;
       line-height: 1;
       vertical-align: middle
@@ -197,7 +247,7 @@
       display: flex;
       align-items: center;
       gap: .5rem;
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--ac);
       letter-spacing: .04em;
       padding-right: 2rem;
@@ -211,14 +261,14 @@
       align-items: center;
       gap: .5rem;
       padding: .85rem 1.25rem;
-      font-size: .8rem;
+      font-size: var(--t-md);
       font-weight: 600;
       color: var(--mu);
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer;
-      transition: color .15s, border-color .15s;
+      transition: color var(--tr), border-color var(--tr);
       white-space: nowrap
     }
 
@@ -232,7 +282,7 @@
     }
 
     .tab-btn sup {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       padding: .1rem .4rem;
       border-radius: 10px;
       background: var(--cl2);
@@ -269,16 +319,16 @@
     }
 
     .view>div>header p {
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--mu)
     }
 
 
     h3.lbl {
-      font-size: .75rem;
+      font-size: var(--t-sm);
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: var(--ls-caps);
       color: var(--mu);
       margin-bottom: .6rem
     }
@@ -288,7 +338,7 @@
     .modal label {
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: .06em
+      letter-spacing: var(--ls-caps)
     }
 
     .cat-hdr>b,
@@ -303,7 +353,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       margin-block: 1.5rem;
-      font-size: .8rem;
+      font-size: var(--t-md);
       align-items: center
     }
 
@@ -347,7 +397,7 @@
       gap: 1.5rem;
       flex-wrap: wrap;
       margin-bottom: 1.5rem;
-      font-size: .75rem
+      font-size: var(--t-sm)
     }
 
     .stats-bar>div b {
@@ -396,12 +446,12 @@
     }
 
     .cat-hdr>b {
-      font-size: .8rem
+      font-size: var(--t-md)
     }
 
     .cat-hdr>em,
     .cat-hdr>s {
-      font-size: .75rem;
+      font-size: var(--t-sm);
       color: var(--mu)
     }
 
@@ -411,7 +461,7 @@
     }
 
     .cat-hdr>s {
-      transition: transform .2s;
+      transition: transform var(--tr-m);
       flex-shrink: 0;
       text-decoration: none
     }
@@ -456,7 +506,7 @@
     }
 
     .tool-card>header b {
-      font-size: .9rem;
+      font-size: var(--t-lg);
       font-weight: 600;
       color: var(--tx);
       line-height: 1.3
@@ -468,9 +518,9 @@
     }
 
     .tool-card>p {
-      font-size: .75rem;
+      font-size: var(--t-sm);
       color: var(--mu);
-      line-height: 1.6
+      line-height: var(--lh)
     }
 
 
@@ -501,9 +551,9 @@
     }
 
     .badge {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       padding: .1rem .4rem;
-      border-radius: 2px;
+      border-radius: var(--r);
       font-weight: 600;
       letter-spacing: .03em
     }
@@ -536,7 +586,7 @@
       padding: .55rem .75rem;
       gap: .2rem;
       cursor: default;
-      transition: border-color .15s
+      transition: border-color var(--tr)
     }
 
     .qa-card:hover {
@@ -544,12 +594,12 @@
     }
 
     .qa-card small {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       color: var(--mu)
     }
 
     .qa-card b {
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--tx);
       line-height: 1.2;
       font-weight: 600
@@ -574,20 +624,20 @@
 
     .nir-sa {
       margin: .7rem var(--ind) .2rem;
-      font-size: .75rem
+      font-size: var(--t-sm)
     }
 
     .nir-lbl {
       color: var(--ac);
-      font-size: .65rem;
+      font-size: var(--t-xs);
       margin-bottom: .2rem;
       font-weight: 600
     }
 
     .nir-hit {
       color: #fff;
-      font-size: .75rem;
-      line-height: 1.6
+      font-size: var(--t-sm);
+      line-height: var(--lh)
     }
 
     .nir-hit b,
@@ -601,7 +651,7 @@
 
 
     .info-toggle {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       color: var(--ac);
       cursor: pointer;
       padding: .5rem 0 .5rem var(--ind);
@@ -618,8 +668,8 @@
 
     .t-arr {
       display: inline-block;
-      transition: transform .2s;
-      font-size: .65rem;
+      transition: transform var(--tr-m);
+      font-size: var(--t-xs);
       vertical-align: middle
     }
 
@@ -633,8 +683,8 @@
       padding: .5rem .7rem;
       background: rgba(0, 170, 255, .06);
       border-left: 2px solid var(--ac);
-      border-radius: 2px;
-      font-size: .75rem;
+      border-radius: var(--r);
+      font-size: var(--t-sm);
       color: var(--tx);
       line-height: 1.8
     }
@@ -651,13 +701,13 @@
 
     .dl-section>b {
       display: block;
-      font-size: .8rem;
+      font-size: var(--t-md);
       margin-bottom: .1rem
     }
 
     .dl-section>small {
       display: block;
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--mu);
       margin-bottom: .6rem
     }
@@ -673,8 +723,8 @@
       text-decoration: none;
       color: var(--tx);
       display: block;
-      transition: background .15s, border-color .15s;
-      border-radius: 6px
+      transition: background var(--tr), border-color var(--tr);
+      border-radius: var(--r-lg)
     }
 
     a.dl-card:hover {
@@ -684,18 +734,18 @@
 
     a.dl-card b {
       display: block;
-      font-size: 1rem;
+      font-size: var(--t-xl);
       margin-bottom: .25rem
     }
 
     a.dl-card small {
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--mu)
     }
 
 
     #local-stats {
-      font-size: .75rem;
+      font-size: var(--t-sm);
       color: var(--mu);
       margin-bottom: 1rem
     }
@@ -715,7 +765,7 @@
       flex-direction: column;
       padding: .75rem 1rem;
       gap: .4rem;
-      transition: border-color .15s
+      transition: border-color var(--tr)
     }
 
     .lc:hover {
@@ -730,7 +780,7 @@
     }
 
     .lc>header b {
-      font-size: .9rem;
+      font-size: var(--t-lg);
       font-weight: 700;
       line-height: 1.3
     }
@@ -742,9 +792,9 @@
     }
 
     .lc>p {
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--mu);
-      line-height: 1.6
+      line-height: var(--lh)
     }
 
     .lc>footer {
@@ -756,7 +806,7 @@
     }
 
     .lc>footer code {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       color: var(--mu);
       opacity: .7;
       word-break: break-all
@@ -767,11 +817,11 @@
       background: none;
       border: none;
       cursor: pointer;
-      font-size: .8rem;
+      font-size: var(--t-md);
       color: var(--mu);
       padding: .15rem .3rem;
-      border-radius: 2px;
-      transition: color .15s, background .15s;
+      border-radius: var(--r);
+      transition: color var(--tr), background var(--tr);
       line-height: 1
     }
 
@@ -788,7 +838,7 @@
     .empty {
       text-align: center;
       padding: 4rem 2rem;
-      font-size: .9rem;
+      font-size: var(--t-lg);
       color: var(--mu);
       border: 1px dashed var(--br);
       border-radius: 4px;
@@ -804,7 +854,7 @@
 
     .empty h3 {
       color: var(--tx);
-      font-size: 1rem;
+      font-size: var(--t-xl);
       margin-bottom: .5rem
     }
 
@@ -823,8 +873,8 @@
       align-items: center;
       gap: .3rem;
       padding: .15rem .5rem;
-      border-radius: 2px;
-      font-size: .65rem;
+      border-radius: var(--r);
+      font-size: var(--t-xs);
       font-weight: 600
     }
 
@@ -833,7 +883,7 @@
       border: none;
       color: var(--cl);
       cursor: pointer;
-      font-size: .65rem;
+      font-size: var(--t-xs);
       padding: 0;
       opacity: .6;
       line-height: 1
@@ -864,7 +914,7 @@
     }
 
     .modal {
-      border-radius: 6px;
+      border-radius: var(--r-lg);
       padding: 1.5rem;
       width: 100%;
       max-width: 480px;
@@ -874,7 +924,7 @@
     }
 
     .modal>b {
-      font-size: 1rem;
+      font-size: var(--t-xl);
       font-weight: 700
     }
 
@@ -882,12 +932,12 @@
       display: flex;
       flex-direction: column;
       gap: .35rem;
-      font-size: .75rem;
+      font-size: var(--t-sm);
       color: var(--mu)
     }
 
     .modal label small {
-      font-size: .65rem;
+      font-size: var(--t-xs);
       text-transform: none;
       letter-spacing: 0;
       font-weight: 400;
@@ -908,7 +958,7 @@
 
       .tab-btn {
         padding: .75rem;
-        font-size: .75rem
+        font-size: var(--t-sm)
       }
 
       .view {
@@ -949,7 +999,7 @@
         <input class="field" style="width:260px" type="text" placeholder="Tool oder Kategorie suchen…"
           oninput="onSearch(this.value)">
         <div class="sep"></div>
-        <span class="mu" style="font-size:.75rem">FILTER:</span>
+        <span class="mu" style="font-size:var(--t-sm)">FILTER:</span>
         <button class="btn active" data-src="all" onclick="setFilter(null)">Alle</button>
         <button class="btn" data-src="h" onclick="setFilter('h')">Hiren's</button>
         <button class="btn" data-src="m" onclick="setFilter('m')">MediCat</button>
