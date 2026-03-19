@@ -6,126 +6,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ventoy USB Toolkit</title>
   <style>
+    /* ============================================================
+       1. DESIGN TOKENS
+       ============================================================ */
+
     :root {
-      /* ── Farben ── */
-      /* Farben */
+      /* Farben – Hintergründe & Oberflächen */
       --bg: #001;
-      /* Hintergrund */
       --sf: #112;
-      /* Oberflächenfarbe */
       --br: #223;
-      /* Rahmenfarbe */
+
+      /* Farben – Text */
       --tx: #CDE;
-      /* Textfarbe */
       --mu: #567;
-      /* Sekundärtext */
       --ac: #889;
-      /* Akzentfarbe */
       --ac2: #8893;
-      /* Akzentfarbe transparent */
+
+      /* Farben – Quellen */
       --ch: #F80;
-      /* Orange (Hiren's) */
       --ch2: #F803;
-      /* Orange transparent */
+      /* Hiren's  – Orange */
       --cm: #A0F;
-      /* Lila (MediCat) */
       --cm2: #A0F3;
-      /* Lila transparent */
+      /* MediCat  – Lila  */
       --cs: #09F;
-      /* Blau (Standalone) */
       --cs2: #09F3;
-      /* Blau transparent */
-      --cl: #0D8;
-      /* Grün (Kategorien) */
+      /* Standalone – Blau */
+      --cl: #0F9;
       --cl2: #0D83;
-      /* Grün transparent */
-      --cl-soft-bg: rgba(0, 220, 136, .1);
-      /* Grüner Hintergrund */
+      /* Kategorien – Grün */
+
+      --cl-soft-bg: rgba(0, 220, 136, .10);
       --cl-soft-br: rgba(0, 220, 136, .25);
-      /* Grüner Rahmen */
-      --ind: 1.1rem;
-      /* Einrückung */
 
-      /* Typografie-Skala */
+      /* Typografie */
       --t-xs: .65rem;
-      /* Sehr klein: Badges, Labels, Code */
       --t-sm: .75rem;
-      /* Klein: Beschreibungen, sekundärer Text */
       --t-md: .8rem;
-      /* Standard-UI-Text */
       --t-lg: .9rem;
-      /* Groß: Tool-Namen, leichte Hervorhebungen */
       --t-xl: 1rem;
-      /* Sehr groß: Modal- und Kartentitel */
+      --ls-caps: .06em;
+      --lh: 1.6;
 
-      /* Radien */
+      /* Abstände & Radien */
+      --ind: 1.1rem;
       --r: 2px;
-      /* Kleine Radien: Felder, Buttons, Badges, Icons */
       --r-lg: 6px;
-      /* Große Radien: Modal, Download-Karten */
 
       /* Übergänge */
       --tr: .15s;
-      /* Standard Hover/Focus-Übergang */
-      --tr-m: .2s;
-      /* Transform-Animationen */
-
-      /* Typografie-Details */
-      --ls-caps: .06em;
-      /* Buchstabenabstand für Großbuchstaben */
-      --lh: 1.6;
-      /* Zeilenhöhe für Fließtext */
+      --tr-m: .25s;
     }
 
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
-
-    body {
-      font-family: 'IBM Plex Sans', sans-serif;
-      background: var(--bg);
-      color: var(--tx);
-      min-height: 100vh
-    }
-
-
-    .card,
-    .tool-card,
-    .qa-card,
-    .lc,
-    .modal,
-    a.dl-card {
-      background: var(--sf);
-      border: 1px solid var(--br)
-    }
-
-
-    .mu {
-      color: var(--mu)
-    }
-
-    .italic {
-      font-style: italic
-    }
-
-    .d-none {
-      display: none
-    }
-
+    /* ============================================================
+       2. QUELLENFARBEN  (data-src-Attribut)
+       ============================================================ */
 
     [data-src=h] {
       --src-color: var(--ch);
       --src-bg: var(--ch2);
       --src-br: var(--ch);
       --src-soft-bg: rgba(255, 136, 0, .15);
-      --src-soft-br: rgba(255, 136, 0, .3)
-    }
-
-    [data-src=ok] {
-      --src-color: var(--cl)
+      --src-soft-br: rgba(255, 136, 0, .30);
     }
 
     [data-src=m] {
@@ -133,7 +76,7 @@
       --src-bg: var(--cm2);
       --src-br: var(--cm);
       --src-soft-bg: rgba(170, 0, 255, .15);
-      --src-soft-br: rgba(170, 0, 255, .3)
+      --src-soft-br: rgba(170, 0, 255, .30);
     }
 
     [data-src=s] {
@@ -141,16 +84,65 @@
       --src-bg: var(--cs2);
       --src-br: var(--cs);
       --src-soft-bg: rgba(0, 153, 255, .12);
-      --src-soft-br: rgba(0, 153, 255, .25)
+      --src-soft-br: rgba(0, 153, 255, .25);
+    }
+
+    [data-src=ok] {
+      --src-color: var(--cl);
     }
 
     [data-src=all] {
       --src-bg: var(--ac2);
-      --src-br: var(--ac)
+      --src-br: var(--ac);
     }
 
 
+    /* ============================================================
+       3. RESET & BASE
+       ============================================================ */
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      min-height: 100vh;
+    }
+
+    /* Gemeinsame Karten-Basis */
+    .card,
+    .tool-card,
+    .qa-card,
+    .lc,
+    .modal,
+    a.dl-card {
+      background: var(--sf);
+      border: 1px solid var(--br);
+    }
+
+
+    /* ============================================================
+       4. UTILITIES
+       ============================================================ */
+
+    .mu {
+      color: var(--mu);
+    }
+
+    .italic {
+      font-style: italic;
+    }
+
+    .d-none {
+      display: none;
+    }
+
+
+    /* ============================================================
+       5. FORMULARELEMENTE
+       ============================================================ */
+
     .field {
+      width: 100%;
       padding: .45rem .7rem;
       border-radius: var(--r);
       border: 1px solid var(--br);
@@ -159,22 +151,25 @@
       font-size: var(--t-md);
       outline: none;
       transition: border-color var(--tr);
-      width: 100%
     }
 
     .field:focus {
-      border-color: var(--ac)
+      border-color: var(--ac);
     }
 
     .field::placeholder {
-      color: var(--mu)
+      color: var(--mu);
     }
 
     textarea.field {
       resize: vertical;
-      min-height: 70px
+      min-height: 70px;
     }
 
+
+    /* ============================================================
+       6. BUTTONS
+       ============================================================ */
 
     .btn {
       display: inline-flex;
@@ -189,47 +184,54 @@
       color: var(--tx);
       font-size: var(--t-sm);
       cursor: pointer;
-      transition: all var(--tr);
       user-select: none;
       line-height: 1;
-      vertical-align: middle
+      vertical-align: middle;
+      transition: all var(--tr);
     }
 
+    /* Allgemeines Hover */
     .btn:hover,
     #btn-expand:hover,
     #btn-tier2:hover {
       color: #fff;
-      border-color: var(--ac)
+      border-color: var(--ac);
     }
 
     #btn-expand:hover,
     #btn-tier2:hover {
-      background: var(--ac2)
+      background: var(--ac2);
     }
 
+    /* Quellenfarben-Hover & aktiv */
     .btn[data-src]:hover,
     .btn[data-src].active {
       color: #fff;
       background: var(--src-bg);
-      border-color: var(--src-br)
+      border-color: var(--src-br);
     }
 
+    /* Varianten */
     .btn-l {
       border-color: var(--cl);
       background: var(--cl2);
       color: var(--cl);
-      font-weight: 700
+      font-weight: 700;
     }
 
     .btn-l:hover {
       background: var(--cl);
-      color: #000
+      color: #000;
     }
 
     .btn-m {
-      color: var(--mu)
+      color: var(--mu);
     }
 
+
+    /* ============================================================
+       7. NAVIGATION (Tab-Leiste)
+       ============================================================ */
 
     .tab-nav {
       position: sticky;
@@ -240,7 +242,7 @@
       border-bottom: 1px solid var(--br);
       display: flex;
       align-items: stretch;
-      padding: 0 2rem
+      padding: 0 2rem;
     }
 
     .tab-nav>strong {
@@ -253,7 +255,7 @@
       padding-right: 2rem;
       border-right: 1px solid var(--br);
       margin-right: 1rem;
-      white-space: nowrap
+      white-space: nowrap;
     }
 
     .tab-btn {
@@ -268,17 +270,17 @@
       border: none;
       border-bottom: 2px solid transparent;
       cursor: pointer;
+      white-space: nowrap;
       transition: color var(--tr), border-color var(--tr);
-      white-space: nowrap
     }
 
     .tab-btn:hover {
-      color: var(--tx)
+      color: var(--tx);
     }
 
     .tab-btn.active {
       color: var(--ac);
-      border-bottom-color: var(--ac)
+      border-bottom-color: var(--ac);
     }
 
     .tab-btn sup {
@@ -289,40 +291,48 @@
       color: var(--cl);
       border: 1px solid var(--cl);
       font-weight: 700;
-      font-style: normal
+      font-style: normal;
     }
 
+
+    /* ============================================================
+       8. VIEWS (Tab-Inhalte)
+       ============================================================ */
 
     .view {
       display: none;
-      padding: 2rem
+      padding: 2rem;
     }
 
     .view.active {
-      display: block
+      display: block;
     }
 
     .view>div {
       max-width: 1100px;
-      margin-inline: auto
+      margin-inline: auto;
     }
 
     .view>div>header {
       border-bottom: 1px solid var(--br);
       padding-bottom: 1.25rem;
-      margin-bottom: 1.75rem
+      margin-bottom: 1.75rem;
     }
 
     .view>div>header h1 {
       font-size: 1.25rem;
-      margin-bottom: .25rem
+      margin-bottom: .25rem;
     }
 
     .view>div>header p {
       font-size: var(--t-md);
-      color: var(--mu)
+      color: var(--mu);
     }
 
+
+    /* ============================================================
+       9. ÜBERSCHRIFTEN & LABELS
+       ============================================================ */
 
     h3.lbl {
       font-size: var(--t-sm);
@@ -330,23 +340,28 @@
       text-transform: uppercase;
       letter-spacing: var(--ls-caps);
       color: var(--mu);
-      margin-bottom: .6rem
+      margin-bottom: .6rem;
     }
 
+    /* Gemeinsame uppercase-Label-Styles */
     .dl-section>b,
     .cat-hdr>b,
     .modal label {
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: var(--ls-caps)
+      letter-spacing: var(--ls-caps);
     }
 
     .cat-hdr>b,
     .lc>header b,
     .modal>b {
-      color: #fff
+      color: #fff;
     }
 
+
+    /* ============================================================
+       10. LEGENDE
+       ============================================================ */
 
     .legend {
       display: flex;
@@ -354,13 +369,13 @@
       gap: 1rem;
       margin-block: 1.5rem;
       font-size: var(--t-md);
-      align-items: center
+      align-items: center;
     }
 
     .legend>span {
       display: flex;
       align-items: center;
-      gap: .5rem
+      gap: .5rem;
     }
 
     .legend i {
@@ -370,26 +385,30 @@
       border-radius: 50%;
       flex-shrink: 0;
       font-style: normal;
-      background: var(--src-color)
+      background: var(--src-color);
     }
 
     .legend i.missing {
-      background: var(--br)
+      background: var(--br);
     }
 
+
+    /* ============================================================
+       11. STEUERLEISTE & STATISTIKEN
+       ============================================================ */
 
     .controls {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: .5rem;
-      margin-bottom: 1rem
+      margin-bottom: 1rem;
     }
 
     .sep {
       width: 1px;
       height: 1.2rem;
-      background: var(--br)
+      background: var(--br);
     }
 
     .stats-bar {
@@ -397,35 +416,40 @@
       gap: 1.5rem;
       flex-wrap: wrap;
       margin-bottom: 1.5rem;
-      font-size: var(--t-sm)
+      font-size: var(--t-sm);
     }
 
     .stats-bar>div b {
       font-size: 1.3rem;
       font-weight: 600;
       color: var(--tx);
-      display: block
+      display: block;
     }
 
     .stats-bar>div b[data-src] {
-      color: var(--src-color)
+      color: var(--src-color);
     }
 
     .stats-bar>div span {
-      color: var(--mu)
+      color: var(--mu);
     }
 
+
+    /* ============================================================
+       12. KATEGORIEN
+       ============================================================ */
 
     #categories {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem
+      gap: 1.5rem;
     }
 
     .category {
-      overflow: hidden
+      overflow: hidden;
     }
 
+    /* Kategoriekopf */
     .cat-hdr {
       display: flex;
       align-items: center;
@@ -434,120 +458,123 @@
       background: rgba(255, 255, 255, .03);
       border-bottom: 1px solid var(--br);
       cursor: pointer;
-      user-select: none
+      user-select: none;
     }
 
     .cat-hdr:hover {
-      background: rgba(255, 255, 255, .06)
+      background: rgba(255, 255, 255, .06);
     }
 
     .cat-hdr.cat-match {
-      border-left: 2px solid var(--ac)
+      border-left: 2px solid var(--ac);
     }
 
     .cat-hdr>b {
-      font-size: var(--t-md)
-    }
-
-    .cat-hdr>em,
-    .cat-hdr>s {
-      font-size: var(--t-sm);
-      color: var(--mu)
+      font-size: var(--t-md);
     }
 
     .cat-hdr>em {
+      font-size: var(--t-sm);
+      color: var(--mu);
       margin-left: auto;
-      font-style: normal
+      font-style: normal;
     }
 
     .cat-hdr>s {
-      transition: transform var(--tr-m);
+      font-size: var(--t-sm);
+      color: var(--mu);
       flex-shrink: 0;
-      text-decoration: none
+      text-decoration: none;
+      transition: transform var(--tr-m);
     }
 
     .category.open .cat-hdr>s {
       transform: rotate(90deg);
-      display: inline-block
+      display: inline-block;
     }
 
+    /* Tool-Grid */
     .tools-grid {
       display: none;
       grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 1px;
-      background: var(--br)
+      background: var(--br);
     }
 
     .category.open .tools-grid {
-      display: grid
+      display: grid;
     }
 
+
+    /* ============================================================
+       13. TOOL-KARTEN
+       ============================================================ */
 
     .tool-card {
       display: flex;
       flex-direction: column;
       padding: .75rem 1rem;
-      gap: .35rem
+      gap: .35rem;
     }
 
     .tool-card.hidden,
     .tool-card.tier2-hidden {
-      display: none
+      display: none;
     }
 
     .tool-card.tier2 {
-      opacity: .55
+      opacity: .55;
     }
 
     .tool-card>header {
       display: flex;
       align-items: flex-start;
-      gap: .6rem
+      gap: .6rem;
     }
 
     .tool-card>header b {
       font-size: var(--t-lg);
       font-weight: 600;
       color: var(--tx);
-      line-height: 1.3
+      line-height: 1.3;
     }
 
     .tool-card>p,
     .tool-card>.tags {
-      padding-left: var(--ind)
+      padding-left: var(--ind);
     }
 
     .tool-card>p {
       font-size: var(--t-sm);
       color: var(--mu);
-      line-height: var(--lh)
+      line-height: var(--lh);
     }
 
-
+    /* Quellenpunkte */
     .pdots {
       display: flex;
       flex-direction: column;
       gap: 2px;
       flex-shrink: 0;
-      margin-top: 4px
+      margin-top: 4px;
     }
 
     .pdot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--br)
+      background: var(--br);
     }
 
     .pdot[data-src] {
-      background: var(--src-color)
+      background: var(--src-color);
     }
 
-
+    /* Tags & Badges */
     .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: .35rem
+      gap: .35rem;
     }
 
     .badge {
@@ -555,29 +582,33 @@
       padding: .1rem .4rem;
       border-radius: var(--r);
       font-weight: 600;
-      letter-spacing: .03em
+      letter-spacing: .03em;
     }
 
     .badge[data-src] {
       background: var(--src-soft-bg);
       color: var(--src-color);
-      border: 1px solid var(--src-soft-br)
+      border: 1px solid var(--src-soft-br);
     }
 
-
+    /* Grüne Kategorie-Badges */
     .lc-badge,
     .cat-tag {
       background: var(--cl-soft-bg);
       color: var(--cl);
-      border: 1px solid var(--cl-soft-br)
+      border: 1px solid var(--cl-soft-br);
     }
 
+
+    /* ============================================================
+       14. SCHNELLZUGRIFF-KARTEN
+       ============================================================ */
 
     .qa-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
       gap: .5rem;
-      margin-bottom: 2rem
+      margin-bottom: 2rem;
     }
 
     .qa-card {
@@ -586,178 +617,190 @@
       padding: .55rem .75rem;
       gap: .2rem;
       cursor: default;
-      transition: border-color var(--tr)
+      transition: border-color var(--tr);
     }
 
     .qa-card:hover {
-      border-color: var(--ac)
+      border-color: var(--ac);
     }
 
     .qa-card small {
       font-size: var(--t-xs);
-      color: var(--mu)
+      color: var(--mu);
     }
 
     .qa-card b {
       font-size: var(--t-md);
       color: var(--tx);
       line-height: 1.2;
-      font-weight: 600
+      font-weight: 600;
     }
 
     .qa-card>div {
       display: flex;
       gap: 3px;
-      margin-top: .1rem
+      margin-top: .1rem;
     }
 
 
+    /* ============================================================
+       15. NIR-SUCHTREFFER & INFO-BOX
+       ============================================================ */
+
     .nir-link {
       color: var(--ac);
-      text-decoration: none
+      text-decoration: none;
     }
 
     .nir-link:hover,
     .info-toggle:hover {
-      text-decoration: underline
+      text-decoration: underline;
     }
 
     .nir-sa {
       margin: .7rem var(--ind) .2rem;
-      font-size: var(--t-sm)
+      font-size: var(--t-sm);
     }
 
     .nir-lbl {
       color: var(--ac);
       font-size: var(--t-xs);
       margin-bottom: .2rem;
-      font-weight: 600
+      font-weight: 600;
     }
 
     .nir-hit {
       color: #fff;
       font-size: var(--t-sm);
-      line-height: var(--lh)
+      line-height: var(--lh);
     }
 
     .nir-hit b,
     .info-box b {
-      color: var(--ac)
+      color: var(--ac);
     }
 
     .info-box b {
-      font-weight: 600
+      font-weight: 600;
     }
 
-
+    /* Ausklappbare Info-Sektion */
     .info-toggle {
-      font-size: var(--t-xs);
-      color: var(--ac);
-      cursor: pointer;
+      display: block;
+      width: calc(100% - var(--ind));
       padding: .5rem 0 .5rem var(--ind);
       margin-top: .6rem;
       margin-bottom: .5rem;
-      display: block;
+      font-size: var(--t-xs);
+      color: var(--ac);
+      cursor: pointer;
+      text-align: left;
       background: none;
       border: none;
       border-top: 1px solid rgba(255, 255, 255, .08);
       border-bottom: 1px solid rgba(255, 255, 255, .08);
-      text-align: left;
-      width: calc(100% - var(--ind))
     }
 
     .t-arr {
       display: inline-block;
-      transition: transform var(--tr-m);
       font-size: var(--t-xs);
-      vertical-align: middle
+      vertical-align: middle;
+      transition: transform var(--tr-m);
     }
 
     .t-arr.open {
-      transform: rotate(90deg)
+      transform: rotate(90deg);
     }
 
     .info-box {
       display: none;
       margin: .4rem var(--ind) 0;
       padding: .5rem .7rem;
-      background: rgba(0, 170, 255, .06);
-      border-left: 2px solid var(--ac);
       border-radius: var(--r);
       font-size: var(--t-sm);
       color: var(--tx);
-      line-height: 1.8
+      line-height: 1.8;
+      background: rgba(0, 170, 255, .06);
+      border-left: 2px solid var(--ac);
     }
 
     .info-box.open {
-      display: block
+      display: block;
     }
 
 
+    /* ============================================================
+       16. DOWNLOAD-SEKTION
+       ============================================================ */
+
     .dl-section {
       padding: .75rem;
-      margin-bottom: 1.25rem
+      margin-bottom: 1.25rem;
     }
 
     .dl-section>b {
       display: block;
       font-size: var(--t-md);
-      margin-bottom: .1rem
+      margin-bottom: .1rem;
     }
 
     .dl-section>small {
       display: block;
       font-size: var(--t-md);
       color: var(--mu);
-      margin-bottom: .6rem
+      margin-bottom: .6rem;
     }
 
     .dl-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: .6rem
+      gap: .6rem;
     }
 
     a.dl-card {
+      display: block;
       padding: .75rem .8rem;
       text-decoration: none;
       color: var(--tx);
-      display: block;
+      border-radius: var(--r-lg);
       transition: background var(--tr), border-color var(--tr);
-      border-radius: var(--r-lg)
     }
 
     a.dl-card:hover {
       background: rgba(255, 255, 255, .02);
-      border-color: var(--ac)
+      border-color: var(--ac);
     }
 
     a.dl-card b {
       display: block;
       font-size: var(--t-xl);
-      margin-bottom: .25rem
+      margin-bottom: .25rem;
     }
 
     a.dl-card small {
       font-size: var(--t-md);
-      color: var(--mu)
+      color: var(--mu);
     }
 
+
+    /* ============================================================
+       17. LOKALE SOFTWARE
+       ============================================================ */
 
     #local-stats {
       font-size: var(--t-sm);
       color: var(--mu);
-      margin-bottom: 1rem
+      margin-bottom: 1rem;
     }
 
     #local-stats b {
-      color: var(--cl)
+      color: var(--cl);
     }
 
     .local-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: .75rem
+      gap: .75rem;
     }
 
     .lc {
@@ -765,36 +808,36 @@
       flex-direction: column;
       padding: .75rem 1rem;
       gap: .4rem;
-      transition: border-color var(--tr)
+      transition: border-color var(--tr);
     }
 
     .lc:hover {
-      border-color: rgba(0, 220, 136, .3)
+      border-color: rgba(0, 220, 136, .3);
     }
 
     .lc>header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: .5rem
+      gap: .5rem;
     }
 
     .lc>header b {
       font-size: var(--t-lg);
       font-weight: 700;
-      line-height: 1.3
+      line-height: 1.3;
     }
 
     .lc>header aside {
       display: flex;
       gap: .3rem;
-      flex-shrink: 0
+      flex-shrink: 0;
     }
 
     .lc>p {
       font-size: var(--t-md);
       color: var(--mu);
-      line-height: var(--lh)
+      line-height: var(--lh);
     }
 
     .lc>footer {
@@ -802,16 +845,20 @@
       align-items: center;
       gap: .5rem;
       flex-wrap: wrap;
-      margin-top: .1rem
+      margin-top: .1rem;
     }
 
     .lc>footer code {
       font-size: var(--t-xs);
       color: var(--mu);
       opacity: .7;
-      word-break: break-all
+      word-break: break-all;
     }
 
+
+    /* ============================================================
+       18. ICON-BUTTONS
+       ============================================================ */
 
     .icon-btn {
       background: none;
@@ -821,19 +868,23 @@
       color: var(--mu);
       padding: .15rem .3rem;
       border-radius: var(--r);
+      line-height: 1;
       transition: color var(--tr), background var(--tr);
-      line-height: 1
     }
 
     .icon-btn:hover {
       color: var(--tx);
-      background: rgba(255, 255, 255, .07)
+      background: rgba(255, 255, 255, .07);
     }
 
     .icon-btn.del:hover {
-      color: #f66
+      color: #f66;
     }
 
+
+    /* ============================================================
+       19. LEER-ZUSTÄNDE
+       ============================================================ */
 
     .empty {
       text-align: center;
@@ -842,30 +893,34 @@
       color: var(--mu);
       border: 1px dashed var(--br);
       border-radius: 4px;
-      grid-column: 1/-1
+      grid-column: 1 / -1;
     }
 
     .empty i {
       font-size: 2.5rem;
       margin-bottom: .75rem;
       display: block;
-      font-style: normal
+      font-style: normal;
     }
 
     .empty h3 {
       color: var(--tx);
       font-size: var(--t-xl);
-      margin-bottom: .5rem
+      margin-bottom: .5rem;
     }
 
+
+    /* ============================================================
+       20. KATEGORIEN-MANAGER (Lokale Software)
+       ============================================================ */
 
     .cat-mgr {
       padding: .75rem 1rem;
-      margin-bottom: 1rem
+      margin-bottom: 1rem;
     }
 
     #cat-tags-list {
-      margin-bottom: .5rem
+      margin-bottom: .5rem;
     }
 
     .cat-tag {
@@ -875,7 +930,7 @@
       padding: .15rem .5rem;
       border-radius: var(--r);
       font-size: var(--t-xs);
-      font-weight: 600
+      font-weight: 600;
     }
 
     .cat-tag button {
@@ -886,31 +941,35 @@
       font-size: var(--t-xs);
       padding: 0;
       opacity: .6;
-      line-height: 1
+      line-height: 1;
     }
 
     .cat-tag button:hover {
-      opacity: 1
+      opacity: 1;
     }
 
     #cat-manager .controls {
-      margin-bottom: 0
+      margin-bottom: 0;
     }
 
+
+    /* ============================================================
+       21. MODAL
+       ============================================================ */
 
     .overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .7);
       z-index: 200;
+      background: rgba(0, 0, 0, .7);
       align-items: center;
       justify-content: center;
-      padding: 1rem
+      padding: 1rem;
     }
 
     .overlay.open {
-      display: flex
+      display: flex;
     }
 
     .modal {
@@ -920,12 +979,12 @@
       max-width: 480px;
       display: flex;
       flex-direction: column;
-      gap: 1rem
+      gap: 1rem;
     }
 
     .modal>b {
       font-size: var(--t-xl);
-      font-weight: 700
+      font-weight: 700;
     }
 
     .modal label {
@@ -933,7 +992,7 @@
       flex-direction: column;
       gap: .35rem;
       font-size: var(--t-sm);
-      color: var(--mu)
+      color: var(--mu);
     }
 
     .modal label small {
@@ -941,33 +1000,37 @@
       text-transform: none;
       letter-spacing: 0;
       font-weight: 400;
-      margin-top: -.1rem
+      margin-top: -.1rem;
     }
 
     .modal-actions {
       display: flex;
       gap: .5rem;
-      justify-content: flex-end
+      justify-content: flex-end;
     }
 
 
-    @media(max-width:600px) {
+    /* ============================================================
+       22. RESPONSIVE
+       ============================================================ */
+
+    @media (max-width: 600px) {
       .tab-nav>strong {
-        display: none
+        display: none;
       }
 
       .tab-btn {
         padding: .75rem;
-        font-size: var(--t-sm)
+        font-size: var(--t-sm);
       }
 
       .view {
-        padding: 1rem
+        padding: 1rem;
       }
 
       .dl-grid,
       .local-grid {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr;
       }
     }
   </style>
