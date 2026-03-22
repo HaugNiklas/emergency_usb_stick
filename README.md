@@ -9,6 +9,10 @@
 
 ---
 
+https://launcher.nirsoft.net/utilities_list.html
+https://docs.medicat.dev/usb/tools/antivirus/
+https://www.hirensbootcd.org/download/
+
 ## 📋 TODO / Geplante Features
 
 - [ ] **Tool-Links im Dashboard** – Klick auf einen Tool-Namen soll direkt zur Datei auf dem USB-Stick weiterleiten (z.B. via relativem Pfad oder `file://`-Link). Erfordert, dass das Dashboard vom Stick geöffnet wird, nicht aus dem Browser.
