@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Emergency USB-Stick Toolkit</title>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <!-- TODO: Klasse für aktiven Tab und Symbole -->
+      <button class="navigation_knopf" data-tab="tools">Tools</button>
+      <button class="navigation_knopf" data-tab="programme">Programme</button>
+      <button class="navigation_knopf" data-tab="lokale_software">
+        Lokale Software
+      </button>
+    </nav>
+    <div>
+      <!-- * Tools-Übersicht -->
+
+      <section id="tools">
+        <header class="header">
+          <h1>Tool-Übersicht</h1>
+          <p>
+            Quellen: hirensbootcd.org (v1.0.8) · docs.medicat.dev · README
+            (Standalone)
+          </p>
+        </header>
+
+        <!-- Legende -->
+        <div class="legende">
+          <span class="dot" style="--color: hiren">Hiren's BootCD PE</span>
+          <span class="dot" style="--color: medicat">MediCat PortableApps</span>
+          <span class="dot" style="--color: standalone"
+            >Standalone Tools-Ordner</span
+          >
+          <span class="dot" style="--color: fehlend">Nicht enthalten</span>
+        </div>
+
+        <!-- Filterleiste -->
+        <div class="filter">
+          <input
+            type="search"
+            id="tool_suche"
+            placeholder="Tool oder Kategorie suchen…"
+          />
+          <!-- TODO Separator und Klasse für Knöpfe -->
+          <span class="X">FILTER:</span>
+          <button class="knopf alle aktiv">Alle</button>
+          <button class="knopf hirens">Hiren's</button>
+          <button class="knopf medicat">MediCat</button>
+          <button class="knopf standalone">Standalone</button>
+          <button class="knopf">▼ Alle einklappen</button>
+          <button class="knopf">+ Erweiterte anzeigen</button>
+        </div>
+
+        <!-- Statistikleiste -->
+        <div class="statistik">
+          <div class="statistik_item">
+            <span class="number alle">-</span>
+            <span class="label">Tools gesamt</span>
+          </div>
+          <div class="statistik_item">
+            <span class="number hirens">-</span>
+            <span class="label">in Hiren's</span>
+          </div>
+          <div class="statistik_item">
+            <span class="number medicat">-</span>
+            <span class="label">in MediCat</span>
+          </div>
+          <div class="statistik_item">
+            <span class="number standalone">-</span>
+            <span class="label">Standalone</span>
+          </div>
+          <div class="statistik_item">
+            <span class="number sichtbar">-</span>
+            <span class="label">sichtbar</span>
+          </div>
+        </div>
+
+        <!-- Schnellzugriff -->
+        <h3 class="schnellzugriff">Schnellzugriff: Wichtigsten Tools</h3>
+        <div class="schnellzugriff_liste"></div>
+
+        <!-- Tool-Kategorien -->
+        <div id="tool_kategorien"></div>
+      </section>
+
+      <!-- * Programme-Übersicht -->
+
+      <section id="programme">
+        <header class="header">
+          <h1>Programm-Übersicht</h1>
+          <p>
+            Schneller Zugriff auf die wichtigsten Programm nach der Instalation
+            von einem Betriebssystem.
+          </p>
+        </header>
+        <div id="programm_kategorien">
+          <h2 class="programm_titel">Sicherheit</h2>
+          <p>XX</p>
+          <div class="programm_liste" id="sicherheit_liste"></div>
+          <h2 class="programm_titel">Generell</h2>
+          <p>XX</p>
+          <div class="programm_liste" id="generell_liste"></div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
