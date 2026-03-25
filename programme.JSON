@@ -1,6 +1,6 @@
 const meta = {
   categories: {
-    'BCD & MBR / Boot-Reparatur':                { icon: '💽', order:  1 },
+    'BCD & MBR / Boot-Reparatur':                 { icon: '💽', order:  1 },
     'Festplatte – Diagnose & SMART':              { icon: '💾', order:  2 },
     'Festplatte – Speicherplatz-Analyse':         { icon: '📊', order:  3 },
     'Festplatte – Partitionsverwaltung':          { icon: '🗂️', order:  4 },
