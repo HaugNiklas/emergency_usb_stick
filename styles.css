@@ -1,0 +1,198 @@
+:root {
+  /* Farben – Hintergründe & Oberflächen */
+
+  --color-background: #000011;
+  --color-surface: #111122;
+  --color-border: #222233;
+  --color-border-hover: #bbbbcc;
+
+  /* Farben – Text */
+
+  --color-text: #cde;
+  --color-text-muted: #567;
+  --color-text-accent: #889;
+  --color-text-accent-transparent: #8893;
+
+  /* Hiren's – Orange */
+  --color-hirens: #f80;
+  --color-hirens-transparent: #f803;
+
+  /* MediCat – Lila */
+  --color-medicat: #a0f;
+  --color-medicat-transparent: #a0f3;
+
+  /* Standalone – Blau */
+  --color-standalone: #09f;
+  --color-standalone-transparent: #09f3;
+
+  /* Sichtbar – Grün */
+  --color-categories: #0c5;
+  --color-categories-transparent: #0c53;
+
+  --font-size-small: 0.8rem;
+  --font-size-big: 1.2rem;
+  --font-size-biggest: 2rem;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 15px;
+  display: flex;
+  padding: 20px;
+}
+
+.tab > * {
+  margin-bottom: 20px;
+}
+
+.navigation__btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  height: 40px;
+}
+
+.navigation__btn:hover {
+  color: var(--color-border-hover);
+}
+
+.navigation__btn.navigation__btn--aktiv {
+  color: var(--color-text-accent);
+  border-color: var(--color-text-accent);
+}
+
+p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.legende {
+  display: flex;
+  gap: 20px;
+}
+
+.dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot--hiren::before {
+  background: var(--color-hirens);
+}
+.dot--medicat::before {
+  background: var(--color-medicat);
+}
+.dot--standalone::before {
+  background: var(--color-standalone);
+}
+.dot--fehlend::before {
+  background: var(--color-text-muted);
+}
+
+.filter,
+.filter__suchgruppe,
+.filter__optionen,
+.filter__ansicht {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter__btn,
+.filter__suche {
+  background: var(--color-surface);
+  border: var(--color-border) 1px solid;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 2px;
+}
+
+.filter__btn:hover {
+  color: var(--color-text);
+  border: var(--color-border-hover) 1px solid;
+}
+
+.filter__btn--hiren:hover {
+  color: var(--color-text);
+  background-color: var(--color-hirens-transparent);
+  border-color: var(--color-hirens);
+}
+.filter__btn--medicat:hover {
+  color: var(--color-text);
+  background-color: var(--color-medicat-transparent);
+  border-color: var(W--color-medicat);
+}
+.filter__btn--standalone:hover {
+  color: var(--color-text);
+  background-color: var(--color-standalone-transparent);
+  border-color: var(--color-standalone);
+}
+
+.filter__ansicht {
+  margin-left: auto;
+}
+
+.statistik {
+  display: flex;
+}
+
+.statistik__item {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+}
+
+.statistik__wert {
+  font-weight: bold;
+  font-size: var(--font-size-biggest);
+}
+
+.statistik__wert--alle {
+  color: var(--color-text);
+}
+.statistik__wert--hirens {
+  color: var(--color-hirens);
+}
+.statistik__wert--medicat {
+  color: var(--color-medicat);
+}
+.statistik__wert--standalone {
+  color: var(--color-standalone);
+}
+.statistik__wert--sichtbar {
+  color: var(--color-categories);
+}
+
+.statistik__label {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.schnellzugriff__titel {
+  font-size: var(--font-size-big);
+  color: var(--color-text-accent);
+}
+
+.tab {
+  display: none;
+}
+
+.tab--aktiv {
+  display: block;
+}

@@ -5,24 +5,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emergency USB-Stick Toolkit</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navigation">
-        <!-- TODO: Symbole -->
-        <ul>
-            <li><button class="navigation_btn aktiv" data-tab="tools">Tools</button></li>
-            <li><button class="navigation_btn" data-tab="programme">Programme</button></li>
-            <li><button class="navigation_btn" data-tab="lokale_software">Lokale Software</button></li>
-        </ul>
+        <button class="navigation__btn" data-tab="home">🛠️ Ventoy USB Toolkit</button>
+        <button class="navigation__btn navigation__btn--aktiv" data-tab="tools">⚙️ Tools</button>
+        <button class="navigation__btn" data-tab="programme">🖥️ Programme</button>
+        <button class="navigation__btn" data-tab="lokale_software">📁 Lokale Software</button>
+
     </nav>
     <main class="main">
         <!-- * Tools-Übersicht -->
 
-        <section id="tools" class="tab_inhalt aktiv">
-            <h1>Tool-Übersicht</h1>
-            <p>
+        <section id="tools" class="tab tab--aktiv">
+            <h1 class="tab__titel">Tool-Übersicht</h1>
+            <p class="tab__beschreibung">
                 Quellen: hirensbootcd.org (v1.0.8) · docs.medicat.dev · README
                 (Standalone)
             </p>
@@ -36,79 +36,81 @@
             </div>
 
             <!-- Filterleiste -->
-
-            <div class="such_gruppe">
-                <input type="search" id="tool_suche" placeholder="Tool oder Kategorie suchen…" />
-            </div>
-            <!-- TODO Separator und Klasse für Knöpfe -->
-            <div class="filter_optionen">
-                <span class="filter_label">FILTER:</span>
-                <button class="filter_btn alle aktiv">Alle</button>
-                <button class="filter_btn hirens">Hiren's</button>
-                <button class="filter_btn medicat">MediCat</button>
-                <button class="filter_btn standalone">Standalone</button>
-            </div>
-            <div class="ansicht_optionen">
-                <button class="filter_btn">▼ Alle einklappen</button>
-                <button class="filter_btn">+ Erweiterte anzeigen</button>
+            <div class="filter">
+                <div class="filter__suchgruppe">
+                    <input class="filter__suche" type="search" placeholder="Tool oder Kategorie suchen…" />
+                </div>
+                <!-- TODO Separator und Klasse für Knöpfe -->
+                <div class="filter__optionen">
+                    <span class="filter__label">FILTER:</span>
+                    <button class="filter__btn filter__btn--aktiv">Alle</button>
+                    <button class="filter__btn filter__btn--hiren">Hiren's</button>
+                    <button class="filter__btn filter__btn--medicat">MediCat</button>
+                    <button class="filter__btn filter__btn--standalone">Standalone</button>
+                </div>
+                <div class="filter__ansicht">
+                    <button class="filter__btn">▼ Alle einklappen</button>
+                    <button class="filter__btn">+ Erweiterte anzeigen</button>
+                </div>
             </div>
 
             <!-- Statistikleiste -->
             <div class="statistik">
-                <div class="statistik_item">
-                    <span class="statistik_wert alle">-</span>
-                    <span class="label">Tools gesamt</span>
+                <div class="statistik__item">
+                    <span class="statistik__wert statistik__wert--alle">-</span>
+                    <span class="statistik__label">Tools gesamt</span>
                 </div>
-                <div class="statistik_item">
-                    <span class="statistik_wert hirens">-</span>
-                    <span class="label">in Hiren's</span>
+                <div class="statistik__item">
+                    <span class="statistik__wert statistik__wert--hirens">-</span>
+                    <span class="statistik__label">in Hiren's</span>
                 </div>
-                <div class="statistik_item">
-                    <span class="statistik_wert medicat">-</span>
-                    <span class="label">in MediCat</span>
+                <div class="statistik__item">
+                    <span class="statistik__wert statistik__wert--medicat">-</span>
+                    <span class="statistik__label">in MediCat</span>
                 </div>
-                <div class="statistik_item">
-                    <span class="statistik_wert standalone">-</span>
-                    <span class="label">Standalone</span>
+                <div class="statistik__item">
+                    <span class="statistik__wert statistik__wert--standalone">-</span>
+                    <span class="statistik__label">Standalone</span>
                 </div>
-                <div class="statistik_item">
-                    <span class="statistik_wert sichtbar">-</span>
-                    <span class="label">sichtbar</span>
+                <div class="statistik__item">
+                    <span class="statistik__wert statistik__wert--sichtbar">-</span>
+                    <span class="statistik__label">sichtbar</span>
                 </div>
             </div>
 
             <!-- Schnellzugriff -->
-            <h2 class="schnellzugriff">Schnellzugriff: Wichtigsten Tools</h2>
-            <div class="schnellzugriff_liste"></div>
+            <h2 class="schnellzugriff__titel">⚡ Schnellzugriff: Wichtigsten Tools</h2>
+            <div class="schnellzugriff__liste"></div>
 
             <!-- Tool-Kategorien -->
-            <div id="tool_kategorien"></div>
+            <div id="toolKategorien"></div>
 
         </section>
 
         <!-- * Programme-Übersicht -->
 
-        <section id="programme" class="tab_inhalt">
-            <h1>Programme Übersicht</h1>
-            <p>
+        <section id="programme" class="tab">
+            <h1 class="tab__titel">Programme Übersicht</h1>
+            <p class="tab__beschreibung">
                 Schneller Zugriff auf die wichtigsten Programme nach der Installation von einem Betriebssystem.
             </p>
 
-            <div id="programm_kategorien">
-                <h2 class="kategorie_header">Sicherheit</h2>
-                <!-- TODO: Beschreibung Sicherheit -->
-                <div class="programm_liste" id="sicherheit_liste"></div>
-                <h2 class="kategorie_header">Generell</h2>
-                <p><!-- TODO: Beschreibung Generell --></p>
-                <div class="programm_liste" id="generell_liste"></div>
+            <div class="kategorien">
+                <h2 class="kategorie__titel">Sicherheit</h2>
+                <p class="kategorie__beschreibung"><!-- TODO --></p>
+                <div class="programm__liste" id="sicherheit_liste"></div>
+
+                <h2 class="kategorie__titel">Generell</h2>
+                <p class="kategorie__beschreibung"><!-- TODO --></p>
+                <div class="programm__liste" id="generell_liste"></div>
             </div>
         </section>
 
         <!-- * Lokale Software-Übersicht -->
 
-        <section id="lokale_software" class="tab_inhalt">
-            <h1>Lokale Software</h1>
-            <p>
+        <section id="lokaleSoftware" class="tab">
+            <h1 class="tab__titel">Lokale Software</h1>
+            <p class="tab__beschreibung">
                 Übersicht über die Software, die lokal auf dem USB-Stick installiert
                 ist.
             </p>
