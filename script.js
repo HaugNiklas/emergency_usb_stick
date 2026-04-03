@@ -43,6 +43,9 @@ fetch("tools.json")
     document.querySelector(".statistik__wert--standalone").textContent =
       data.tools.filter((t) => t.includes.includes("standalone")).length;
 
+    // Lokale Software — provisorisch 0
+    document.querySelector(".statistik__wert--lokal").textContent = 0;
+
     // ───────────────────────────────────────
     // SCHNELLZUGRIFF (Tier 0)
     // ───────────────────────────────────────
@@ -155,14 +158,10 @@ fetch("tools.json")
         erweiterteBtn.textContent = versteckt
           ? `+ ${tier2Cards.length} Weitere anzeigen`
           : `− ${tier2Cards.length} Ausblenden`;
-        statistikAktualisieren();
       });
 
       grid.appendChild(kasten);
     });
-
-    // Initiale Statistik setzen
-    statistikAktualisieren();
 
     // ═══════════════════════════════════════════
     // ALLE EINKLAPPEN BUTTON
@@ -181,7 +180,6 @@ fetch("tools.json")
       });
 
       btn.textContent = einklappen ? "▶ Alle ausklappen" : "▼ Alle einklappen";
-      statistikAktualisieren();
     });
   });
 
@@ -212,8 +210,6 @@ document.querySelectorAll(".filter__optionen .filter__btn").forEach((btn) => {
         card.classList.toggle("versteckt", !hatPunkt);
       }
     });
-
-    statistikAktualisieren();
   });
 });
 
@@ -235,6 +231,4 @@ document.querySelector(".filter__suche").addEventListener("input", (e) => {
     const treffer = name.includes(begriff) || desc.includes(begriff);
     card.classList.toggle("versteckt", !treffer);
   });
-
-  statistikAktualisieren();
 });

@@ -29,9 +29,9 @@
   --color-standalone: #09f;
   --color-standalone-transparent: #09f3;
 
-  /* Sichtbar – Grün */
-  --color-categories: #0c5;
-  --color-categories-transparent: #0c53;
+  /* Lokal – Grün */
+  --color-lokal: #0c5;
+  --color-lokal-transparent: #0c53;
 
   --font-size-small: 0.8rem;
   --font-size-big: 1.2rem;
@@ -190,8 +190,8 @@ p {
 .statistik__wert--standalone {
   color: var(--color-standalone);
 }
-.statistik__wert--sichtbar {
-  color: var(--color-categories);
+.statistik__wert--lokal {
+  color: var(--color-lokal);
 }
 
 .statistik__label {
