@@ -58,14 +58,14 @@
                 <!-- TODO Separator und Klasse für Knöpfe -->
                 <div class="filter__optionen">
                     <span class="filter__label">FILTER:</span>
-                    <button class="filter__btn filter__btn--aktiv">Alle</button>
+                    <button class="filter__btn filter__btn--alle filter__btn--aktiv">Alle</button>
                     <button class="filter__btn filter__btn--hiren">Hiren's</button>
                     <button class="filter__btn filter__btn--medicat">MediCat</button>
                     <button class="filter__btn filter__btn--standalone">Standalone</button>
                 </div>
                 <div class="filter__ansicht">
-                    <button class="filter__btn">▼ Alle einklappen</button>
-                    <button class="filter__btn">+ Erweiterte anzeigen</button>
+                    <button class="filter__btn" id="alle-einklappen">▼ Alle einklappen</button>
+                    <button class="filter__btn" id="erweiterte-anzeigen">+ Erweiterte anzeigen</button>
                 </div>
             </div>
 
@@ -77,15 +77,15 @@
                 </div>
                 <div class="statistik__item">
                     <span class="statistik__wert statistik__wert--hirens">-</span>
-                    <span class="statistik__label">in Hiren's</span>
+                    <span class="statistik__label">davon in Hiren's</span>
                 </div>
                 <div class="statistik__item">
                     <span class="statistik__wert statistik__wert--medicat">-</span>
-                    <span class="statistik__label">in MediCat</span>
+                    <span class="statistik__label">davon in MediCat</span>
                 </div>
                 <div class="statistik__item">
                     <span class="statistik__wert statistik__wert--standalone">-</span>
-                    <span class="statistik__label">Standalone</span>
+                    <span class="statistik__label">davon standalone</span>
                 </div>
                 <div class="statistik__item">
                     <span class="statistik__wert statistik__wert--sichtbar">-</span>

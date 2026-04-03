@@ -38,6 +38,11 @@
   --font-size-biggest: 2rem;
 }
 
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
 body {
   background-color: var(--color-background-base);
   color: var(--color-text);
@@ -205,9 +210,14 @@ p {
   padding: 1rem;
 }
 
+.card--erweitert {
+  background: var(--color-background-raised);
+  
+}
+
 .kategorie-kasten {
   border: 1px solid var(--color-border-default);
-  border-radius: 6px;
+  border-radius: 2px;
   overflow: hidden;
   margin-bottom: 1rem;
 }
@@ -218,12 +228,18 @@ p {
   font-weight: 500;
   color: var(--color-text);
   border-bottom: 1px solid var(--color-border-default);
+   cursor: pointer;
+}
+
+.kategorie-kasten__header:hover {
+  background: var(--color-background-elevated);
 }
 
 .kategorie-kasten__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
+  gap: 4px;
+  padding: 2px;
   background: var(--color-background-elevated);
 }
 
@@ -232,16 +248,105 @@ p {
   justify-content: space-between;
 }
 
-.kategorie-kasten__toggle {
-  background: none;
-  border: none;
+.kategorie-kasten__info{
   color: var(--color-text-muted);
-  cursor: pointer;
   font-size: var(--font-size-small);
 }
 
-.kategorie-kasten__toggle:hover {
+.kategorie-kasten__aktionen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kategorie-kasten__footer {
+  background: var(--color-background-raised);
+  border-top: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+}
+
+.card__punkte {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.punkt {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.punkt--hirens     { background: var(--color-hirens); }
+.punkt--medicat    { background: var(--color-medicat); }
+.punkt--standalone { background: var(--color-standalone); }
+.punkt--leer       { background: var(--color-text-muted); opacity: 0.2; }
+
+
+.schnellzugriff-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.schnellzugriff-grid .card {
+  padding: 0.5rem 0.75rem;
+  border-color: var(--color-border-default);
+  border-style: solid;
+  border-width: 1px;
+  height: 5vw;
+  min-height: 30px;
+  max-height: 50px;
+}
+.schnellzugriff-grid .card__name {
+  font-size: var(--font-size-small);
+  font-weight: 500;
   color: var(--color-text);
+  margin: 0 0 2px;
+}
+
+.schnellzugriff-grid .card__desc {
+  font-size: 0.7rem;
+  margin: 0 0 2px;
+}
+.schnellzugriff-grid .card__punkte {
+  margin-top: 0 0 2px;
+}
+
+
+.schnellzugriff-grid .card:hover {
+  border-color: var(--color-border-focus);
+}
+
+
+
+.versteckt {
+  display: none;
+}
+
+
+
+.filter__btn--aktiv.filter__btn--hiren {
+  background-color: var(--color-hirens-transparent);
+  border-color: var(--color-hirens);
+  color: var(--color-text);
+}
+
+.filter__btn--aktiv.filter__btn--medicat {
+  background-color: var(--color-medicat-transparent);
+  border-color: var(--color-medicat);
+  color: var(--color-text);
+}
+
+.filter__btn--aktiv.filter__btn--standalone {
+  background-color: var(--color-standalone-transparent);
+  border-color: var(--color-standalone);
+  color: var(--color-text);
+}
+
+.filter__btn--aktiv.filter__btn--alle {
+  color: var(--color-text);
+  border-color: var(--color-border-focus);
 }
 
 /**/
