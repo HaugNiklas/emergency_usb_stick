@@ -1,22 +1,21 @@
 :root {
-  /* Farben – Hintergründe & Oberflächen */
-
+  /* === Hintergründe === */
   --color-background-base: #000011;
   --color-background-surface: #111122;
   --color-background-raised: #171727;
   --color-background-elevated: #222233;
 
-  /* Farben – Ränder */
+  /* === Ränder === */
   --color-border-default: #222233;
   --color-border-focus: #bbbbcc;
 
-  /* Farben – Text */
-
+  /* === Text === */
   --color-text: #cde;
   --color-text-muted: #567;
   --color-text-accent: #889;
   --color-text-accent-transparent: #8893;
 
+  /* === Tool-Quellen === */
   /* Hiren's – Orange */
   --color-hirens: #f80;
   --color-hirens-transparent: #f803;
@@ -33,15 +32,15 @@
   --color-lokal: #0c5;
   --color-lokal-transparent: #0c53;
 
+  /* === Typografie === */
   --font-size-small: 0.8rem;
   --font-size-big: 1.2rem;
   --font-size-biggest: 2rem;
 }
 
-.main {
-  max-width: 1100px;
-  margin: 0 auto;
-}
+/* =====================
+   1. Reset / Globale Elemente
+   ===================== */
 
 body {
   background-color: var(--color-background-base);
@@ -53,8 +52,18 @@ body {
   padding: 20px;
 }
 
-.tab > * {
-  margin-bottom: 20px;
+p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+/* =====================
+   2. Layout
+   ===================== */
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .navigation {
@@ -80,43 +89,40 @@ body {
   border-color: var(--color-text-accent);
 }
 
-p {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-small);
+.tab {
+  display: none;
 }
+
+.tab--aktiv {
+  display: block;
+}
+
+.tab > * {
+  margin-bottom: 20px;
+}
+
+/* =====================
+   3. Komponenten
+   ===================== */
+
+/* --- Legende --- */
 
 .legende {
   display: flex;
   gap: 20px;
 }
 
-.dot {
+.punkt__statistik {
   display: inline-flex;
   align-items: center;
   gap: 10px;
 }
 
-.dot::before {
-  content: "";
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.punkt__statistik > .punkt {
+  margin-right: 8px;
 }
 
-.dot--hiren::before {
-  background: var(--color-hirens);
-}
-.dot--medicat::before {
-  background: var(--color-medicat);
-}
-.dot--standalone::before {
-  background: var(--color-standalone);
-}
-.dot--fehlend::before {
-  background: var(--color-text-muted);
-}
+/* --- Filter --- */
 
 .filter,
 .filter__suchgruppe,
@@ -127,10 +133,14 @@ p {
   align-items: center;
 }
 
+.filter__ansicht {
+  margin-left: auto;
+}
+
 .filter__btn,
 .filter__suche {
   background: var(--color-background-surface);
-  border: var(--color-border-default) 1px solid;
+  border: 1px solid var(--color-border-default);
   color: var(--color-text-muted);
   cursor: pointer;
   height: 30px;
@@ -140,28 +150,36 @@ p {
 
 .filter__btn:hover {
   color: var(--color-text);
-  border: var(--color-border-focus) 1px solid;
+  border: 1px solid var(--color-border-focus);
 }
 
-.filter__btn--hiren:hover {
+.filter__btn--hiren:hover,
+.filter__btn--aktiv.filter__btn--hiren {
   color: var(--color-text);
   background-color: var(--color-hirens-transparent);
   border-color: var(--color-hirens);
 }
-.filter__btn--medicat:hover {
+
+.filter__btn--medicat:hover,
+.filter__btn--aktiv.filter__btn--medicat {
   color: var(--color-text);
   background-color: var(--color-medicat-transparent);
   border-color: var(--color-medicat);
 }
-.filter__btn--standalone:hover {
+
+.filter__btn--standalone:hover,
+.filter__btn--aktiv.filter__btn--standalone {
   color: var(--color-text);
   background-color: var(--color-standalone-transparent);
   border-color: var(--color-standalone);
 }
 
-.filter__ansicht {
-  margin-left: auto;
+.filter__btn--aktiv.filter__btn--alle {
+  color: var(--color-text);
+  border-color: var(--color-border-focus);
 }
+
+/* --- Statistik --- */
 
 .statistik {
   display: flex;
@@ -178,33 +196,19 @@ p {
   font-size: var(--font-size-biggest);
 }
 
-.statistik__wert--alle {
-  color: var(--color-text);
-}
-.statistik__wert--hirens {
-  color: var(--color-hirens);
-}
-.statistik__wert--medicat {
-  color: var(--color-medicat);
-}
-.statistik__wert--standalone {
-  color: var(--color-standalone);
-}
-.statistik__wert--lokal {
-  color: var(--color-lokal);
-}
+.statistik__wert--alle       { color: var(--color-text); }
+.statistik__wert--hirens     { color: var(--color-hirens); }
+.statistik__wert--medicat    { color: var(--color-medicat); }
+.statistik__wert--standalone { color: var(--color-standalone); }
+.statistik__wert--lokal      { color: var(--color-lokal); }
 
 .statistik__label {
   font-size: var(--font-size-small);
   color: var(--color-text-muted);
 }
 
-.schnellzugriff__titel {
-  font-size: var(--font-size-big);
-  color: var(--color-text-accent);
-}
+/* --- Card --- */
 
-/**/
 .card {
   background: var(--color-background-surface);
   padding: 1rem;
@@ -212,27 +216,73 @@ p {
 
 .card--erweitert {
   background: var(--color-background-raised);
-  
 }
+
+/* --- Schnellzugriff --- */
+
+.schnellzugriff__titel {
+  font-size: var(--font-size-big);
+  color: var(--color-text-accent);
+}
+
+.schnellzugriff-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.schnellzugriff-grid .card {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-default);
+  height: 5vw;
+  min-height: 30px;
+  max-height: 60px;
+}
+
+.schnellzugriff-grid .card:hover {
+  border-color: var(--color-border-focus);
+}
+
+.schnellzugriff-grid .card__name {
+  color: var(--color-text);
+  margin: 0 0 2px;
+}
+
+.schnellzugriff-grid .card__desc {
+  font-size: 0.7rem;
+  margin: 0 0 2px;
+}
+
+/* --- Kategorie-Kasten --- */
 
 .kategorie-kasten {
   border: 1px solid var(--color-border-default);
   border-radius: 2px;
-  overflow: hidden;
   margin-bottom: 1rem;
 }
 
 .kategorie-kasten__header {
   background: var(--color-background-raised);
   padding: 0.75rem 1rem;
-  font-weight: 500;
-  color: var(--color-text);
   border-bottom: 1px solid var(--color-border-default);
-   cursor: pointer;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 
 .kategorie-kasten__header:hover {
   background: var(--color-background-elevated);
+}
+
+.kategorie-kasten__info {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.kategorie-kasten__footer {
+  background: var(--color-background-raised);
+  border-top: 1px solid var(--color-border-default);
+  padding: 0.5rem 1rem;
 }
 
 .kategorie-kasten__grid {
@@ -243,118 +293,32 @@ p {
   background: var(--color-background-elevated);
 }
 
-.kategorie-kasten__header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.kategorie-kasten__info{
-  color: var(--color-text-muted);
-  font-size: var(--font-size-small);
-}
-
-.kategorie-kasten__aktionen {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.kategorie-kasten__footer {
-  background: var(--color-background-raised);
-  border-top: 1px solid var(--color-border);
-  padding: 0.5rem 1rem;
-}
-
-.card__punkte {
-  display: flex;
-  gap: 5px;
-  margin-top: 8px;
-}
+/* =====================
+   4. Utilities
+   ===================== */
 
 .punkt {
-  width: 8px;
-  height: 8px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 .punkt--hirens     { background: var(--color-hirens); }
 .punkt--medicat    { background: var(--color-medicat); }
 .punkt--standalone { background: var(--color-standalone); }
-.punkt--leer       { background: var(--color-text-muted); opacity: 0.2; }
+.punkt--leer,
+.punkt--fehlend    { background: var(--color-text-muted); opacity: 0.2; }
 
-
-.schnellzugriff-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
+.punkt__card {
+  display: flex;
+  gap: 5px;
+  margin-top: 8px;
+  align-items: center;
 }
-
-.schnellzugriff-grid .card {
-  padding: 0.5rem 0.75rem;
-  border-color: var(--color-border-default);
-  border-style: solid;
-  border-width: 1px;
-  height: 5vw;
-  min-height: 30px;
-  max-height: 50px;
-}
-.schnellzugriff-grid .card__name {
-  font-size: var(--font-size-small);
-  font-weight: 500;
-  color: var(--color-text);
-  margin: 0 0 2px;
-}
-
-.schnellzugriff-grid .card__desc {
-  font-size: 0.7rem;
-  margin: 0 0 2px;
-}
-.schnellzugriff-grid .card__punkte {
-  margin-top: 0 0 2px;
-}
-
-
-.schnellzugriff-grid .card:hover {
-  border-color: var(--color-border-focus);
-}
-
-
 
 .versteckt {
   display: none;
-}
-
-
-
-.filter__btn--aktiv.filter__btn--hiren {
-  background-color: var(--color-hirens-transparent);
-  border-color: var(--color-hirens);
-  color: var(--color-text);
-}
-
-.filter__btn--aktiv.filter__btn--medicat {
-  background-color: var(--color-medicat-transparent);
-  border-color: var(--color-medicat);
-  color: var(--color-text);
-}
-
-.filter__btn--aktiv.filter__btn--standalone {
-  background-color: var(--color-standalone-transparent);
-  border-color: var(--color-standalone);
-  color: var(--color-text);
-}
-
-.filter__btn--aktiv.filter__btn--alle {
-  color: var(--color-text);
-  border-color: var(--color-border-focus);
-}
-
-/**/
-
-.tab {
-  display: none;
-}
-
-.tab--aktiv {
-  display: block;
 }

@@ -62,7 +62,7 @@ fetch("tools.json")
         card.innerHTML = `
           <p class="card__name">${tool.name}</p>
           <p class="card__desc">${tool.short}</p>
-          <div class="card__punkte">
+          <div class="punkt__card">
             ${tool.includes.includes("hirens") ? '<span class="punkt punkt--hirens"></span>' : '<span class="punkt punkt--leer"></span>'}
             ${tool.includes.includes("medicat") ? '<span class="punkt punkt--medicat"></span>' : '<span class="punkt punkt--leer"></span>'}
             ${tool.includes.includes("standalone") ? '<span class="punkt punkt--standalone"></span>' : '<span class="punkt punkt--leer"></span>'}
@@ -131,7 +131,7 @@ fetch("tools.json")
           card.innerHTML = `
             <p class="card__name">${tool.name}</p>
             <p class="card__desc">${tool.desc}</p>
-            <div class="card__punkte">
+            <div class="punkt__card">
               ${tool.includes.includes("hirens") ? '<span class="punkt punkt--hirens"></span>' : '<span class="punkt punkt--leer"></span>'}
               ${tool.includes.includes("medicat") ? '<span class="punkt punkt--medicat"></span>' : '<span class="punkt punkt--leer"></span>'}
               ${tool.includes.includes("standalone") ? '<span class="punkt punkt--standalone"></span>' : '<span class="punkt punkt--leer"></span>'}
