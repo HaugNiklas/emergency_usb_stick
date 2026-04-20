@@ -167,6 +167,31 @@ fetch("tools.json")
     // ALLE EINKLAPPEN BUTTON
     // ═══════════════════════════════════════════
 
+    // ═══════════════════════════════════════════
+    // GLOBALER "ERWEITERTE ANZEIGEN" BUTTON
+    // ═══════════════════════════════════════════
+
+    document.getElementById("erweiterte-anzeigen").addEventListener("click", () => {
+      const alleErweiterten = document.querySelectorAll(".card--erweitert");
+      const btn = document.getElementById("erweiterte-anzeigen");
+      const aktuellVersteckt = alleErweiterten[0]?.classList.contains("versteckt") ?? true;
+
+      alleErweiterten.forEach((c) => c.classList.toggle("versteckt", !aktuellVersteckt));
+
+      // Auch die Footer-Buttons in jedem Kasten aktualisieren
+      document.querySelectorAll(".erweiterte-btn").forEach((b) => {
+        const kasten = b.closest(".kategorie-kasten");
+        const anzahl = kasten?.querySelectorAll(".card--erweitert").length ?? 0;
+        b.textContent = aktuellVersteckt
+          ? `− ${anzahl} Ausblenden`
+          : `+ ${anzahl} Weitere anzeigen`;
+      });
+
+      btn.textContent = aktuellVersteckt
+        ? "− Erweiterte ausblenden"
+        : "+ Erweiterte anzeigen";
+    });
+
     document.getElementById("alle-einklappen").addEventListener("click", () => {
       const alleGrids = document.querySelectorAll(".kategorie-kasten__grid");
       const alleTogglePfeile = document.querySelectorAll(".toggle-pfeil");
@@ -201,10 +226,13 @@ document.querySelectorAll(".filter__optionen .filter__btn").forEach((btn) => {
       filter = "standalone";
 
     document.querySelectorAll("#tool-grid .card").forEach((card) => {
-      if (card.classList.contains("card--erweitert")) return;
+      // Tier-2-Karten nur filtern wenn sie gerade sichtbar sind
+      const istErweitert = card.classList.contains("card--erweitert");
+      const istAufgeklappt = !card.classList.contains("versteckt");
+      if (istErweitert && !istAufgeklappt) return;
 
       if (!filter) {
-        card.classList.remove("versteckt");
+        if (!istErweitert) card.classList.remove("versteckt");
       } else {
         const hatPunkt = card.querySelector(`.punkt--${filter}`);
         card.classList.toggle("versteckt", !hatPunkt);
@@ -221,7 +249,10 @@ document.querySelector(".filter__suche").addEventListener("input", (e) => {
   const begriff = e.target.value.toLowerCase().trim();
 
   document.querySelectorAll("#tool-grid .card").forEach((card) => {
-    if (card.classList.contains("card--erweitert")) return;
+    // Tier-2-Karten nur durchsuchen wenn sie gerade sichtbar sind
+    const istErweitert = card.classList.contains("card--erweitert");
+    const istAufgeklappt = !card.classList.contains("versteckt");
+    if (istErweitert && !istAufgeklappt) return;
 
     const name =
       card.querySelector(".card__name")?.textContent.toLowerCase() ?? "";
@@ -229,6 +260,8 @@ document.querySelector(".filter__suche").addEventListener("input", (e) => {
       card.querySelector(".card__desc")?.textContent.toLowerCase() ?? "";
 
     const treffer = name.includes(begriff) || desc.includes(begriff);
-    card.classList.toggle("versteckt", !treffer);
+    if (!istErweitert) card.classList.toggle("versteckt", !treffer);
+    else if (treffer) card.classList.remove("versteckt");
+    else card.classList.add("versteckt");
   });
 });

@@ -309,8 +309,8 @@ p {
 .punkt--hirens     { background: var(--color-hirens); }
 .punkt--medicat    { background: var(--color-medicat); }
 .punkt--standalone { background: var(--color-standalone); }
-.punkt--leer,
-.punkt--fehlend    { background: var(--color-text-muted); opacity: 0.2; }
+.punkt--leer       { background: var(--color-text-muted); opacity: 0.5; }
+.punkt--fehlend    { background: var(--color-text-muted); opacity: 0.7; }
 
 .punkt__card {
   display: flex;
