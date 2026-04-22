@@ -33,15 +33,18 @@ function statistikAktualisieren() {
 fetch("tools.json")
   .then((res) => res.json())
   .then((data) => {
+    const notfall = data.notfall;
+    const setup   = data.setup;
+
     // Statische Statistik-Zahlen setzen
     document.querySelector(".statistik__wert--alle").textContent =
-      data.tools.length;
+      notfall.tools.length;
     document.querySelector(".statistik__wert--hirens").textContent =
-      data.tools.filter((t) => t.includes.includes("hirens")).length;
+      notfall.tools.filter((t) => t.includes.includes("hirens")).length;
     document.querySelector(".statistik__wert--medicat").textContent =
-      data.tools.filter((t) => t.includes.includes("medicat")).length;
+      notfall.tools.filter((t) => t.includes.includes("medicat")).length;
     document.querySelector(".statistik__wert--standalone").textContent =
-      data.tools.filter((t) => t.includes.includes("standalone")).length;
+      notfall.tools.filter((t) => t.includes.includes("standalone")).length;
 
     // Lokale Software — provisorisch 0
     document.querySelector(".statistik__wert--lokal").textContent = 0;
@@ -52,7 +55,7 @@ fetch("tools.json")
 
     const schnellzugriff = document.getElementById("schnellzugriff-grid");
 
-    data.tools
+    notfall.tools
       .filter((tool) => tool.tier === 0)
       .forEach((tool) => {
         const card = document.createElement("div");
@@ -85,7 +88,7 @@ fetch("tools.json")
     const grid = document.getElementById("tool-grid");
 
     // Kategorien nach "order" sortieren
-    const sortiertKategorien = Object.entries(data.categories).sort(
+    const sortiertKategorien = Object.entries(notfall.categories).sort(
       (a, b) => a[1].order - b[1].order,
     );
 
@@ -95,8 +98,8 @@ fetch("tools.json")
       kasten.id = `kategorie-${key}`;
 
       // Anzahl Tools in dieser Kategorie zählen
-      const anzahl = data.tools.filter((tool) => tool.category === key).length;
-      const tier2Anzahl = data.tools.filter(
+      const anzahl = notfall.tools.filter((tool) => tool.category === key).length;
+      const tier2Anzahl = notfall.tools.filter(
         (tool) => tool.category === key && tool.tier === 2,
       ).length;
 
@@ -122,7 +125,7 @@ fetch("tools.json")
       });
 
       // Tools der Kategorie als Karten einfügen
-      data.tools
+      notfall.tools
         .filter((tool) => tool.category === key)
         .forEach((tool) => {
           const card = document.createElement("div");
@@ -162,6 +165,51 @@ fetch("tools.json")
 
       grid.appendChild(kasten);
     });
+
+    // ───────────────────────────────────────
+    // PROGRAMME-GRID (Setup)
+    // ───────────────────────────────────────
+
+    const programmGrid = document.getElementById("programm-grid");
+
+    Object.entries(setup.categories)
+      .sort((a, b) => a[1].order - b[1].order)
+      .forEach(([key, kategorie]) => {
+        const kasten = document.createElement("div");
+        kasten.className = "kategorie-kasten";
+
+        const header = document.createElement("div");
+        header.className = "kategorie-kasten__header";
+        const anzahl = setup.tools.filter((t) => t.category === key).length;
+        header.innerHTML = `
+          <span>${kategorie.icon} ${kategorie.label}</span>
+          <span class="kategorie-kasten__info"><span class="toggle-anzahl">${anzahl} Programme</span> <span class="toggle-pfeil">▼</span></span>
+        `;
+        kasten.appendChild(header);
+
+        const kartenGrid = document.createElement("div");
+        kartenGrid.className = "kategorie-kasten__grid";
+
+        header.addEventListener("click", () => {
+          const eingeklappt = kartenGrid.classList.toggle("versteckt");
+          header.querySelector(".toggle-pfeil").textContent = eingeklappt ? "▶" : "▼";
+        });
+
+        setup.tools
+          .filter((t) => t.category === key)
+          .forEach((tool) => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+              <p class="card__name">${tool.name}</p>
+              <p class="card__desc">${tool.desc}</p>
+            `;
+            kartenGrid.appendChild(card);
+          });
+
+        kasten.appendChild(kartenGrid);
+        programmGrid.appendChild(kasten);
+      });
 
     // ═══════════════════════════════════════════
     // ALLE EINKLAPPEN BUTTON
