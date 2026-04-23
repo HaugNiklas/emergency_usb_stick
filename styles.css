@@ -1,41 +1,48 @@
 :root {
   /* === Hintergründe === */
-  --color-background-base: #000011;
-  --color-background-surface: #111122;
-  --color-background-raised: #171727;
+  --color-background-base: #0a0a0f;
+  --color-background-surface: #111118;
+  --color-background-raised: #1a1a24;
   --color-background-elevated: #222233;
 
   /* === Ränder === */
-  --color-border-default: #222233;
+  --color-border-default: #2a2a3a;
   --color-border-focus: #bbbbcc;
 
   /* === Text === */
-  --color-text: #cde;
-  --color-text-muted: #567;
-  --color-text-accent: #889;
-  --color-text-accent-transparent: #8893;
+  --color-text: #e8e8f0;
+  --color-text-muted: #666680;
+  --color-text-accent: #888899;
+  --color-text-accent-transparent: #88889933;
 
   /* === Tool-Quellen === */
   /* Hiren's – Orange */
-  --color-hirens: #f80;
-  --color-hirens-transparent: #f803;
+  --color-hirens: #ff8800;
+  --color-hirens-transparent: #ff880033;
 
   /* MediCat – Lila */
-  --color-medicat: #a0f;
-  --color-medicat-transparent: #a0f3;
+  --color-medicat: #aa00ff;
+  --color-medicat-transparent: #aa00ff33;
 
   /* Standalone – Blau */
-  --color-standalone: #09f;
-  --color-standalone-transparent: #09f3;
+  --color-standalone: #0099ff;
+  --color-standalone-transparent: #0099ff33;
 
   /* Lokal – Grün */
-  --color-lokal: #0c5;
-  --color-lokal-transparent: #0c53;
+  --color-lokal: #00cc55;
+  --color-lokal-transparent: #00cc5533;
 
   /* === Typografie === */
   --font-size-small: 0.8rem;
   --font-size-big: 1.2rem;
   --font-size-biggest: 2rem;
+
+
+  --accent-usb: #ff6b35;
+  --accent-pc:  #00d4aa;
+  --accent-purpel: #a855f7;
+  --accent-blue: #4a9eff;;
+
 }
 
 /* =====================
@@ -45,7 +52,7 @@
 body {
   background-color: var(--color-background-base);
   color: var(--color-text);
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Space Mono", sans-serif;
   font-size: 15px;
   display: flex;
   flex-direction: column;
@@ -321,4 +328,83 @@ p {
 
 .versteckt {
   display: none;
+}
+
+/* =====================
+   5. Header & Mode-Switcher
+   ===================== */
+
+
+header {
+  padding: 40px 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+h1#main-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+h1#main-title span.orange { color: var(--accent-usb); }
+h1#main-title span.teal   { color: var(--accent-pc); }
+
+.header-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 8px;
+  flex-wrap: wrap;
+}
+
+.stat { text-align: right; }
+
+.stat-num {
+  font-size: 35px;
+  font-weight: 800;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.mode-switcher {
+  margin-bottom: 32px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  display: flex;
+  align-self: flex-start;
+}
+
+.mode-btn {
+  padding: 12px 28px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-btn.active-usb { background: var(--accent-usb); color: #fff; }
+.mode-btn.active-pc  { background: var(--accent-pc);  color: #0a0a0f; }
+.mode-btn:hover:not(.active-usb):not(.active-pc) {
+  background: var(--color-background-raised);
+  color: var(--color-text);
 }

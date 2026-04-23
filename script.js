@@ -1,4 +1,72 @@
 // ═══════════════════════════════════════════
+// HEADER STATS & MODE SWITCHER
+// ═══════════════════════════════════════════
+
+let currentMode = 'usb';
+let appData = null;
+
+function switchMode(m) {
+  currentMode = m;
+
+  document.querySelectorAll('.mode-btn').forEach((b, i) => {
+    b.className = 'mode-btn';
+    if (i === 0 && m === 'usb') b.classList.add('active-usb');
+    if (i === 1 && m === 'pc')  b.classList.add('active-pc');
+  });
+
+  const title = document.getElementById('main-title');
+  if (m === 'usb') {
+    title.innerHTML = '<span class="orange">Notfall</span> USB<br>Tool-Sammlung';
+  } else {
+    title.innerHTML = '<span class="teal">PC Setup</span><br>Tool-Liste';
+  }
+
+  const sectionMap = { usb: 'tools', pc: 'programme' };
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('tab--aktiv'));
+  document.getElementById(sectionMap[m])?.classList.add('tab--aktiv');
+
+  buildStats();
+}
+
+function buildStats() {
+  const el = document.getElementById('header-stats');
+  if (!appData) return;
+
+  if (currentMode === 'usb') {
+    const tools  = appData.notfall.tools;
+    const cats   = Object.keys(appData.notfall.categories).length;
+    const tier0  = tools.filter(t => t.tier === 0).length;
+    el.innerHTML = `
+      <div class="stat">
+        <div class="stat-num" style="color:var(--accent-usb)">${tools.length}</div>
+        <div class="stat-label">Tools</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">${cats}</div>
+        <div class="stat-label">Kategorien</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#ffd700">${tier0}</div>
+        <div class="stat-label">Schnellzugriff</div>
+      </div>
+    `;
+  } else {
+    const tools = appData.setup.tools;
+    const cats  = Object.keys(appData.setup.categories).length;
+    el.innerHTML = `
+      <div class="stat">
+        <div class="stat-num" style="color:var(--accent-pc)">${tools.length}</div>
+        <div class="stat-label">Tools</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">${cats}</div>
+        <div class="stat-label">Kategorien</div>
+      </div>
+    `;
+  }
+}
+
+// ═══════════════════════════════════════════
 // TABS WECHSELN
 // ═══════════════════════════════════════════
 
@@ -33,21 +101,24 @@ function statistikAktualisieren() {
 fetch("tools.json")
   .then((res) => res.json())
   .then((data) => {
+    appData = data;
+    buildStats();
+
     const notfall = data.notfall;
     const setup   = data.setup;
 
     // Statische Statistik-Zahlen setzen
-    document.querySelector(".statistik__wert--alle").textContent =
-      notfall.tools.length;
-    document.querySelector(".statistik__wert--hirens").textContent =
-      notfall.tools.filter((t) => t.includes.includes("hirens")).length;
-    document.querySelector(".statistik__wert--medicat").textContent =
-      notfall.tools.filter((t) => t.includes.includes("medicat")).length;
-    document.querySelector(".statistik__wert--standalone").textContent =
-      notfall.tools.filter((t) => t.includes.includes("standalone")).length;
 
-    // Lokale Software — provisorisch 0
-    document.querySelector(".statistik__wert--lokal").textContent = 0;
+    const statAlle = document.querySelector(".statistik__wert--alle");
+    if (statAlle) statAlle.textContent = notfall.tools.length;
+    const statHirens = document.querySelector(".statistik__wert--hirens");
+    if (statHirens) statHirens.textContent = notfall.tools.filter((t) => t.includes.includes("hirens")).length;
+    const statMedicat = document.querySelector(".statistik__wert--medicat");
+    if (statMedicat) statMedicat.textContent = notfall.tools.filter((t) => t.includes.includes("medicat")).length;
+    const statStandalone = document.querySelector(".statistik__wert--standalone");
+    if (statStandalone) statStandalone.textContent = notfall.tools.filter((t) => t.includes.includes("standalone")).length;
+    const statLokal = document.querySelector(".statistik__wert--lokal");
+    if (statLokal) statLokal.textContent = 0;
 
     // ───────────────────────────────────────
     // SCHNELLZUGRIFF (Tier 0)

@@ -6,42 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Emergency USB-Stick Toolkit</title>
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 
 <body>
-    <!-- Navigation -->
-    <nav class="navigation">
-        <div class="navigation__logo">
-            <svg width="200" height="50" viewBox="0 40 300 100">
-                <!-- USB Stick body -->
-                <rect x="40" y="55" width="90" height="50" rx="6" fill="#2a2a4a" stroke="#4f8ef7" stroke-width="1.5" />
-                <rect x="130" y="68" width="28" height="24" rx="3" fill="#3a3a5a" stroke="#4f8ef7" stroke-width="1" />
-                <rect x="134" y="73" width="20" height="14" rx="2" fill="#1a1a2e" stroke="#7ec8e3" stroke-width="0.8" />
-                <circle cx="65" cy="80" r="3" fill="#7ec8e3" />
-                <!-- Text -->
-                <text x="178" y="92" font-family="sans-serif" font-size="38" font-weight="700" fill="#f0f4ff"
-                    letter-spacing="-1">Ventoy</text>
-                <text x="180" y="118" font-family="sans-serif" font-size="16" font-weight="400" fill="#7ec8e3"
-                    letter-spacing="3">USB TOOLKIT</text>
-            </svg>
+    <!-- Header -->
+    <header>
+      <div class="header-top">
+        <div>
+          <div class="logo">// Niklas' Arsenal</div>
+          <h1 id="main-title">
+            <span class="orange">Notfall</span> USB<br>Tool-Sammlung
+          </h1>
         </div>
+        <div class="header-stats" id="header-stats"></div>
+      </div>
+    </header>
 
-        <button class="navigation__btn navigation__btn--aktiv" data-tab="tools">⚙️ Tools</button>
-        <button class="navigation__btn" data-tab="programme">🖥️ Programme</button>
-        <button class="navigation__btn" data-tab="lokale_software">📁 Lokale Software</button>
-
-    </nav>
+    <!-- Mode Switcher -->
+    <div class="mode-switcher">
+      <button class="mode-btn active-usb" onclick="switchMode('usb')">🔌 Notfall USB</button>
+      <button class="mode-btn" onclick="switchMode('pc')">💻 PC Setup</button>
+    </div>
     <main class="main">
         <!-- * Tools-Übersicht -->
 
         <section id="tools" class="tab tab--aktiv">
-            <h1 class="tab__titel">Tool-Übersicht</h1>
-            <p class="tab__beschreibung">
-                Quellen: hirensbootcd.org (v1.0.8) · docs.medicat.dev · README
-                (Standalone)
-            </p>
-
             <!-- Legende -->
             <div class="legende">
                 <span class="punkt__statistik"><span class="punkt punkt--hirens"></span> Hiren's BootCD PE</span>
@@ -69,7 +60,7 @@
                 </div>
             </div>
 
-            <!-- Statistikleiste -->
+            <!-- Statistikleiste 
             <div class="statistik">
                 <div class="statistik__item">
                     <span class="statistik__wert statistik__wert--alle">-</span>
@@ -92,6 +83,7 @@
                     <span class="statistik__label">Lokale Software</span>
                 </div>
             </div>
+            -->
 
             <!-- Schnellzugriff -->
             <h2 class="schnellzugriff-grid__titel">⚡ Schnellzugriff: Wichtigsten Tools</h2>
@@ -101,16 +93,16 @@
             <h2 class="tool-grid__titel">Tools:</h2>
             <div id="tool-grid" class="tool-grid"></div>
 
+            <p class="tab__beschreibung">
+                Quellen: hirensbootcd.org (v1.0.8) · docs.medicat.dev · README
+                (Standalone)
+            </p>
+
         </section>
 
         <!-- * Programme-Übersicht -->
 
         <section id="programme" class="tab">
-            <h1 class="tab__titel">Programme Übersicht</h1>
-            <p class="tab__beschreibung">
-                Schneller Zugriff auf die wichtigsten Programme nach der Installation von einem Betriebssystem.
-            </p>
-
             <div id="programm-grid" class="tool-grid"></div>
         </section>
 
