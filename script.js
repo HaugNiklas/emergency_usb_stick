@@ -8,10 +8,10 @@ let appData = null;
 function switchMode(m) {
   currentMode = m;
 
-  document.querySelectorAll('.mode-btn').forEach((b, i) => {
-    b.className = 'mode-btn';
-    if (i === 0 && m === 'usb') b.classList.add('active-usb');
-    if (i === 1 && m === 'pc')  b.classList.add('active-pc');
+  document.querySelectorAll('.modus-wechsler__btn').forEach((b, i) => {
+    b.className = 'modus-wechsler__btn';
+    if (i === 0 && m === 'usb') b.classList.add('modus-wechsler__btn--aktiv-usb');
+    if (i === 1 && m === 'pc')  b.classList.add('modus-wechsler__btn--aktiv-pc');
   });
 
   const title = document.getElementById('main-title');
@@ -67,34 +67,6 @@ function buildStats() {
 }
 
 // ═══════════════════════════════════════════
-// TABS WECHSELN
-// ═══════════════════════════════════════════
-
-const navButtons = document.querySelectorAll(".navigation__btn");
-const tabs = document.querySelectorAll(".tab");
-
-navButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const ziel = button.dataset.tab;
-    navButtons.forEach((btn) => btn.classList.remove("navigation__btn--aktiv"));
-    tabs.forEach((tab) => tab.classList.remove("tab--aktiv"));
-    button.classList.add("navigation__btn--aktiv");
-    document.getElementById(ziel).classList.add("tab--aktiv");
-  });
-});
-
-// ═══════════════════════════════════════════
-// STATISTIK AKTUALISIEREN
-// ═══════════════════════════════════════════
-
-function statistikAktualisieren() {
-  const sichtbar = document.querySelectorAll(
-    "#tool-grid .card:not(.versteckt)",
-  ).length;
-  document.querySelector(".statistik__wert--sichtbar").textContent = sichtbar;
-}
-
-// ═══════════════════════════════════════════
 // DATEN LADEN
 // ═══════════════════════════════════════════
 
@@ -107,19 +79,6 @@ fetch("tools.json")
     const notfall = data.notfall;
     const setup   = data.setup;
 
-    // Statische Statistik-Zahlen setzen
-
-    const statAlle = document.querySelector(".statistik__wert--alle");
-    if (statAlle) statAlle.textContent = notfall.tools.length;
-    const statHirens = document.querySelector(".statistik__wert--hirens");
-    if (statHirens) statHirens.textContent = notfall.tools.filter((t) => t.includes.includes("hirens")).length;
-    const statMedicat = document.querySelector(".statistik__wert--medicat");
-    if (statMedicat) statMedicat.textContent = notfall.tools.filter((t) => t.includes.includes("medicat")).length;
-    const statStandalone = document.querySelector(".statistik__wert--standalone");
-    if (statStandalone) statStandalone.textContent = notfall.tools.filter((t) => t.includes.includes("standalone")).length;
-    const statLokal = document.querySelector(".statistik__wert--lokal");
-    if (statLokal) statLokal.textContent = 0;
-
     // ───────────────────────────────────────
     // SCHNELLZUGRIFF (Tier 0)
     // ───────────────────────────────────────
@@ -131,8 +90,6 @@ fetch("tools.json")
       .forEach((tool) => {
         const card = document.createElement("div");
         card.className = "card";
-        card.style.cursor = "pointer";
-
         card.innerHTML = `
           <p class="card__name">${tool.name}</p>
           <p class="card__desc">${tool.short}</p>
@@ -143,7 +100,6 @@ fetch("tools.json")
           </div>
         `;
 
-        // Klick → zum Kategorie-Kasten scrollen
         card.addEventListener("click", () => {
           const ziel = document.getElementById(`kategorie-${tool.category}`);
           if (ziel) ziel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -158,7 +114,6 @@ fetch("tools.json")
 
     const grid = document.getElementById("tool-grid");
 
-    // Kategorien nach "order" sortieren
     const sortiertKategorien = Object.entries(notfall.categories).sort(
       (a, b) => a[1].order - b[1].order,
     );
@@ -168,13 +123,11 @@ fetch("tools.json")
       kasten.className = "kategorie-kasten";
       kasten.id = `kategorie-${key}`;
 
-      // Anzahl Tools in dieser Kategorie zählen
       const anzahl = notfall.tools.filter((tool) => tool.category === key).length;
       const tier2Anzahl = notfall.tools.filter(
         (tool) => tool.category === key && tool.tier === 2,
       ).length;
 
-      // Header mit Titel und Toggle
       const header = document.createElement("div");
       header.className = "kategorie-kasten__header";
       header.innerHTML = `
@@ -183,19 +136,14 @@ fetch("tools.json")
       `;
       kasten.appendChild(header);
 
-      // Karten-Grid für die Tools
       const kartenGrid = document.createElement("div");
       kartenGrid.className = "kategorie-kasten__grid";
 
-      // Header klicken → Kategorie ein-/ausklappen
       header.addEventListener("click", () => {
         const eingeklappt = kartenGrid.classList.toggle("versteckt");
-        header.querySelector(".toggle-pfeil").textContent = eingeklappt
-          ? "▶"
-          : "▼";
+        header.querySelector(".toggle-pfeil").textContent = eingeklappt ? "▶" : "▼";
       });
 
-      // Tools der Kategorie als Karten einfügen
       notfall.tools
         .filter((tool) => tool.category === key)
         .forEach((tool) => {
@@ -216,13 +164,11 @@ fetch("tools.json")
 
       kasten.appendChild(kartenGrid);
 
-      // Footer mit "Erweiterte anzeigen" Button
       const footer = document.createElement("div");
       footer.className = "kategorie-kasten__footer";
       footer.innerHTML = `<button class="filter__btn erweiterte-btn">+ ${tier2Anzahl} Weitere anzeigen</button>`;
       kasten.appendChild(footer);
 
-      // Tier 2 Tools ein-/ausblenden
       const erweiterteBtn = footer.querySelector(".erweiterte-btn");
       erweiterteBtn.addEventListener("click", () => {
         const tier2Cards = kartenGrid.querySelectorAll(".card--erweitert");
@@ -283,10 +229,6 @@ fetch("tools.json")
       });
 
     // ═══════════════════════════════════════════
-    // ALLE EINKLAPPEN BUTTON
-    // ═══════════════════════════════════════════
-
-    // ═══════════════════════════════════════════
     // GLOBALER "ERWEITERTE ANZEIGEN" BUTTON
     // ═══════════════════════════════════════════
 
@@ -297,7 +239,6 @@ fetch("tools.json")
 
       alleErweiterten.forEach((c) => c.classList.toggle("versteckt", !aktuellVersteckt));
 
-      // Auch die Footer-Buttons in jedem Kasten aktualisieren
       document.querySelectorAll(".erweiterte-btn").forEach((b) => {
         const kasten = b.closest(".kategorie-kasten");
         const anzahl = kasten?.querySelectorAll(".card--erweitert").length ?? 0;
@@ -310,6 +251,10 @@ fetch("tools.json")
         ? "− Erweiterte ausblenden"
         : "+ Erweiterte anzeigen";
     });
+
+    // ═══════════════════════════════════════════
+    // ALLE EINKLAPPEN BUTTON
+    // ═══════════════════════════════════════════
 
     document.getElementById("alle-einklappen").addEventListener("click", () => {
       const alleGrids = document.querySelectorAll(".kategorie-kasten__grid");
@@ -325,6 +270,10 @@ fetch("tools.json")
 
       btn.textContent = einklappen ? "▶ Alle ausklappen" : "▼ Alle einklappen";
     });
+  })
+  .catch(() => {
+    document.querySelector(".main").innerHTML =
+      "<p>Fehler: tools.json konnte nicht geladen werden.</p>";
   });
 
 // ═══════════════════════════════════════════
@@ -341,11 +290,9 @@ document.querySelectorAll(".filter__optionen .filter__btn").forEach((btn) => {
     let filter = null;
     if (btn.classList.contains("filter__btn--hiren")) filter = "hirens";
     if (btn.classList.contains("filter__btn--medicat")) filter = "medicat";
-    if (btn.classList.contains("filter__btn--standalone"))
-      filter = "standalone";
+    if (btn.classList.contains("filter__btn--standalone")) filter = "standalone";
 
     document.querySelectorAll("#tool-grid .card").forEach((card) => {
-      // Tier-2-Karten nur filtern wenn sie gerade sichtbar sind
       const istErweitert = card.classList.contains("card--erweitert");
       const istAufgeklappt = !card.classList.contains("versteckt");
       if (istErweitert && !istAufgeklappt) return;
@@ -368,15 +315,12 @@ document.querySelector(".filter__suche").addEventListener("input", (e) => {
   const begriff = e.target.value.toLowerCase().trim();
 
   document.querySelectorAll("#tool-grid .card").forEach((card) => {
-    // Tier-2-Karten nur durchsuchen wenn sie gerade sichtbar sind
     const istErweitert = card.classList.contains("card--erweitert");
     const istAufgeklappt = !card.classList.contains("versteckt");
     if (istErweitert && !istAufgeklappt) return;
 
-    const name =
-      card.querySelector(".card__name")?.textContent.toLowerCase() ?? "";
-    const desc =
-      card.querySelector(".card__desc")?.textContent.toLowerCase() ?? "";
+    const name = card.querySelector(".card__name")?.textContent.toLowerCase() ?? "";
+    const desc = card.querySelector(".card__desc")?.textContent.toLowerCase() ?? "";
 
     const treffer = name.includes(begriff) || desc.includes(begriff);
     if (!istErweitert) card.classList.toggle("versteckt", !treffer);

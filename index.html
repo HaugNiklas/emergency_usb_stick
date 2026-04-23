@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 
-
 <body>
     <!-- Header -->
     <header>
@@ -25,9 +24,9 @@
     </header>
 
     <!-- Mode Switcher -->
-    <div class="mode-switcher">
-      <button class="mode-btn active-usb" onclick="switchMode('usb')">🔌 Notfall USB</button>
-      <button class="mode-btn" onclick="switchMode('pc')">💻 PC Setup</button>
+    <div class="modus-wechsler">
+      <button class="modus-wechsler__btn modus-wechsler__btn--aktiv-usb" onclick="switchMode('usb')">🔌 Notfall USB</button>
+      <button class="modus-wechsler__btn" onclick="switchMode('pc')">💻 PC Setup</button>
     </div>
     <main class="main">
         <!-- * Tools-Übersicht -->
@@ -46,9 +45,8 @@
                 <div class="filter__suchgruppe">
                     <input class="filter__suche" type="search" placeholder="Tool oder Kategorie suchen…" />
                 </div>
-                <!-- TODO Separator und Klasse für Knöpfe -->
                 <div class="filter__optionen">
-                    <span class="filter__label">FILTER:</span>
+                    <span>FILTER:</span>
                     <button class="filter__btn filter__btn--alle filter__btn--aktiv">Alle</button>
                     <button class="filter__btn filter__btn--hiren">Hiren's</button>
                     <button class="filter__btn filter__btn--medicat">MediCat</button>
@@ -60,40 +58,15 @@
                 </div>
             </div>
 
-            <!-- Statistikleiste 
-            <div class="statistik">
-                <div class="statistik__item">
-                    <span class="statistik__wert statistik__wert--alle">-</span>
-                    <span class="statistik__label">Tools gesamt</span>
-                </div>
-                <div class="statistik__item">
-                    <span class="statistik__wert statistik__wert--hirens">-</span>
-                    <span class="statistik__label">in Hiren's</span>
-                </div>
-                <div class="statistik__item">
-                    <span class="statistik__wert statistik__wert--medicat">-</span>
-                    <span class="statistik__label">in MediCat</span>
-                </div>
-                <div class="statistik__item">
-                    <span class="statistik__wert statistik__wert--standalone">-</span>
-                    <span class="statistik__label">Standalone</span>
-                </div>
-                <div class="statistik__item">
-                    <span class="statistik__wert statistik__wert--lokal">-</span>
-                    <span class="statistik__label">Lokale Software</span>
-                </div>
-            </div>
-            -->
-
             <!-- Schnellzugriff -->
-            <h2 class="schnellzugriff-grid__titel">⚡ Schnellzugriff: Wichtigsten Tools</h2>
+            <h2>⚡ Schnellzugriff: Wichtigsten Tools</h2>
             <div id="schnellzugriff-grid" class="schnellzugriff-grid"></div>
 
             <!-- Tool-Kategorien -->
-            <h2 class="tool-grid__titel">Tools:</h2>
+            <h2>Tools:</h2>
             <div id="tool-grid" class="tool-grid"></div>
 
-            <p class="tab__beschreibung">
+            <p>
                 Quellen: hirensbootcd.org (v1.0.8) · docs.medicat.dev · README
                 (Standalone)
             </p>
@@ -108,9 +81,9 @@
 
         <!-- * Lokale Software-Übersicht -->
 
-        <section id="lokale_software" class="tab">
-            <h1 class="tab__titel">Lokale Software</h1>
-            <p class="tab__beschreibung">
+        <section id="lokale-software" class="tab">
+            <h2>Lokale Software</h2>
+            <p>
                 Übersicht über die Software, die lokal auf dem USB-Stick installiert
                 ist.
             </p>
