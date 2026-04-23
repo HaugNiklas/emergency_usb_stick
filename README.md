@@ -1,4 +1,4 @@
-# 🛠️ Ventoy USB Toolkit Code mit hohem KI-Antei, wird noch einmal überarbeitet, wenn die Struktur steht
+# 🛠️ Ventoy USB Toolkit Code
 
 > **Persönlicher IT-Rettungsstick auf Basis von [Ventoy](https://www.ventoy.net).**  
 > Dieses Repository enthält **keine Binaries oder ISOs** – nur Dokumentation, Konfiguration und Download-Scripts.  
